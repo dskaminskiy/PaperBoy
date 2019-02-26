@@ -1,0 +1,253 @@
+ext {
+    compileSdkVersion = 27
+    minSdkVersion = 21
+    targetSdkVersion = 27
+    buildToolsVersion = '28.0.3'
+    multiDEXVersion = '1.0.3'
+
+    gradleVersion = '3.3.0'
+    realmGradlePluginVersion = '5.4.2'
+
+    kotlinVersion = '1.3.0'
+    koinVersion = '1.0.2'
+
+    firebaseVersion = '4.2.0'
+
+    supportLibVersion = '27.1.1'
+    constraintLayoutVersion = '1.1.2'
+
+    googleServicesPluginVersion = '4.0.1'
+    googlePlayServicesVersion = '15.0.1'
+    googlePlayAnalyticsVersion = '16.0.1'
+
+    firebaseCoreVersion = '16.0.4'
+    firebaseMessagingVersion = '17.1.0'
+    firebasePerformanceVersion = '16.2.0'
+    firebaseAuthVersion = '16.0.5'
+    jobDispatcherVersion = '0.8.5'
+
+    rxJavaVersion = '2.1.17'
+    rxBindingVersion = '2.0.0'
+    rxAndroidVersion = '2.0.2'
+    rxFirebaseVersion = '1.5.6'
+
+    daggerVersion = '2.14.1'
+
+    retrofitVersion = '2.3.0'
+    okHttpVersion = '3.9.1'
+    httpcoreVersion = '4.4.1'
+    httpclientVersion = '4.3.5'
+    httpmimeVersion = '4.3.4'
+
+    ciceroneVersion = '2.1.0'
+
+    frescoVersion = '1.7.1'
+    glideVersion = '4.1.1'
+    glideTransformationVersion = '3.0.1'
+
+    crashlyticsVersion = '2.7.1'
+    answersVersion = '1.4.1'
+
+    mosbyVersion = '3.1.0'
+    moxyVersion = '1.5.5'
+
+    junitVersion = '4.12'
+    jsonAssertVersion = '1.5.0'
+    testRunnerVersion = '1.0.1'
+    espressoVersion = "3.0.2"
+    mockitoVersion = '2.15.0'
+
+    appsflyerVersion = '4.8.0'
+
+    gsonVersion = '2.8.2'
+    circleImageViewVersion = '2.2.0'
+    swipeToRefreshVersion = '1.2.3'
+    segmentedViewVersion = '1.0.6'
+    ioSocketVersion = '0.3.0'
+    scaleImageVersion = '3.6.0'
+    flexboxVersion = '0.3.2'
+    libJingleVersion = '11139'
+    jodaTimeVersion = '2.9.9.3'
+    navbarVersion = '2.1.0'
+    progressVersion = '1.1.7'
+    maskedTextVersion = '2.3.0'
+    chuckVersion = '1.1.0'
+    ottoVersion = '1.3.8'
+    jcropVersion = '0.22'
+    androidMapUtilsVersion = '0.5'
+    viewPagerIndicatorVersion = '2.4.1.1'
+    sectionedRVAdapterVersion = '1.0.4'
+    mobmetricalibVersion = '2.60'
+    facebookSdkVersion = '4.23.0'
+    commonsCodecVersion = '1.10'
+    butterknifeVersion = '8.5.1'
+    gpuimageVersion = '1.4.1'
+    shortcutBadgerVersion = '1.1.14'
+    realmAdaptersVersion = '2.1.0'
+    crystalRangeSeekbarVersion = '1.1.1'
+    jodaTimeVersion = '2.9.9'
+    commonsIoVersion = '2.4'
+    universalImageLoaderVersion = '1.9.4'
+    glideTransformationVersion = '3.0.1'
+    safeJobIntentServiceVersion = '1.0.1'
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    // KOTLIN
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    kotlinImpl = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    // KOIN DI
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    koinImpl = "org.koin:koin-android:$koinVersion"
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    // GRADLE
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    gradlePlugin = "com.android.tools.build:gradle:$gradleVersion"
+    realmGradlePlugin = "io.realm:realm-gradle-plugin:$realmGradlePluginVersion"
+    kotlinPlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    // SUPPORT LIBRARIES
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    supportLib = [
+            design            : "com.android.support:design:$supportLibVersion",
+            support           : "com.android.support:support-v4:$supportLibVersion",
+            appCompat         : "com.android.support:appcompat-v7:$supportLibVersion",
+            cardView          : "com.android.support:cardview-v7:$supportLibVersion",
+            constraintLayout  : "com.android.support.constraint:constraint-layout:$constraintLayoutVersion"
+    ]
+    multiDEXLib = "com.android.support:multidex:$multiDEXVersion"
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    // GOOGLE SERVICES PLUGIN
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    googleServicesPlugin = "com.google.gms:google-services:$googleServicesPluginVersion"
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    // GOOGLE PLAY SERVICES
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    playServices = [
+            maps            :   "com.google.android.gms:play-services-maps:$googlePlayServicesVersion",
+            location        :   "com.google.android.gms:play-services-location:$googlePlayServicesVersion",
+            gcm             :   "com.google.android.gms:play-services-gcm:$googlePlayServicesVersion",
+            analytics       :   "com.google.android.gms:play-services-analytics:$googlePlayAnalyticsVersion"
+    ]
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    // FIREBASE SERVICES
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    firebaseCore = "com.google.firebase:firebase-core:$firebaseCoreVersion"
+    firebaseAuth = "com.google.firebase:firebase-auth:$firebaseAuthVersion"
+    firebaseMessaging = "com.google.firebase:firebase-messaging:$firebaseMessagingVersion"
+    firebasePerformance = "com.google.firebase:firebase-perf:$firebasePerformanceVersion"
+    firebaseJobDispatcher = "com.firebase:firebase-jobdispatcher:$jobDispatcherVersion"
+    firebasePlugin = "com.google.gms:google-services:$firebaseVersion"
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    // RX
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    rxJava = "io.reactivex.rxjava2:rxjava:$rxJavaVersion"
+    rxAndroid = "io.reactivex.rxjava2:rxandroid:$rxAndroidVersion"
+    rxBinding = "com.jakewharton.rxbinding2:rxbinding-kotlin:$rxBindingVersion"
+    rxFirebase = "com.github.FrangSierra:RxFirebase:$rxFirebaseVersion"
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    // NETWORK
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    retrofit = [
+            retrofit       : "com.squareup.retrofit2:retrofit:$retrofitVersion",
+            gsonConverter  : "com.squareup.retrofit2:converter-gson:$retrofitVersion",
+            rxJavaAdapter  : "com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion"
+    ]
+    okHttp = [
+            okHttp         : "com.squareup.okhttp3:okhttp:$okHttpVersion",
+            okHttpLogger   : "com.squareup.okhttp3:logging-interceptor:$okHttpVersion"
+    ]
+    httpComponents = [
+            httpcore       : "org.apache.httpcomponents:httpcore:$httpcoreVersion",
+            httpclient     : "org.apache.httpcomponents:httpclient:$httpclientVersion",
+            httpmime       : "org.apache.httpcomponents:httpmime:$httpmimeVersion"
+    ]
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    // IMAGE LOADING
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    fresco = "com.facebook.fresco:fresco:$frescoVersion"
+    glide = [
+            glide          : "com.github.bumptech.glide:glide:$glideVersion",
+            integration    : "com.github.bumptech.glide:okhttp3-integration:$glideVersion"
+    ]
+    glideCompiler = "com.github.bumptech.glide:compiler:$glideVersion"
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    // UI
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    swipeToRefresh = "com.github.orangegangsters:swipy:${swipeToRefreshVersion}@aar"
+    circleImageView = "de.hdodenhof:circleimageview:$circleImageViewVersion"
+    navbar = "com.aurelhubert:ahbottomnavigation:$navbarVersion"
+    progressBar = "me.zhanghai.android.materialprogressbar:library:$progressVersion"
+    maskedText = "com.redmadrobot:inputmask:$maskedTextVersion"
+    scaleImage = "com.davemorrissey.labs:subsampling-scale-image-view:$scaleImageVersion"
+    segmentedView = "info.hoang8f:android-segmented:$segmentedViewVersion"
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    // CRASH-REPORTING
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    crashlyticsLib = "com.crashlytics.sdk.android:crashlytics:${crashlyticsVersion}@aar"
+    answersLib = "com.crashlytics.sdk.android:answers:${answersVersion}@aar"
+    mockito = "org.mockito:mockito-core:$mockitoVersion"
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    // TESTING
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    junit = "junit:junit:$junitVersion"
+    jsonAssert = "org.skyscreamer:jsonassert:$jsonAssertVersion"
+    testRunner = "com.android.support.test:runner:$testRunnerVersion"
+    espresso = "com.android.support.test.espresso:espresso-core:$espressoVersion"
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    // SOCKET
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    ioSocket = "com.github.nkzawa:socket.io-client:$ioSocketVersion"
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    // DATE AND TIME
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    jodaTime = "net.danlew:android.joda:$jodaTimeVersion"
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    // ANALYTICS
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    analytics = [
+            appsflyer          : "com.appsflyer:af-android-sdk:${appsflyerVersion}@aar"
+    ]
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    // OTHER
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    flexbox = "com.google.android:flexbox:$flexboxVersion"
+    jingleLib = "io.pristine:libjingle:${libJingleVersion}@aar"
+    gson = "com.google.code.gson:gson:$gsonVersion"
+    chuck = "com.readystatesoftware.chuck:library:$chuckVersion"
+    otto = "com.squareup:otto:$ottoVersion"
+    jcrop = "com.github.jimcoven:jcropimageview:$jcropVersion"
+    androidMapUtils = "com.google.maps.android:android-maps-utils:$androidMapUtilsVersion"
+    viewPagerIndicator = "fr.avianey.com.viewpagerindicator:library:${viewPagerIndicatorVersion}@aar"
+    sectionedRVAdapter = "io.github.luizgrp.sectionedrecyclerviewadapter:sectionedrecyclerviewadapter:$sectionedRVAdapterVersion"
+    mobmetricalib = "com.yandex.android:mobmetricalib:$mobmetricalibVersion"
+    facebookSdk = "com.facebook.android:facebook-android-sdk:$facebookSdkVersion"
+    commonsCodec = "commons-codec:commons-codec:$commonsCodecVersion"
+    butterknife = "com.jakewharton:butterknife:$butterknifeVersion"
+    gpuimage = "jp.co.cyberagent.android.gpuimage:gpuimage-library:$gpuimageVersion"
+    shortcutBadger = "me.leolin:ShortcutBadger:${shortcutBadgerVersion}@aar"
+    realmAdapters = "io.realm:android-adapters:$realmAdaptersVersion"
+    crystalRangeSeekbar = "com.crystal:crystalrangeseekbar:$crystalRangeSeekbarVersion"
+    commonsIo = "commons-io:commons-io:$commonsIoVersion"
+    universalImageLoader = "com.nostra13.universalimageloader:universal-image-loader:$universalImageLoaderVersion"
+    glideTransformation = "jp.wasabeef:glide-transformations:$glideTransformationVersion"
+    safeJobIntentService = "com.ufreedom.kit:safejobintentservice:$safeJobIntentServiceVersion"
+    butterknifeCompiler = "com.jakewharton:butterknife-compiler:$butterknifeVersion"
+
+}

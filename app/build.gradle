@@ -1,32 +1,67 @@
 apply plugin: 'com.android.application'
-
 apply plugin: 'kotlin-android'
-
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'com.google.gms.google-services'
 
 android {
-    compileSdkVersion 27
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
+
     defaultConfig {
         applicationId "deniskaminskiy.paperboy"
-        minSdkVersion 21
-        targetSdkVersion 27
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        vectorDrawables.useSupportLibrary = true
+        multiDexEnabled true
     }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+
+        debug {
+            debuggable = true
+            versionNameSuffix "-debug"
         }
     }
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'com.android.support:appcompat-v7:27.1.1'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+
+    // Support library
+    implementation supportLib.values()
+
+    // Develop library
+    implementation multiDEXLib
+    implementation kotlinImpl
+
+    // Network
+    implementation retrofit.values()
+    implementation okHttp.values()
+    implementation httpComponents.values()
+
+    // Rx
+    implementation rxJava
+    implementation rxAndroid
+
+    // Glide
+    implementation glide.values()
+    kapt glideCompiler
+
+    // Google Play Services
+    implementation playServices.values()
+
+    // Others
+    implementation gson
+    implementation jodaTime
+
+    androidTestImplementation espresso
+    testImplementation junit
+    testImplementation mockito
 }
