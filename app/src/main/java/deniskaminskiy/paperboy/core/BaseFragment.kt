@@ -22,7 +22,6 @@ abstract class BaseFragment<P : Presenter<V>, V: View>: Fragment() {
     override fun onStart() {
         super.onStart()
         if (presenter != null) {
-            assert(presenter != null)
             presenter?.onViewAttached(this as V)
             presenter?.onStart(isFirstStart)
             isFirstStart = false
@@ -31,7 +30,6 @@ abstract class BaseFragment<P : Presenter<V>, V: View>: Fragment() {
 
     override fun onStop() {
         if (presenter != null) {
-            assert(presenter != null)
             presenter?.onStop()
             presenter?.onViewDetached()
         }

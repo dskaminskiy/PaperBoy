@@ -24,7 +24,6 @@ abstract class BaseActivity<P : Presenter<V>, V : View> : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
         if (presenter != null) {
-            assert(presenter != null)
             presenter?.onViewAttached(this as V)
             presenter?.onStart(isFirstStart)
             isFirstStart = false
@@ -33,7 +32,6 @@ abstract class BaseActivity<P : Presenter<V>, V : View> : AppCompatActivity() {
 
     override fun onStop() {
         if (presenter != null) {
-            assert(presenter != null)
             presenter?.onStop()
             presenter?.onViewDetached()
         }

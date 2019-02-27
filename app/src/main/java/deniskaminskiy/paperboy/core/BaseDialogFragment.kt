@@ -22,7 +22,6 @@ abstract class BaseDialogFragment<P : Presenter<V>, V : View> : DialogFragment()
     override fun onStart() {
         super.onStart()
         if (presenter != null) {
-            assert(presenter != null)
             presenter?.onViewAttached(this as V)
             presenter?.onStart(isFirstStart)
             isFirstStart = false
@@ -31,7 +30,6 @@ abstract class BaseDialogFragment<P : Presenter<V>, V : View> : DialogFragment()
 
     override fun onStop() {
         if (presenter != null) {
-            assert(presenter != null)
             presenter?.onStop()
             presenter?.onViewDetached()
         }
