@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 
 @SuppressLint("Registered")
-abstract class BaseActivity<P : Presenter<V>, V : View> : AppCompatActivity() {
+abstract class BaseActivity<P : Presenter<V>, V : View> : AppCompatActivity(), View {
 
     companion object {
         private const val TAG = "BaseActivity"

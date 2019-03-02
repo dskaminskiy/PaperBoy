@@ -3,7 +3,7 @@ package deniskaminskiy.paperboy.core
 import android.os.Bundle
 import android.support.v4.app.Fragment
 
-abstract class BaseFragment<P : Presenter<V>, V: View>: Fragment() {
+abstract class BaseFragment<P : Presenter<V>, V: View>: Fragment(), View {
 
     companion object {
         private const val TAG = "BaseFragment"

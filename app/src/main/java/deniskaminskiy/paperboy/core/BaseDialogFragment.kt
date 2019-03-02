@@ -3,7 +3,7 @@ package deniskaminskiy.paperboy.core
 import android.os.Bundle
 import android.support.v4.app.DialogFragment
 
-abstract class BaseDialogFragment<P : Presenter<V>, V : View> : DialogFragment() {
+abstract class BaseDialogFragment<P : Presenter<V>, V : View> : DialogFragment(), View {
 
     companion object {
         private const val TAG = "BaseDialogFragment"
