@@ -46,6 +46,9 @@ dependencies {
     implementation okHttp.values()
     implementation httpComponents.values()
 
+    // Cicerone
+    implementation cicerone
+
     // Rx
     implementation rxJava
     implementation rxAndroid

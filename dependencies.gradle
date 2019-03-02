@@ -8,6 +8,8 @@ ext {
     gradleVersion = '3.3.0'
     realmGradlePluginVersion = '5.4.2'
 
+    ciceroneVersion = '5.0.0'
+
     kotlinVersion = '1.3.0'
     koinVersion = '1.0.2'
 
@@ -38,8 +40,6 @@ ext {
     httpcoreVersion = '4.4.1'
     httpclientVersion = '4.3.5'
     httpmimeVersion = '4.3.4'
-
-    ciceroneVersion = '2.1.0'
 
     frescoVersion = '1.7.1'
     glideVersion = '4.1.1'
@@ -101,6 +101,7 @@ ext {
     ////////////////////////////////////////////////////////////////////////////////////////////////
     koinImpl = "org.koin:koin-android:$koinVersion"
 
+    cicerone = "ru.terrakok.cicerone:cicerone:$ciceroneVersion"
     ////////////////////////////////////////////////////////////////////////////////////////////////
     // GRADLE
     ////////////////////////////////////////////////////////////////////////////////////////////////
