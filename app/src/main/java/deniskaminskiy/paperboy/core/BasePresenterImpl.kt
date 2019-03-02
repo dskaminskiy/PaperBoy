@@ -13,7 +13,6 @@ abstract class BasePresenterImpl<V : View> : Presenter<V> {
         viewRef = WeakReference(view)
     }
 
-
     override fun onStart(viewCreated: Boolean) {
         //..
     }
