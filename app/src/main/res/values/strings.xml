@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">PaperBoy</string>
+    <string name="app_name_lower_case">paperboy</string>
 </resources>

@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "976750905652",
+    "firebase_url": "https://paperboy-33a6a.firebaseio.com",
+    "project_id": "paperboy-33a6a",
+    "storage_bucket": "paperboy-33a6a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:976750905652:android:9011222cd8afd883",
+        "android_client_info": {
+          "package_name": "deniskaminskiy.paperboy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "976750905652-5i4k76su6paqnvcv3jgs4h6tht33mg6a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCwaYckQvos6UxDTZ29Sv7Q8e6P5GyYJYY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
