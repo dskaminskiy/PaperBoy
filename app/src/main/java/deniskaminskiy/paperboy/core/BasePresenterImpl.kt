@@ -2,7 +2,7 @@ package deniskaminskiy.paperboy.core
 
 import java.lang.ref.WeakReference
 
-abstract class BasePresenter<V : View> : Presenter<V> {
+abstract class BasePresenterImpl<V : View> : Presenter<V> {
 
     private var viewRef: WeakReference<V?> = WeakReference(view)
 
