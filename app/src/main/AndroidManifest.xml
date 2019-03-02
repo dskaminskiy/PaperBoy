@@ -1,10 +1,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="deniskaminskiy.paperboy">
 
-    <application android:allowBackup="true"
+    <application android:name=".PaperBoyApplication"
+                 android:allowBackup="false"
                  android:label="@string/app_name"
                  android:icon="@mipmap/ic_launcher"
                  android:roundIcon="@mipmap/ic_launcher_round"
-                 android:supportsRtl="true"
                  android:theme="@style/AppTheme"/>
 </manifest>
