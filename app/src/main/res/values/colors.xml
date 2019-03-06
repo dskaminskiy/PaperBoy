@@ -1,6 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
+    <color name="colorPrimary">@color/paper</color>
+    <color name="colorPrimaryDark">@color/print100</color>
+    <color name="colorAccent">@color/marlboroNew</color>
+    
+    <color name="paper">#fafaf7</color>
+
+    <color name="print10">#f5f5f2</color>
+    <color name="print15">#f0f0ed</color>
+    <color name="print20">#ebebe8</color>
+    <color name="print30">#e0e0dc</color>
+    <color name="print40">#ccccc8</color>
+    <color name="print50">#b8b8b4</color>
+    <color name="print60">#8f8f89</color>
+    <color name="print70">#666662</color>
+    <color name="print80">#3d3d3a</color>
+    <color name="print90">#292927</color>
+    <color name="print100">#141413</color>
+    
+    <color name="marlboroNew">#eb5454</color>
+    <color name="marlboroOld">#ef6060</color>
 </resources>
