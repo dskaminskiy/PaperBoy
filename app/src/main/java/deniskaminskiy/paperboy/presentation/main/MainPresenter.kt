@@ -9,9 +9,6 @@ class MainPresenter(
 
     override fun onStart(viewCreated: Boolean) {
         super.onStart(viewCreated)
-
-        // TODO: next screen
-        // router.navigateTo(Screens.MainScreen)
     }
 
 }

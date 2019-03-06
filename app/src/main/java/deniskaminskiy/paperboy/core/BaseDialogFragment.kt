@@ -1,7 +1,7 @@
 package deniskaminskiy.paperboy.core
 
 import android.os.Bundle
-import android.support.v4.app.DialogFragment
+import androidx.fragment.app.DialogFragment
 
 abstract class BaseDialogFragment<P : Presenter<V>, V : View> : DialogFragment(), View {
 

@@ -1,7 +1,7 @@
 ext {
-    compileSdkVersion = 27
+    compileSdkVersion = 28
     minSdkVersion = 21
-    targetSdkVersion = 27
+    targetSdkVersion = 28
     buildToolsVersion = '28.0.3'
     multiDEXVersion = '1.0.3'
 

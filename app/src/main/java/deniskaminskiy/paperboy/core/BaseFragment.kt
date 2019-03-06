@@ -1,7 +1,7 @@
 package deniskaminskiy.paperboy.core
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 
 abstract class BaseFragment<P : Presenter<V>, V: View>: Fragment(), View {
 

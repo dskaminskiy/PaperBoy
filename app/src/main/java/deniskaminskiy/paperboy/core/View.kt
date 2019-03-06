@@ -1,6 +1,6 @@
 package deniskaminskiy.paperboy.core
 
-import android.support.annotation.UiThread
+import androidx.annotation.UiThread
 
 @UiThread
 interface View
