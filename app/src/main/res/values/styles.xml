@@ -13,4 +13,51 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="TextStyle.Headline" parent="android:Widget.TextView">
+        <item name="android:fontFamily">@font/IBMPlexSans-Bold</item>
+        <item name="android:textSize">30sp</item>
+        <item name="android:textColor">@color/print100</item>
+        <item name="android:letterSpacing">0.02</item>
+    </style>
+
+    <style name="TextStyle.Subheader" parent="android:Widget.TextView">
+        <item name="android:fontFamily">@font/IBMPlexSans-SemiBold</item>
+        <item name="android:letterSpacing">0.02</item>
+    </style>
+    
+
+    <style name="TextStyle.Subheader.14" parent="TextStyle.Subheader">
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="TextStyle.Subheader.14.50" parent="TextStyle.Subheader.14">
+        <item name="android:textColor">@color/print50</item>
+    </style>
+
+    <style name="TextStyle.Subheader.14.70" parent="TextStyle.Subheader.14">
+        <item name="android:textColor">@color/print70</item>
+    </style>
+
+    <style name="TextStyle.Subheader.14.100" parent="TextStyle.Subheader.14">
+        <item name="android:textColor">@color/print100</item>
+    </style>
+
+
+    <style name="TextStyle.Subheader.16" parent="TextStyle.Subheader">
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="TextStyle.Subheader.16.50" parent="TextStyle.Subheader.16">
+        <item name="android:textColor">@color/print50</item>
+    </style>
+
+    <style name="TextStyle.Subheader.16.70" parent="TextStyle.Subheader.16">
+        <item name="android:textColor">@color/print70</item>
+    </style>
+
+    <style name="TextStyle.Subheader.16.100" parent="TextStyle.Subheader.16">
+        <item name="android:textColor">@color/print100</item>
+    </style>
+    
+
 </resources>
