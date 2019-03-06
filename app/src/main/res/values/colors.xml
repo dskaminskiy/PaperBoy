@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <color name="colorPrimary">@color/paper</color>
     <color name="colorPrimaryDark">@color/print100</color>
     <color name="colorAccent">@color/marlboroNew</color>
@@ -20,4 +21,5 @@
     
     <color name="marlboroNew">#eb5454</color>
     <color name="marlboroOld">#ef6060</color>
+
 </resources>
