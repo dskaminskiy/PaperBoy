@@ -4,7 +4,11 @@
     <color name="colorPrimary">@color/paper</color>
     <color name="colorPrimaryDark">@color/print100</color>
     <color name="colorAccent">@color/marlboroNew</color>
-    
+
+    <color name="iconHighAccent">@color/print100</color>
+    <color name="iconMiddleAccent">@color/print90</color>
+    <color name="iconLightAccent">@color/print70</color>
+
     <color name="paper">#fafaf7</color>
 
     <color name="print10">#f5f5f2</color>

@@ -14,19 +14,19 @@
     </style>
 
     <style name="TextStyle.Headline" parent="android:Widget.TextView">
-        <item name="android:fontFamily">@font/IBMPlexSans-Bold</item>
+        <item name="android:fontFamily">@font/ibm_plex_sans_bold</item>
         <item name="android:textSize">30sp</item>
         <item name="android:textColor">@color/print100</item>
         <item name="android:letterSpacing">0.02</item>
     </style>
 
     <style name="TextStyle.Subheader" parent="android:Widget.TextView">
-        <item name="android:fontFamily">@font/IBMPlexSans-SemiBold</item>
         <item name="android:letterSpacing">0.02</item>
     </style>
     
 
     <style name="TextStyle.Subheader.14" parent="TextStyle.Subheader">
+        <item name="android:fontFamily">@font/ibm_plex_sans_medium</item>
         <item name="android:textSize">14sp</item>
     </style>
 
@@ -44,6 +44,7 @@
 
 
     <style name="TextStyle.Subheader.16" parent="TextStyle.Subheader">
+        <item name="android:fontFamily">@font/ibm_plex_sans_semibold</item>
         <item name="android:textSize">16sp</item>
     </style>
 

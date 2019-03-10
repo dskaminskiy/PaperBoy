@@ -6,7 +6,7 @@ import deniskaminskiy.paperboy.core.BaseActivity
 import ru.terrakok.cicerone.Cicerone
 import ru.terrakok.cicerone.android.support.SupportAppNavigator
 
-class MainActivity : BaseActivity<MainPresenter, MainView>() {
+class MainActivity : BaseActivity<MainPresenter, MainView>(), MainView {
 
     private val router by lazy { Cicerone.create().router }
     private val navigatorHolder by lazy { Cicerone.create().navigatorHolder }
@@ -16,7 +16,7 @@ class MainActivity : BaseActivity<MainPresenter, MainView>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        presenter = MainPresenter(router)
+        presenter = MainPresenter(this, router)
     }
 
     override fun onResume() {
