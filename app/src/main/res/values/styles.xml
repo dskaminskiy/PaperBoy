@@ -59,6 +59,13 @@
     <style name="TextStyle.Subheader.16.100" parent="TextStyle.Subheader.16">
         <item name="android:textColor">@color/print100</item>
     </style>
+
+    <style name="TextStyle.PassCode" parent="android:Widget.TextView">
+        <item name="android:fontFamily">@font/ibm_plex_sans_semibold</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:textColor">@color/paper</item>
+        <item name="android:letterSpacing">1.25</item>
+    </style>
     
 
 </resources>
