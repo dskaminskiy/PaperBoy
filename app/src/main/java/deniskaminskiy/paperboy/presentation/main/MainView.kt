@@ -4,4 +4,6 @@ import deniskaminskiy.paperboy.core.View
 
 interface MainView: View {
 
+    fun showAuth()
+
 }

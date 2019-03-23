@@ -1,6 +1,8 @@
 package deniskaminskiy.paperboy.core
 
+import android.content.Context
 import android.os.Bundle
+import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
 
 abstract class BaseFragment<P : Presenter<V>, V: View>: Fragment(), View {
@@ -34,6 +36,16 @@ abstract class BaseFragment<P : Presenter<V>, V: View>: Fragment(), View {
             presenter?.onViewDetached()
         }
         super.onStop()
+    }
+
+    fun showKeyboard(view: android.view.View) {
+        activity?.let {
+            if (it is BaseActivity<*,*>) {
+                it.showKeyboard(view)
+            } else {
+                (it.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager)?.showSoftInput(view, 0)
+            }
+        }
     }
 
 }

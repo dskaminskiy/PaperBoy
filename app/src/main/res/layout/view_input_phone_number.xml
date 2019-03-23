@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:orientation="horizontal"
+              android:layout_width="wrap_content"
+              android:nextFocusForward="@id/vNumber"
+              android:layout_height="wrap_content">
+
+    <deniskaminskiy.paperboy.presentation.view.InputView
+            android:id="@+id/vRegion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:text="+7"/>
+
+    <deniskaminskiy.paperboy.presentation.view.InputView
+            android:id="@+id/vNumber"
+            android:layout_marginStart="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:text="977 804 05 76"
+            android:minWidth="184dp"
+            app:isStroke="true"/>
+
+</LinearLayout>

@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">PaperBoy</string>
     <string name="app_name_lower_case">paperboy</string>
+
+    <string name="phone_number">Phone number</string>
+    <string name="select_country_code_and_enter_phone">Select your country code and enter phone number from telegram account</string>
 </resources>

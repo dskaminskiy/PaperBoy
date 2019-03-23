@@ -1,7 +1,9 @@
 package deniskaminskiy.paperboy.core
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Bundle
+import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 
 @SuppressLint("Registered")
@@ -36,6 +38,10 @@ abstract class BaseActivity<P : Presenter<V>, V : View> : AppCompatActivity(), V
             presenter?.onViewDetached()
         }
         super.onStop()
+    }
+
+    fun showKeyboard(view: android.view.View) {
+        (getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager)?.showSoftInput(view, 0)
     }
 
 }

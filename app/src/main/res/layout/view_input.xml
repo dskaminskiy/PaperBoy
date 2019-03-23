@@ -10,15 +10,16 @@
               android:gravity="center"
               tools:background="@color/print30">
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/tvText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingTop="2dp"
+            android:gravity="center"
+            android:background="@null"
+            android:inputType="number"
             android:includeFontPadding="false"
-            android:paddingBottom="2dp"
-            android:minHeight="32dp"
+            android:minHeight="24dp"
             style="@style/TextStyle.Sans.Semibold.20"
-            tools:text="0"/>
+            tools:text="977"/>
 
 </LinearLayout>

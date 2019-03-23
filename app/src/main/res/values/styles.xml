@@ -1,11 +1,15 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="android:windowActivityTransitions">true</item>
+        <item name="android:windowEnterTransition">@android:transition/slide_right</item>
+        <item name="android:windowExitTransition">@android:transition/slide_left</item>
     </style>
 
     <style name="AppTheme.NoActionBar" parent="AppTheme">
@@ -17,42 +21,42 @@
         <item name="android:fontFamily">@font/ibm_plex_serif_semibold</item>
         <item name="android:textSize">32sp</item>
         <item name="android:textColor">@color/print100</item>
-        <item name="android:letterSpacing">0.4dp</item>
+        <item name="android:letterSpacing">0.04</item>
     </style>
 
     <style name="TextStyle.Serif.Bold.24" parent="android:Widget.TextView">
         <item name="android:textSize">24sp</item>
         <item name="android:fontFamily">@font/ibm_plex_serif_bold</item>
         <item name="android:textColor">@color/print100</item>
-        <item name="android:letterSpacing">0.3dp</item>
+        <item name="android:letterSpacing">0.03</item>
     </style>
 
     <style name="TextStyle.Sans.Semibold.20" parent="android:Widget.TextView">
         <item name="android:textSize">20sp</item>
         <item name="android:fontFamily">@font/ibm_plex_sans_semibold</item>
         <item name="android:textColor">@color/print100</item>
-        <item name="android:letterSpacing">1.25dp</item>
+        <item name="android:letterSpacing">0.125</item>
     </style>
 
     <style name="TextStyle.Sans.Semibold.16" parent="android:Widget.TextView">
         <item name="android:textSize">16sp</item>
         <item name="android:fontFamily">@font/ibm_plex_sans_semibold</item>
         <item name="android:textColor">@color/print100</item>
-        <item name="android:letterSpacing">0.2dp</item>
+        <item name="android:letterSpacing">0.02</item>
     </style>
 
     <style name="TextStyle.Sans.Text.16" parent="android:Widget.TextView">
         <item name="android:textSize">14sp</item>
         <item name="android:fontFamily">@font/ibm_plex_sans_text</item>
         <item name="android:textColor">@color/print100</item>
-        <item name="android:letterSpacing">0.2dp</item>
+        <item name="android:letterSpacing">0.02</item>
     </style>
 
     <style name="TextStyle.Sans.Medium.14" parent="android:Widget.TextView">
         <item name="android:textSize">14sp</item>
         <item name="android:fontFamily">@font/ibm_plex_sans_medium</item>
         <item name="android:textColor">@color/print100</item>
-        <item name="android:letterSpacing">0.17dp</item>
+        <item name="android:letterSpacing">0.017</item>
     </style>
 
 </resources>

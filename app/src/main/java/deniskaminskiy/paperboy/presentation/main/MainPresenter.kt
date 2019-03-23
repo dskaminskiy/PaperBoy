@@ -8,6 +8,7 @@ class MainPresenter(
 
     override fun onStart(viewCreated: Boolean) {
         super.onStart(viewCreated)
+        view?.showAuth()
     }
 
 }

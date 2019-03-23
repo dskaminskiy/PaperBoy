@@ -8,10 +8,10 @@ import android.widget.LinearLayout
 import deniskaminskiy.paperboy.R
 import deniskaminskiy.paperboy.utils.Colors
 import deniskaminskiy.paperboy.utils.ColorsFactory
+import deniskaminskiy.paperboy.utils.dp
 import kotlinx.android.synthetic.main.view_input.view.*
 
-
-class InputView(
+class InputView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
@@ -27,7 +27,7 @@ class InputView(
 
     var text: String
         set(value) {
-            tvText.text = value
+            tvText.setText(value)
         }
         get() = tvText.text.toString()
 
@@ -35,17 +35,20 @@ class InputView(
         set(value) {
             field = value
             background = defaultBackground.apply {
-                setStroke(if (value) STROKE_WIDTH else 0, palette.admiral)
+                setStroke(if (value) dpStrokeWidth else 0, palette.admiral)
             }
         }
 
     private val defaultBackground: GradientDrawable by lazy {
         GradientDrawable().apply {
             shape = GradientDrawable.RECTANGLE
-            cornerRadius = CORNER_RADIUS.toFloat()
+            cornerRadius = dpCornerRadius
             setColor(palette.print15)
         }
     }
+
+    private val dpStrokeWidth = STROKE_WIDTH.dp(context)
+    private val dpCornerRadius = CORNER_RADIUS.dp(context).toFloat()
 
     init {
         View.inflate(context, R.layout.view_input, this)
