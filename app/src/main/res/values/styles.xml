@@ -13,59 +13,46 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="TextStyle.Headline" parent="android:Widget.TextView">
-        <item name="android:fontFamily">@font/ibm_plex_sans_bold</item>
-        <item name="android:textSize">30sp</item>
+    <style name="TextStyle.Serif.Semibold.32" parent="android:Widget.TextView">
+        <item name="android:fontFamily">@font/ibm_plex_serif_semibold</item>
+        <item name="android:textSize">32sp</item>
         <item name="android:textColor">@color/print100</item>
-        <item name="android:letterSpacing">0.02</item>
+        <item name="android:letterSpacing">0.4dp</item>
     </style>
 
-    <style name="TextStyle.Subheader" parent="android:Widget.TextView">
-        <item name="android:letterSpacing">0.02</item>
-    </style>
-    
-
-    <style name="TextStyle.Subheader.14" parent="TextStyle.Subheader">
-        <item name="android:fontFamily">@font/ibm_plex_sans_medium</item>
-        <item name="android:textSize">14sp</item>
-    </style>
-
-    <style name="TextStyle.Subheader.14.50" parent="TextStyle.Subheader.14">
-        <item name="android:textColor">@color/print50</item>
-    </style>
-
-    <style name="TextStyle.Subheader.14.70" parent="TextStyle.Subheader.14">
-        <item name="android:textColor">@color/print70</item>
-    </style>
-
-    <style name="TextStyle.Subheader.14.100" parent="TextStyle.Subheader.14">
-        <item name="android:textColor">@color/print100</item>
-    </style>
-
-
-    <style name="TextStyle.Subheader.16" parent="TextStyle.Subheader">
-        <item name="android:fontFamily">@font/ibm_plex_sans_semibold</item>
-        <item name="android:textSize">16sp</item>
-    </style>
-
-    <style name="TextStyle.Subheader.16.50" parent="TextStyle.Subheader.16">
-        <item name="android:textColor">@color/print50</item>
-    </style>
-
-    <style name="TextStyle.Subheader.16.70" parent="TextStyle.Subheader.16">
-        <item name="android:textColor">@color/print70</item>
-    </style>
-
-    <style name="TextStyle.Subheader.16.100" parent="TextStyle.Subheader.16">
-        <item name="android:textColor">@color/print100</item>
-    </style>
-
-    <style name="TextStyle.PassCode" parent="android:Widget.TextView">
-        <item name="android:fontFamily">@font/ibm_plex_sans_semibold</item>
+    <style name="TextStyle.Serif.Bold.24" parent="android:Widget.TextView">
         <item name="android:textSize">24sp</item>
-        <item name="android:textColor">@color/paper</item>
-        <item name="android:letterSpacing">1.25</item>
+        <item name="android:fontFamily">@font/ibm_plex_serif_bold</item>
+        <item name="android:textColor">@color/print100</item>
+        <item name="android:letterSpacing">0.3dp</item>
     </style>
-    
+
+    <style name="TextStyle.Sans.Semibold.20" parent="android:Widget.TextView">
+        <item name="android:textSize">20sp</item>
+        <item name="android:fontFamily">@font/ibm_plex_sans_semibold</item>
+        <item name="android:textColor">@color/print100</item>
+        <item name="android:letterSpacing">1.25dp</item>
+    </style>
+
+    <style name="TextStyle.Sans.Semibold.16" parent="android:Widget.TextView">
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">@font/ibm_plex_sans_semibold</item>
+        <item name="android:textColor">@color/print100</item>
+        <item name="android:letterSpacing">0.2dp</item>
+    </style>
+
+    <style name="TextStyle.Sans.Text.16" parent="android:Widget.TextView">
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">@font/ibm_plex_sans_text</item>
+        <item name="android:textColor">@color/print100</item>
+        <item name="android:letterSpacing">0.2dp</item>
+    </style>
+
+    <style name="TextStyle.Sans.Medium.14" parent="android:Widget.TextView">
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">@font/ibm_plex_sans_medium</item>
+        <item name="android:textColor">@color/print100</item>
+        <item name="android:letterSpacing">0.17dp</item>
+    </style>
 
 </resources>

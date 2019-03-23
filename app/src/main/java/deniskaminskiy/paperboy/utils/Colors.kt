@@ -29,6 +29,8 @@ interface Colors {
     val marlboroNew: Int
     val marlboroOld: Int
 
+    val admiral: Int
+
 }
 
 object ColorsFactory {
@@ -86,6 +88,8 @@ class AndroidColors(
     override val marlboroOld: Int
         get() = c(R.color.marlboroOld)
 
+    override val admiral: Int
+        get() = c(R.color.admiral)
 
     private fun c(@ColorRes resId: Int): Int =
         contextDelegate.getContext().compatColor(resId)

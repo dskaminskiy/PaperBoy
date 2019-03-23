@@ -22,6 +22,7 @@ class InputView(
         const val STROKE_WIDTH = 2
     }
 
+    // variable name "colors" not available
     private val palette: Colors by lazy { ColorsFactory.create(context) }
 
     var text: String
@@ -34,58 +35,41 @@ class InputView(
         set(value) {
             field = value
             background = defaultBackground.apply {
-                setStroke(if (value) STROKE_WIDTH else 0, palette.print30)
+                setStroke(if (value) STROKE_WIDTH else 0, palette.admiral)
             }
         }
-
-    var textColor: Int
-        set(value) {
-            if (value != -1) tvText.setTextColor(value)
-        }
-        get() = tvText.currentTextColor
 
     private val defaultBackground: GradientDrawable by lazy {
         GradientDrawable().apply {
             shape = GradientDrawable.RECTANGLE
             cornerRadius = CORNER_RADIUS.toFloat()
-            setColor(palette.print90)
+            setColor(palette.print15)
         }
     }
 
     init {
         View.inflate(context, R.layout.view_input, this)
+
+        val a = context.theme.obtainStyledAttributes(attrs, R.styleable.InputView, 0, 0)
+
+        show(
+            InputViewPresentModel(
+                text = a.getString(R.styleable.InputView_text) ?: "",
+                isStroke = a.getBoolean(R.styleable.InputView_isStroke, false)
+            )
+        )
+
+        a.recycle()
     }
 
     fun show(model: InputViewPresentModel) {
         text = model.text
         isStroke = model.isStroke
-        isEnabled = model.isEnabled
-    }
-
-    private fun updatePaddings(textType: InputViewTextType) {
-
-    }
-
-    private fun updateTextSize(textType: InputViewTextType) {
-
-    }
-
-    override fun setEnabled(enabled: Boolean) {
-        if (enabled) textColor = palette.paper else palette.print50
     }
 
 }
 
 data class InputViewPresentModel(
     val text: String,
-    val isEnabled: Boolean,
-    val isStroke: Boolean,
-    val textType: InputViewTextType
+    val isStroke: Boolean
 )
-
-enum class InputViewTextType(
-    val textSize: Int
-) {
-    PASS_CODE(24),
-    PHONE_NUMBER(20)
-}

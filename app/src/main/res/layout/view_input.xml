@@ -6,8 +6,9 @@
               android:foreground="?android:attr/selectableItemBackground"
               android:focusable="true"
               android:minWidth="56dp"
+              android:padding="16dp"
               android:gravity="center"
-              tools:background="@color/print90">
+              tools:background="@color/print30">
 
     <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvText"
@@ -17,7 +18,7 @@
             android:includeFontPadding="false"
             android:paddingBottom="2dp"
             android:minHeight="32dp"
-            style="@style/TextStyle.PassCode"
+            style="@style/TextStyle.Sans.Semibold.20"
             tools:text="0"/>
 
 </LinearLayout>
