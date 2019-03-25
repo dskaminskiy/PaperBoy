@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import deniskaminskiy.paperboy.R
 import deniskaminskiy.paperboy.core.BaseFragment
+import kotlinx.android.synthetic.main.view_input_phone_number.*
 
 class AuthPhoneFragment : BaseFragment<AuthPhonePresenter, AuthPhoneView>(), AuthPhoneView {
 
@@ -21,6 +22,11 @@ class AuthPhoneFragment : BaseFragment<AuthPhonePresenter, AuthPhoneView>(), Aut
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         presenter = AuthPhonePresenter(this)
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        vNumber.requestFocus()
     }
 
 }

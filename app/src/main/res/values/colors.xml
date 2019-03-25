@@ -9,6 +9,8 @@
     <color name="iconMiddleAccent">@color/print90</color>
     <color name="iconLightAccent">@color/print70</color>
 
+    <color name="inputCursorColor">@color/print50</color>
+
     <color name="paper">#fafaf7</color>
 
     <color name="print10">#f5f5f2</color>

@@ -38,8 +38,6 @@ class InputView @JvmOverloads constructor(
             background = defaultBackground.apply {
                 setStroke(dpStrokeWidth, if (value) palette.admiral else Color.TRANSPARENT)
             }
-            //invalidate()
-            //requestLayout()
         }
 
     private val defaultBackground: GradientDrawable by lazy {
@@ -61,6 +59,10 @@ class InputView @JvmOverloads constructor(
         }
 
         setOnClickListener { v ->
+            etText.requestFocus()
+        }
+
+        setOnFocusChangeListener { v, hasFocus ->
             etText.requestFocus()
         }
 

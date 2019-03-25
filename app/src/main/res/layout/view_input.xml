@@ -18,6 +18,7 @@
             android:padding="16dp"
             android:inputType="number"
             android:includeFontPadding="false"
+            android:textCursorDrawable="@drawable/input_cursor"
             android:minHeight="24dp"
             style="@style/TextStyle.Sans.Semibold.20"
             tools:text="977"/>
