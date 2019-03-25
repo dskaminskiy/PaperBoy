@@ -1,6 +1,7 @@
 package deniskaminskiy.paperboy.presentation.view
 
 import android.content.Context
+import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.util.AttributeSet
 import android.view.View
@@ -27,16 +28,18 @@ class InputView @JvmOverloads constructor(
 
     var text: String
         set(value) {
-            tvText.setText(value)
+            etText.setText(value)
         }
-        get() = tvText.text.toString()
+        get() = etText.text.toString()
 
     var isStroke: Boolean = false
         set(value) {
             field = value
             background = defaultBackground.apply {
-                setStroke(if (value) dpStrokeWidth else 0, palette.admiral)
+                setStroke(dpStrokeWidth, if (value) palette.admiral else Color.TRANSPARENT)
             }
+            //invalidate()
+            //requestLayout()
         }
 
     private val defaultBackground: GradientDrawable by lazy {
@@ -53,26 +56,15 @@ class InputView @JvmOverloads constructor(
     init {
         View.inflate(context, R.layout.view_input, this)
 
-        val a = context.theme.obtainStyledAttributes(attrs, R.styleable.InputView, 0, 0)
+        etText.onFocusChangeListener = OnFocusChangeListener { v, hasFocus ->
+            isStroke = hasFocus
+        }
 
-        show(
-            InputViewPresentModel(
-                text = a.getString(R.styleable.InputView_text) ?: "",
-                isStroke = a.getBoolean(R.styleable.InputView_isStroke, false)
-            )
-        )
+        setOnClickListener { v ->
+            etText.requestFocus()
+        }
 
-        a.recycle()
-    }
-
-    fun show(model: InputViewPresentModel) {
-        text = model.text
-        isStroke = model.isStroke
+        background = defaultBackground
     }
 
 }
-
-data class InputViewPresentModel(
-    val text: String,
-    val isStroke: Boolean
-)

@@ -1,6 +1,7 @@
 package deniskaminskiy.paperboy.presentation.view
 
 import android.content.Context
+import android.graphics.Canvas
 import android.util.AttributeSet
 import android.view.View
 import android.widget.LinearLayout
@@ -19,12 +20,15 @@ class InputPhoneNumberView @JvmOverloads constructor(
         val a = context.theme.obtainStyledAttributes(attrs, R.styleable.LinearLayoutCompat, 0, 0)
 
         a.recycle()
-
-        vNumber.requestFocus()
     }
 
     fun show(model: InputPhoneNumberPresentModel) {
 
+    }
+
+    override fun onDraw(canvas: Canvas?) {
+        super.onDraw(canvas)
+        vNumber.requestFocus()
     }
 
 }
