@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import deniskaminskiy.paperboy.R
 import deniskaminskiy.paperboy.core.BaseFragment
-import kotlinx.android.synthetic.main.view_input_phone_number.*
+import kotlinx.android.synthetic.main.fragment_auth_phone.*
 
 class AuthPhoneFragment : BaseFragment<AuthPhonePresenter, AuthPhoneView>(), AuthPhoneView {
 
