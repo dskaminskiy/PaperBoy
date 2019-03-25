@@ -36,18 +36,18 @@
                 android:layout_marginTop="16dp">
 
             <deniskaminskiy.paperboy.presentation.view.InputView
-                    android:id="@+id/vRegion"
+                    android:id="@+id/ivRegion"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:focusable="false"
                     android:focusableInTouchMode="true"/>
 
             <deniskaminskiy.paperboy.presentation.view.InputView
-                    android:id="@+id/vNumber"
+                    android:id="@+id/ivPhone"
                     android:layout_marginStart="16dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:minWidth="184dp"/>
+                    android:minWidth="200dp"/>
 
         </LinearLayout>
 

@@ -3,6 +3,7 @@ package deniskaminskiy.paperboy.presentation.view
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
+import android.text.method.DigitsKeyListener
 import android.util.AttributeSet
 import android.view.View
 import android.widget.LinearLayout
@@ -10,7 +11,11 @@ import deniskaminskiy.paperboy.R
 import deniskaminskiy.paperboy.utils.Colors
 import deniskaminskiy.paperboy.utils.ColorsFactory
 import deniskaminskiy.paperboy.utils.dp
+import deniskaminskiy.paperboy.utils.view.addOnTextChangedListener
 import kotlinx.android.synthetic.main.view_input.view.*
+
+typealias OnTextChanged = (String) -> Unit
+typealias OnFocusChanged = (Boolean) -> Unit
 
 class InputView @JvmOverloads constructor(
     context: Context,
@@ -23,6 +28,14 @@ class InputView @JvmOverloads constructor(
         const val STROKE_WIDTH = 2
     }
 
+    var onTextChanged: OnTextChanged = {}
+        set(value) {
+            field = value
+            etText.addOnTextChangedListener(value)
+        }
+
+    var onFocusChanged: OnFocusChanged = {}
+
     // variable name "colors" not available
     private val palette: Colors by lazy { ColorsFactory.create(context) }
 
@@ -31,6 +44,9 @@ class InputView @JvmOverloads constructor(
             etText.setText(value)
         }
         get() = etText.text.toString()
+
+    val length: Int
+        get() = etText.length()
 
     var isStroke: Boolean = false
         set(value) {
@@ -56,6 +72,7 @@ class InputView @JvmOverloads constructor(
 
         etText.onFocusChangeListener = OnFocusChangeListener { v, hasFocus ->
             isStroke = hasFocus
+            onFocusChanged(hasFocus)
         }
 
         setOnClickListener { v ->
@@ -67,6 +84,10 @@ class InputView @JvmOverloads constructor(
         }
 
         background = defaultBackground
+    }
+
+    fun setSelectionToEnd() {
+        etText.setSelection(etText.length())
     }
 
 }

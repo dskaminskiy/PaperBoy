@@ -11,7 +11,7 @@ import kotlinx.android.synthetic.main.fragment_auth_phone.*
 class AuthPhoneFragment : BaseFragment<AuthPhonePresenter, AuthPhoneView>(), AuthPhoneView {
 
     companion object {
-        const val TAG = "AuthPhoneActivity"
+        const val TAG = "AuthPhoneFragment"
 
         fun newInstance() = AuthPhoneFragment()
     }
@@ -19,14 +19,30 @@ class AuthPhoneFragment : BaseFragment<AuthPhonePresenter, AuthPhoneView>(), Aut
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
             inflater.inflate(R.layout.fragment_auth_phone, container, false)
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        presenter = AuthPhonePresenter(this)
-    }
-
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        vNumber.requestFocus()
+
+        presenter = AuthPhonePresenter(this).also {
+            ivRegion.onTextChanged = it::onReignAdditionalNumberChanged
+            ivPhone.onTextChanged = it::onPhoneNumberChanged
+        }
+
+        ivRegion.onFocusChanged = { hasFocus ->
+            if (hasFocus) ivRegion.setSelectionToEnd()
+        }
+        ivPhone.requestFocus()
+    }
+
+    override fun show(model: AuthPhonePresentModel) {
+        if (ivRegion.text != model.regionAdditionalNumber) {
+            ivRegion.text = model.regionAdditionalNumber
+            ivRegion.setSelectionToEnd()
+        }
+
+        if (ivPhone.text != model.phoneNumber) {
+            ivPhone.text = model.phoneNumber
+            ivPhone.setSelectionToEnd()
+        }
     }
 
 }
