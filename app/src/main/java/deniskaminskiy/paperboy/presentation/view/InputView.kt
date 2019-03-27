@@ -45,15 +45,13 @@ class InputView @JvmOverloads constructor(
         }
         get() = etText.text.toString()
 
-    val length: Int
-        get() = etText.length()
-
     var isStroke: Boolean = false
         set(value) {
             field = value
             background = defaultBackground.apply {
                 setStroke(dpStrokeWidth, if (value) palette.admiral else Color.TRANSPARENT)
             }
+            requestLayout()
         }
 
     private val defaultBackground: GradientDrawable by lazy {
@@ -73,6 +71,7 @@ class InputView @JvmOverloads constructor(
         etText.onFocusChangeListener = OnFocusChangeListener { v, hasFocus ->
             isStroke = hasFocus
             onFocusChanged(hasFocus)
+            if (hasFocus) setSelectionToEnd()
         }
 
         setOnClickListener { v ->
@@ -87,7 +86,7 @@ class InputView @JvmOverloads constructor(
     }
 
     fun setSelectionToEnd() {
-        etText.setSelection(etText.length())
+        etText.post { etText.setSelection(etText.length(), etText.length()) }
     }
 
 }

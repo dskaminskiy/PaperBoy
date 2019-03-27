@@ -33,6 +33,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
+                android:clipChildren="false"
+                android:gravity="center_vertical"
+                android:padding="2dp"
+                android:clipToPadding="false"
                 android:layout_marginTop="16dp">
 
             <deniskaminskiy.paperboy.presentation.view.InputView

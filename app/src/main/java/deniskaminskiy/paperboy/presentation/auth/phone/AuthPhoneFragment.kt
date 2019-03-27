@@ -36,12 +36,10 @@ class AuthPhoneFragment : BaseFragment<AuthPhonePresenter, AuthPhoneView>(), Aut
     override fun show(model: AuthPhonePresentModel) {
         if (ivRegion.text != model.regionAdditionalNumber) {
             ivRegion.text = model.regionAdditionalNumber
-            ivRegion.setSelectionToEnd()
         }
 
         if (ivPhone.text != model.phoneNumber) {
             ivPhone.text = model.phoneNumber
-            ivPhone.setSelectionToEnd()
         }
     }
 
