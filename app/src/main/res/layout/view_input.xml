@@ -23,6 +23,6 @@
             android:textCursorDrawable="@drawable/input_cursor"
             android:minHeight="56dp"
             style="@style/TextStyle.Sans.Semibold.20"
-            tools:text="977"/>
+            tools:text="7"/>
 
 </LinearLayout>

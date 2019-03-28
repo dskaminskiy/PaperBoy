@@ -6,6 +6,8 @@ interface AuthPhoneView : View {
 
     fun show(model: AuthPhonePresentModel)
 
+    fun openAuthCode()
+
 }
 
 data class AuthPhonePresentModel(

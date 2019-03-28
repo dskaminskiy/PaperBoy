@@ -3,5 +3,8 @@
     <string name="app_name_lower_case">paperboy</string>
 
     <string name="phone_number">Phone number</string>
-    <string name="select_country_code_and_enter_phone">Select your country code and enter phone number from telegram account</string>
+    <string name="select_country_code_and_enter_phone">Select your country code and enter phone\nnumber from telegram account</string>
+    <string name="enter_pass_code">Enter pass code</string>
+    <string name="back">back</string>
+    <string name="telegram_sent_code_to_you">Telegram sent the code to you. Enter to if\nyou want to import your channels</string>
 </resources>

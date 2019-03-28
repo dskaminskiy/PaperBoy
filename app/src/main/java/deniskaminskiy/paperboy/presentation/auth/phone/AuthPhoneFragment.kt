@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import deniskaminskiy.paperboy.R
 import deniskaminskiy.paperboy.core.BaseFragment
+import deniskaminskiy.paperboy.presentation.auth.code.AuthCodeFragment
+import deniskaminskiy.paperboy.utils.open
 import kotlinx.android.synthetic.main.fragment_auth_phone.*
 
 class AuthPhoneFragment : BaseFragment<AuthPhonePresenter, AuthPhoneView>(), AuthPhoneView {
@@ -17,7 +19,7 @@ class AuthPhoneFragment : BaseFragment<AuthPhonePresenter, AuthPhoneView>(), Aut
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
-            inflater.inflate(R.layout.fragment_auth_phone, container, false)
+        inflater.inflate(R.layout.fragment_auth_phone, container, false)
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -30,17 +32,23 @@ class AuthPhoneFragment : BaseFragment<AuthPhonePresenter, AuthPhoneView>(), Aut
         ivRegion.onFocusChanged = { hasFocus ->
             if (hasFocus) ivRegion.setSelectionToEnd()
         }
+
+        ivPhone.requestFocus()
+    }
+
+    override fun onResume() {
+        super.onResume()
         ivPhone.requestFocus()
     }
 
     override fun show(model: AuthPhonePresentModel) {
-        if (ivRegion.text != model.regionAdditionalNumber) {
-            ivRegion.text = model.regionAdditionalNumber
-        }
+        ivRegion.text = model.regionAdditionalNumber
+        ivPhone.text = model.phoneNumber
+    }
 
-        if (ivPhone.text != model.phoneNumber) {
-            ivPhone.text = model.phoneNumber
-        }
+    override fun openAuthCode() {
+        AuthCodeFragment.newInstance()
+            .open(activity, android.R.id.content, AuthCodeFragment.TAG)
     }
 
 }

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:app="http://schemas.android.com/apk/res-auto"
+             android:layout_width="match_parent" android:layout_height="match_parent"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:background="@color/paper">
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_gravity="bottom"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="40dp"
+            android:orientation="vertical">
+
+        <LinearLayout
+                android:id="@+id/vBack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_marginStart="4dp"
+                    android:layout_gravity="center_vertical"
+                    app:srcCompat="@drawable/ic_arrow_back"
+                    app:tint="@color/admiral"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/back"
+                    android:includeFontPadding="false"
+                    android:minHeight="20dp"
+                    android:layout_marginStart="12dp"
+                    style="@style/TextStyle.Sans.Semibold.16"
+                    android:textColor="@color/admiral"/>
+
+        </LinearLayout>
+
+        <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/TextStyle.Serif.Bold.24"
+                android:minHeight="32dp"
+                android:text="@string/enter_pass_code"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/TextStyle.Sans.Text.16"
+                android:textColor="@color/print70"
+                android:minHeight="24dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/telegram_sent_code_to_you"/>
+
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:clipChildren="false"
+                android:gravity="center_vertical"
+                android:padding="2dp"
+                android:clipToPadding="false"
+                android:layout_marginTop="16dp">
+
+            <deniskaminskiy.paperboy.presentation.view.InputView
+                    android:id="@+id/ivFirst"
+                    android:layout_width="56dp"
+                    android:nextFocusForward="@id/ivSecond"
+                    android:layout_height="56dp"
+                    android:focusableInTouchMode="false"/>
+
+            <deniskaminskiy.paperboy.presentation.view.InputView
+                    android:id="@+id/ivSecond"
+                    android:layout_width="56dp"
+                    android:layout_marginStart="8dp"
+                    android:nextFocusForward="@id/ivThird"
+                    android:layout_height="56dp"
+                    android:focusableInTouchMode="false"/>
+
+            <deniskaminskiy.paperboy.presentation.view.InputView
+                    android:id="@+id/ivThird"
+                    android:layout_width="56dp"
+                    android:layout_marginStart="8dp"
+                    android:nextFocusForward="@id/ivFourth"
+                    android:layout_height="56dp"
+                    android:focusableInTouchMode="false"/>
+
+            <deniskaminskiy.paperboy.presentation.view.InputView
+                    android:id="@+id/ivFourth"
+                    android:layout_width="56dp"
+                    android:layout_marginStart="8dp"
+                    android:nextFocusForward="@id/ivFifth"
+                    android:layout_height="56dp"
+                    android:focusableInTouchMode="false"/>
+
+            <deniskaminskiy.paperboy.presentation.view.InputView
+                    android:id="@+id/ivFifth"
+                    android:layout_width="56dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_height="56dp"
+                    android:focusableInTouchMode="false"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</FrameLayout>

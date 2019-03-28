@@ -28,6 +28,8 @@ class InputView @JvmOverloads constructor(
         const val STROKE_WIDTH = 2
     }
 
+    //TODO: Добавить слушатель на удаление при уже пустом поле
+
     var onTextChanged: OnTextChanged = {}
         set(value) {
             field = value
@@ -41,7 +43,9 @@ class InputView @JvmOverloads constructor(
 
     var text: String
         set(value) {
-            etText.setText(value)
+            if (etText.text.toString() != value) {
+                etText.setText(value)
+            }
         }
         get() = etText.text.toString()
 
