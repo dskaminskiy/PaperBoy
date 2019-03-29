@@ -24,11 +24,10 @@ class AuthCodeFragment : BaseFragment<AuthCodePresenter, AuthCodeView>(), AuthCo
         super.onActivityCreated(savedInstanceState)
 
         presenter = AuthCodePresenter(this).also { presenter ->
-            ivFirst.onTextChanged = presenter::onPassCodeChanged
-            ivSecond.onTextChanged = presenter::onPassCodeChanged
-            ivThird.onTextChanged = presenter::onPassCodeChanged
-            ivFourth.onTextChanged = presenter::onPassCodeChanged
-            ivFifth.onTextChanged = presenter::onPassCodeChanged
+            listOf(ivFirst, ivSecond, ivThird, ivFourth, ivFifth).apply {
+                forEach { it.onTextChanged = presenter::onPassCodeChanged }
+                forEach { it.onBackspacePressedWithEmptyText = presenter::onBackspacePressedWithEmptyText }
+            }
 
             vBack.setOnClickListener { presenter.onBackClick() }
         }
@@ -36,9 +35,20 @@ class AuthCodeFragment : BaseFragment<AuthCodePresenter, AuthCodeView>(), AuthCo
     }
 
     override fun show(model: AuthCodePresentModel) {
-        //InputView -> TODO
-
         val textLength = model.code.length
+
+        if (textLength >= 1) {
+            // Обновляем текст в засеченых инпутах
+            for (i in 1..textLength) {
+                updateInputText(i, model.code[i - 1].toString())
+            }
+            // Чистим оставшиеся инпуты
+            for (i in (textLength + 1)..5) {
+                updateInputText(i, "")
+            }
+        } else {
+            ivFirst.text = ""
+        }
 
         textLength.let {
             when(it) {
@@ -50,9 +60,7 @@ class AuthCodeFragment : BaseFragment<AuthCodePresenter, AuthCodeView>(), AuthCo
             }.requestFocus()
         }
 
-        if (textLength >= 1) {
-            for (i in 1..textLength) updateInputText(i, model.code[i - 1].toString())
-        }
+        presenter?.onInputsUpdateFinish()
     }
 
     private fun updateInputText(@IntRange(from = 1, to = 5) inputViewNumber: Int,

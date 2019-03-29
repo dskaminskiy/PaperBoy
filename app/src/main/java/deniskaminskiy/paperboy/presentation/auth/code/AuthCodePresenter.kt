@@ -8,6 +8,8 @@ class AuthCodePresenter(
 
     private var code = ""
 
+    private var isInputsUpdating = false
+
     override fun onStart(viewCreated: Boolean) {
         super.onStart(viewCreated)
         updateView()
@@ -17,22 +19,36 @@ class AuthCodePresenter(
      * @param newNumber     - should be integer; if empty string, then it is removing
      */
     fun onPassCodeChanged(newNumber: String) {
-        if (newNumber.isNotEmpty()) {
-            code += newNumber
-        } else {
-            if (code.isNotEmpty()) {
-                code = code.dropLast(1)
+        if (!isInputsUpdating) {
+            if (newNumber.isNotEmpty()) {
+                code += newNumber
+            } else {
+                if (code.isNotEmpty()) {
+                    code = code.dropLast(1)
+                }
             }
+            updateView()
         }
-        updateView()
     }
 
     private fun updateView() {
+        isInputsUpdating = true
         view?.show(AuthCodePresentModel(code))
+    }
+
+    fun onInputsUpdateFinish() {
+        isInputsUpdating = false
     }
 
     fun onBackClick() {
         view?.close()
+    }
+
+    fun onBackspacePressedWithEmptyText() {
+        if (code.isNotEmpty()) {
+            code = code.dropLast(1)
+            updateView()
+        }
     }
 
 }

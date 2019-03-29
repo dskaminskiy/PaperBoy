@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.text.method.DigitsKeyListener
 import android.util.AttributeSet
+import android.view.KeyEvent
 import android.view.View
 import android.widget.LinearLayout
 import deniskaminskiy.paperboy.R
@@ -16,6 +17,7 @@ import kotlinx.android.synthetic.main.view_input.view.*
 
 typealias OnTextChanged = (String) -> Unit
 typealias OnFocusChanged = (Boolean) -> Unit
+typealias OnBackspacePressedWithEmptyText = () -> Unit
 
 class InputView @JvmOverloads constructor(
     context: Context,
@@ -28,13 +30,13 @@ class InputView @JvmOverloads constructor(
         const val STROKE_WIDTH = 2
     }
 
-    //TODO: Добавить слушатель на удаление при уже пустом поле
-
     var onTextChanged: OnTextChanged = {}
         set(value) {
             field = value
             etText.addOnTextChangedListener(value)
         }
+
+    var onBackspacePressedWithEmptyText: OnBackspacePressedWithEmptyText = {}
 
     var onFocusChanged: OnFocusChanged = {}
 
@@ -84,6 +86,13 @@ class InputView @JvmOverloads constructor(
 
         setOnFocusChangeListener { v, hasFocus ->
             etText.requestFocus()
+        }
+
+        etText.setOnKeyListener { v, keyCode, event ->
+            if(event.action == KeyEvent.ACTION_DOWN && event.keyCode == KeyEvent.KEYCODE_DEL && text.isEmpty()) {
+                onBackspacePressedWithEmptyText.invoke()
+            }
+            false
         }
 
         background = defaultBackground
