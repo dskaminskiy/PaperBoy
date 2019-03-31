@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+             android:layout_height="wrap_content">
+
+    <LinearLayout android:orientation="horizontal"
+                  android:layout_width="match_parent"
+                  android:paddingTop="12dp"
+                  android:paddingBottom="12dp"
+                  android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.AppCompatCheckBox
+                android:id="@+id/vCheckBox"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginStart="16dp"
+                android:button="@drawable/selector_check_box"
+                android:gravity="center"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvTitle"
+                android:layout_width="0dp"
+                style="@style/TextStyle.Sans.Medium.14"
+                android:minHeight="18dp"
+                android:includeFontPadding="false"
+                android:layout_weight="1"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:paddingTop="2dp"
+                android:paddingBottom="2dp"
+                tools:text="PSD | Дизайн пространство"
+                android:layout_height="wrap_content"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvExtra"
+                android:layout_width="wrap_content"
+                android:layout_height="28dp"
+                android:minWidth="24dp"
+                android:gravity="center"
+                style="@style/TextStyle.Sans.Medium.14"
+                android:includeFontPadding="false"
+                android:layout_marginEnd="16dp"
+                tools:text="4"/>
+
+    </LinearLayout>
+
+    <View
+            android:id="@+id/vDivider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/print20"
+            android:layout_marginStart="56dp"
+            android:layout_gravity="bottom"/>
+
+</FrameLayout>

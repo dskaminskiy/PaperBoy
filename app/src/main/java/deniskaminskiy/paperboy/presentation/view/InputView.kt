@@ -3,10 +3,10 @@ package deniskaminskiy.paperboy.presentation.view
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
-import android.text.method.DigitsKeyListener
 import android.util.AttributeSet
 import android.view.KeyEvent
 import android.view.View
+import android.view.View.OnFocusChangeListener
 import android.widget.LinearLayout
 import deniskaminskiy.paperboy.R
 import deniskaminskiy.paperboy.utils.Colors
@@ -37,10 +37,8 @@ class InputView @JvmOverloads constructor(
         }
 
     var onBackspacePressedWithEmptyText: OnBackspacePressedWithEmptyText = {}
-
     var onFocusChanged: OnFocusChanged = {}
 
-    // variable name "colors" not available
     private val palette: Colors by lazy { ColorsFactory.create(context) }
 
     var text: String

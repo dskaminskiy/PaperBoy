@@ -4,7 +4,13 @@
 
     <string name="phone_number">Phone number</string>
     <string name="select_country_code_and_enter_phone">Select your country code and enter phone\nnumber from telegram account</string>
+    
     <string name="enter_pass_code">Enter pass code</string>
     <string name="back">back</string>
     <string name="telegram_sent_code_to_you">Telegram sent the code to you. Enter to if\nyou want to import your channels</string>
+    
+    <string name="choose_channels_you_want_import">Choose channels\nyou want import</string>
+    <string name="template_you_have_channels_you_always_can_import">You have %1$d channels. You always can import\nchannels later in settings.</string>
+    <string name="skip_import">Skip import</string>
+    
 </resources>
