@@ -6,7 +6,7 @@
               android:layout_height="match_parent">
 
     <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvChoose"
+            android:id="@+id/tvTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/choose_channels_you_want_import"
@@ -20,7 +20,7 @@
             style="@style/TextStyle.Serif.Bold.24"/>
 
     <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvYouHave"
+            android:id="@+id/tvSubtitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:text="@string/template_you_have_channels_you_always_can_import"
