@@ -5,7 +5,8 @@ import android.os.Bundle
 import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
 
-abstract class BaseFragment<P : Presenter<V>, V: View>: Fragment(), View {
+abstract class BaseFragment<P : Presenter<V>, V : View> : Fragment(), View,
+    FragmentTransactionAllowable, BackPressedListener {
 
     companion object {
         private const val TAG = "BaseFragment"
@@ -14,10 +15,21 @@ abstract class BaseFragment<P : Presenter<V>, V: View>: Fragment(), View {
     protected var presenter: P? = null
 
     private var isFirstStart: Boolean = true
+    private var transactionAllowable: FragmentTransactionAllowable? = null
+
+    override val isTransactionAllowed: Boolean
+        get() = isAdded && transactionAllowable?.isTransactionAllowed == true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         isFirstStart = true
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        (activity as? FragmentTransactionAllowable)?.let {
+            transactionAllowable = it
+        }
     }
 
     @Suppress("UNCHECKED_CAST")
@@ -38,9 +50,19 @@ abstract class BaseFragment<P : Presenter<V>, V: View>: Fragment(), View {
         super.onStop()
     }
 
-    fun showKeyboard(view: android.view.View) {
+    override fun onBackPressed() {
         activity?.let {
             if (it is BaseActivity<*,*>) {
+                it.backPress()
+            } else {
+                it.onBackPressed()
+            }
+        }
+    }
+
+    fun showKeyboard(view: android.view.View) {
+        activity?.let {
+            if (it is BaseActivity<*, *>) {
                 it.showKeyboard(view)
             } else {
                 (it.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager)?.showSoftInput(view, 0)

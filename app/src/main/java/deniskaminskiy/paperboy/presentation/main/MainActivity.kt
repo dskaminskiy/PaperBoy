@@ -8,6 +8,9 @@ import deniskaminskiy.paperboy.utils.open
 
 class MainActivity : BaseActivity<MainPresenter, MainView>(), MainView {
 
+    override val isTransactionAllowed: Boolean
+        get() = isFragmentTransactionAllowed
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)

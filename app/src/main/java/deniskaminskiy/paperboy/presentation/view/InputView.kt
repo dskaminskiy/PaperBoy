@@ -2,7 +2,9 @@ package deniskaminskiy.paperboy.presentation.view
 
 import android.content.Context
 import android.graphics.Color
+import android.graphics.Rect
 import android.graphics.drawable.GradientDrawable
+import android.text.method.TransformationMethod
 import android.util.AttributeSet
 import android.view.KeyEvent
 import android.view.View
@@ -72,6 +74,7 @@ class InputView @JvmOverloads constructor(
     init {
         View.inflate(context, R.layout.view_input, this)
 
+        // При фокусе - показывать обводку и ставить курсор в конец
         etText.onFocusChangeListener = OnFocusChangeListener { v, hasFocus ->
             isStroke = hasFocus
             onFocusChanged(hasFocus)
@@ -86,11 +89,29 @@ class InputView @JvmOverloads constructor(
             etText.requestFocus()
         }
 
+        // Отправляем ивент о попытке стереть пустую строку
         etText.setOnKeyListener { v, keyCode, event ->
             if(event.action == KeyEvent.ACTION_DOWN && event.keyCode == KeyEvent.KEYCODE_DEL && text.isEmpty()) {
                 onBackspacePressedWithEmptyText.invoke()
             }
             false
+        }
+
+        // Нужная клавиатура достигается путем "клавы для пароля", но та скрывает введенные символы
+        // Меняем логику скрытия символов и просто отображаем их
+        etText.transformationMethod = object: TransformationMethod {
+            override fun getTransformation(source: CharSequence, view: View): CharSequence = source
+
+            override fun onFocusChanged(
+                view: View?,
+                sourceText: CharSequence?,
+                focused: Boolean,
+                direction: Int,
+                previouslyFocusedRect: Rect?
+            ) {
+
+            }
+
         }
 
         background = defaultBackground
