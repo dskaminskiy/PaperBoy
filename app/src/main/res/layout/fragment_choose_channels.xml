@@ -17,7 +17,9 @@
             android:minHeight="64dp"
             android:paddingBottom="2dp"
             android:layout_marginStart="16dp"
-            style="@style/TextStyle.Serif.Bold.24"/>
+            android:textSize="24sp"
+            android:fontFamily="@font/ibm_plex_serif_bold"
+            android:letterSpacing="0.03"/>
 
     <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvSubtitle"

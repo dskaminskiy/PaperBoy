@@ -55,13 +55,15 @@ class CheckItemView @JvmOverloads constructor(
     private val dpCornerRadius = InputView.CORNER_RADIUS.dp(context).toFloat()
 
     init {
-        View.inflate(context, R.layout.view_input, this)
+        View.inflate(context, R.layout.view_check_item, this)
 
         tvExtra.background = GradientDrawable().apply {
             shape = GradientDrawable.RECTANGLE
             cornerRadius = dpCornerRadius
             setStroke(dpStrokeWidth, palette.print15)
         }
+
+        setOnClickListener { vCheckBox.performClick() }
 
         val a = context.theme.obtainStyledAttributes(attrs, R.styleable.CheckItemView, 0, 0)
 

@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import deniskaminskiy.paperboy.R
 import deniskaminskiy.paperboy.core.BaseFragment
+import deniskaminskiy.paperboy.utils.AndroidColors
+import deniskaminskiy.paperboy.utils.ContextDelegateFactory
 import deniskaminskiy.paperboy.utils.args
 import deniskaminskiy.paperboy.utils.managers.AndroidResourcesManager
 import kotlinx.android.synthetic.main.fragment_choose_channels.*
@@ -40,14 +42,15 @@ class ChooseChannelsFragment : BaseFragment<ChooseChannelsPresenter, ChooseChann
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        presenter = ChooseChannelsPresenter(this, isChannelsFetched, AndroidResourcesManager.create(this))
+        presenter = ChooseChannelsPresenter(this, isChannelsFetched, AndroidResourcesManager.create(this),
+            AndroidColors(ContextDelegateFactory.create(this)))
 
         rvChannels.layoutManager = LinearLayoutManager(context)
         rvChannels.adapter = adapter
     }
 
     override fun show(model: ChooseChannelsPresentModel) {
-        if (tvTitle.text.toString() != model.title) {
+        if (tvTitle.text.toString() != model.title.toString()) {
             tvTitle.text = model.title
         }
 

@@ -8,9 +8,13 @@ interface ChooseChannelsInteractor : Interactor {
 
     fun channelsImport(): Observable<List<ChannelImport>>
 
+    fun channelsCount(): Int
+
 }
 
-class ChooseChannelsInteractorImpl : ChooseChannelsInteractor {
+class ChooseChannelsInteractorImpl(
+    private val isChannelsFetched: Boolean
+) : ChooseChannelsInteractor {
 
     private val channelsImportMocks = listOf(
         ChannelImport("1", "Mock 1"),
@@ -22,6 +26,8 @@ class ChooseChannelsInteractorImpl : ChooseChannelsInteractor {
     // getFromCloud
 
     override fun channelsImport(): Observable<List<ChannelImport>> =
-            Observable.just(channelsImportMocks)
+        Observable.just(channelsImportMocks)
+
+    override fun channelsCount(): Int = -1
 
 }

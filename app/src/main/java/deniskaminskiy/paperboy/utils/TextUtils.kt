@@ -1,20 +1,17 @@
 package deniskaminskiy.paperboy.utils
 
+import android.text.Html
+import android.text.SpannableString
+import android.text.Spanned
 import androidx.annotation.ColorInt
 
 object TextUtils {
 
-    fun colorLastWord(sentence: String, @ColorInt color: Int): String {
-        if (sentence.isBlank()) return sentence
-        if (!sentence.contains(" ")) return sentence // with color ofc
-
-        val lastWord = sentence.substring(sentence.lastIndexOf(" ") + 1)
-        val otherSentence = sentence.dropLast(lastWord.length)
-
-        //TODO: Сюда нужен hex крч
-        val coloredLastWord = "<font color='$color.h'>$lastWord</font>"
-
-        return  coloredLastWord
-    }
+    fun paintString(text: String, @ColorInt color: Int): Spanned =
+        if (text.isBlank()) {
+            SpannableString(text)
+        } else {
+            Html.fromHtml("<font color='${ColorUtils.hexColor(color)}'>$text</font>")
+        }
 
 }
