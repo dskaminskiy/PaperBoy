@@ -8,6 +8,8 @@ interface ChooseChannelsView : View {
 
     fun show(model: ChooseChannelsPresentModel)
 
+    fun showUnknownError()
+
 }
 
 data class ChooseChannelsPresentModel(

@@ -12,5 +12,7 @@
     <string name="choose_channels_you_want_import">Choose channels\nyou want import</string>
     <string name="template_you_have_channels_you_always_can_import">You have %1$d channels. You always can import\nchannels later in settings.</string>
     <string name="skip_import">Skip import</string>
+
+    <string name="oops_something_happened">Ooops, something happened</string>
     
 </resources>

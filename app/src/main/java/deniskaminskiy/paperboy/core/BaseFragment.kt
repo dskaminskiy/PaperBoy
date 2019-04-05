@@ -4,6 +4,9 @@ import android.content.Context
 import android.os.Bundle
 import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
+import com.google.android.material.snackbar.Snackbar
+import deniskaminskiy.paperboy.R
+import deniskaminskiy.paperboy.utils.toast
 
 abstract class BaseFragment<P : Presenter<V>, V : View> : Fragment(), View,
     FragmentTransactionAllowable, BackPressedListener {
@@ -16,6 +19,8 @@ abstract class BaseFragment<P : Presenter<V>, V : View> : Fragment(), View,
 
     private var isFirstStart: Boolean = true
     private var transactionAllowable: FragmentTransactionAllowable? = null
+
+    private val snackbar: Snackbar? = null
 
     override val isTransactionAllowed: Boolean
         get() = isAdded && transactionAllowable?.isTransactionAllowed == true

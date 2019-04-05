@@ -11,6 +11,7 @@ import deniskaminskiy.paperboy.utils.AndroidColors
 import deniskaminskiy.paperboy.utils.ContextDelegateFactory
 import deniskaminskiy.paperboy.utils.args
 import deniskaminskiy.paperboy.utils.managers.AndroidResourcesManager
+import deniskaminskiy.paperboy.utils.toast
 import kotlinx.android.synthetic.main.fragment_choose_channels.*
 
 class ChooseChannelsFragment : BaseFragment<ChooseChannelsPresenter, ChooseChannelsView>(), ChooseChannelsView {
@@ -59,6 +60,10 @@ class ChooseChannelsFragment : BaseFragment<ChooseChannelsPresenter, ChooseChann
         }
 
         adapter.setData(model.channels)
+    }
+
+    override fun showUnknownError() {
+        toast(getString(R.string.oops_something_happened))
     }
 
 }
