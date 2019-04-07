@@ -8,6 +8,8 @@ interface AuthCodeView : View {
 
     fun close()
 
+    fun showImportChannels()
+
 }
 
 data class AuthCodePresentModel(

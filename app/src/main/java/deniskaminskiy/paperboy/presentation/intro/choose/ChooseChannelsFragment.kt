@@ -7,11 +7,13 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import deniskaminskiy.paperboy.R
 import deniskaminskiy.paperboy.core.BaseFragment
+import deniskaminskiy.paperboy.data.channel.ChannelImport
 import deniskaminskiy.paperboy.utils.AndroidColors
 import deniskaminskiy.paperboy.utils.ContextDelegateFactory
 import deniskaminskiy.paperboy.utils.args
 import deniskaminskiy.paperboy.utils.managers.AndroidResourcesManager
 import deniskaminskiy.paperboy.utils.toast
+import deniskaminskiy.paperboy.utils.view.isInvisible
 import kotlinx.android.synthetic.main.fragment_choose_channels.*
 
 class ChooseChannelsFragment : BaseFragment<ChooseChannelsPresenter, ChooseChannelsView>(), ChooseChannelsView {
@@ -35,16 +37,21 @@ class ChooseChannelsFragment : BaseFragment<ChooseChannelsPresenter, ChooseChann
     private val isChannelsFetched: Boolean
         get() = arguments?.getBoolean(ARG_CHANNELS_IS_FETCHED, false) ?: false
 
-    private val adapter = CheckItemAdapter()
+    private val adapter = CheckItemAdapter<ChannelImport>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
-            inflater.inflate(R.layout.fragment_choose_channels, container, false)
+        inflater.inflate(R.layout.fragment_choose_channels, container, false)
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        presenter = ChooseChannelsPresenter(this, isChannelsFetched, AndroidResourcesManager.create(this),
-            AndroidColors(ContextDelegateFactory.create(this)))
+        presenter = ChooseChannelsPresenter(
+            this, isChannelsFetched, AndroidResourcesManager.create(this),
+            AndroidColors(ContextDelegateFactory.create(this))
+        ).apply {
+            tvSkip.setOnClickListener { onSkipClick() }
+            adapter.onItemClick = ::onItemClick
+        }
 
         rvChannels.layoutManager = LinearLayoutManager(context)
         rvChannels.adapter = adapter
@@ -60,10 +67,15 @@ class ChooseChannelsFragment : BaseFragment<ChooseChannelsPresenter, ChooseChann
         }
 
         adapter.setData(model.channels)
+        if (vFab.isInvisible) vFab.show()
     }
 
     override fun showUnknownError() {
         toast(getString(R.string.oops_something_happened))
+    }
+
+    override fun onBackPressed() {
+        //.
     }
 
 }

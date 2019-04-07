@@ -51,8 +51,8 @@ class CheckItemView @JvmOverloads constructor(
 
     private val palette: Colors by lazy { ColorsFactory.create(context) }
 
-    private val dpStrokeWidth = InputView.STROKE_WIDTH.dp(context)
-    private val dpCornerRadius = InputView.CORNER_RADIUS.dp(context).toFloat()
+    private val dpStrokeWidth = EXTRA_TITLE_STROKE_WIDTH.dp(context)
+    private val dpCornerRadius = EXTRA_TITLE_CORNER_RADIUS.dp(context).toFloat()
 
     init {
         View.inflate(context, R.layout.view_check_item, this)
@@ -62,8 +62,6 @@ class CheckItemView @JvmOverloads constructor(
             cornerRadius = dpCornerRadius
             setStroke(dpStrokeWidth, palette.print15)
         }
-
-        setOnClickListener { vCheckBox.performClick() }
 
         val a = context.theme.obtainStyledAttributes(attrs, R.styleable.CheckItemView, 0, 0)
 

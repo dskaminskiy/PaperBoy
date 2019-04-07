@@ -6,6 +6,10 @@ class AuthCodePresenter(
     view: AuthCodeView
 ) : BasePresenterImpl<AuthCodeView>(view) {
 
+    companion object {
+        private const val CODE_LENGTH = 5
+    }
+
     private var code = ""
 
     private var isInputsUpdating = false
@@ -22,6 +26,9 @@ class AuthCodePresenter(
         if (!isInputsUpdating) {
             if (newNumber.isNotEmpty()) {
                 code += newNumber
+                if (code.length >= CODE_LENGTH) {
+                    view?.showImportChannels()
+                }
             } else {
                 if (code.isNotEmpty()) {
                     code = code.dropLast(1)

@@ -5,8 +5,7 @@ import android.os.Bundle
 import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
-import deniskaminskiy.paperboy.R
-import deniskaminskiy.paperboy.utils.toast
+import deniskaminskiy.paperboy.utils.showKeyboard
 
 abstract class BaseFragment<P : Presenter<V>, V : View> : Fragment(), View,
     FragmentTransactionAllowable, BackPressedListener {

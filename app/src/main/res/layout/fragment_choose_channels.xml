@@ -1,66 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:background="@color/paper"
+        android:focusable="true"
+        android:clickable="true"
+        android:layout_height="match_parent">
 
-    <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/choose_channels_you_want_import"
-            android:layout_marginTop="40dp"
-            android:includeFontPadding="false"
-            android:paddingTop="2dp"
-            android:layout_marginEnd="16dp"
-            android:minHeight="64dp"
-            android:paddingBottom="2dp"
-            android:layout_marginStart="16dp"
-            android:textSize="24sp"
-            android:fontFamily="@font/ibm_plex_serif_bold"
-            android:letterSpacing="0.03"/>
-
-    <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvSubtitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:text="@string/template_you_have_channels_you_always_can_import"
-            android:layout_marginTop="8dp"
-            android:includeFontPadding="false"
-            android:paddingTop="2dp"
-            android:layout_marginEnd="16dp"
-            android:minHeight="44dp"
-            android:paddingBottom="2dp"
-            android:textColor="@color/print70"
-            android:layout_marginStart="16dp"
-            style="@style/TextStyle.Sans.Text.16"/>
-
-    <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvSkip"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/skip_import"
-            android:layout_marginTop="12dp"
-            android:includeFontPadding="false"
-            android:layout_marginEnd="16dp"
-            android:paddingTop="2dp"
-            android:minHeight="20dp"
-            android:paddingBottom="2dp"
-            android:layout_marginStart="16dp"
-            android:textColor="@color/admiral"
-            style="@style/TextStyle.Sans.Semibold.16"/>
-
-    <View android:layout_width="match_parent"
-          android:layout_margin="16dp"
-          android:background="@color/print20"
-          android:layout_height="1dp"/>
-
-    <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvChannels"
+    <LinearLayout
             android:layout_width="match_parent"
-            android:overScrollMode="never"
-            android:layout_height="wrap_content"/>
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+        <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/choose_channels_you_want_import"
+                android:layout_marginTop="40dp"
+                android:includeFontPadding="false"
+                android:paddingTop="2dp"
+                android:layout_marginEnd="16dp"
+                android:minHeight="64dp"
+                android:paddingBottom="2dp"
+                android:layout_marginStart="16dp"
+                android:textSize="24sp"
+                android:fontFamily="@font/ibm_plex_serif_bold"
+                android:letterSpacing="0.03"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvSubtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="@string/template_you_have_channels_you_always_can_import"
+                android:layout_marginTop="8dp"
+                android:includeFontPadding="false"
+                android:paddingTop="2dp"
+                android:layout_marginEnd="16dp"
+                android:minHeight="44dp"
+                android:paddingBottom="2dp"
+                android:textColor="@color/print70"
+                android:layout_marginStart="16dp"
+                style="@style/TextStyle.Sans.Text.16"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvSkip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/skip_import"
+                android:layout_marginTop="12dp"
+                android:includeFontPadding="false"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:layout_marginEnd="16dp"
+                android:paddingTop="2dp"
+                android:minHeight="20dp"
+                android:paddingBottom="2dp"
+                android:layout_marginStart="16dp"
+                android:textColor="@color/admiral"
+                style="@style/TextStyle.Sans.Semibold.16"/>
+
+        <View android:layout_width="match_parent"
+              android:layout_margin="16dp"
+              android:background="@color/print20"
+              android:layout_height="1dp"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvChannels"
+                android:layout_width="match_parent"
+                android:overScrollMode="never"
+                android:layout_height="wrap_content"/>
+
+    </LinearLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/vFab"
@@ -72,6 +84,8 @@
             android:src="@drawable/ic_arrow_forward"
             android:tint="@color/paper"
             app:backgroundTint="@color/print100"
+            app:rippleColor="@color/paper"
+            app:layout_anchorGravity="bottom|end"
             android:layout_margin="16dp"/>
 
-</LinearLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

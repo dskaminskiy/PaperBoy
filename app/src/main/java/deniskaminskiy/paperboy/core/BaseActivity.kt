@@ -1,9 +1,7 @@
 package deniskaminskiy.paperboy.core
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.os.Bundle
-import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 
@@ -78,9 +76,7 @@ abstract class BaseActivity<P : Presenter<V>, V : View> : AppCompatActivity(), V
             .let(supportFragmentManager::findFragmentByTag)
     }
 
-    fun showKeyboard(view: android.view.View) {
-        (getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager)?.showSoftInput(view, 0)
-    }
+
 
     override fun onBackPressed() {
         val currentFragment = getActiveFragment() ?: existingFragment

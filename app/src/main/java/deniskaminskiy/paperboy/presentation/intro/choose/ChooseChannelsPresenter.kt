@@ -19,10 +19,11 @@ class ChooseChannelsPresenter(
     private val colors: Colors,
     private val interactor: ChooseChannelsInteractor =
         ChooseChannelsInteractorImpl(isChannelsFetched),
-    private val composer: Composer = SchedulerComposerFactory.android()
+    private val composer: Composer = SchedulerComposerFactory.android(),
+    private val disposableComposite: CompositeDisposable = CompositeDisposable(),
+    private val mapperToPresentModel: Mapper<List<ChannelImport>, List<CheckItemPresentItemModel<ChannelImport>>> =
+        ChannelImportToPresentModelListMapper()
 ) : BasePresenterImpl<ChooseChannelsView>(view) {
-
-    private val compositeDisposable = CompositeDisposable()
 
     private val title: SpannableStringBuilder by lazy {
         resources.chooseChannelsYouWantImport.let { sentence ->
@@ -36,43 +37,57 @@ class ChooseChannelsPresenter(
         }
     }
 
-    private val subtitle: String by lazy {
-        resources.youHaveChannels(interactor.channelsCount())
-    }
+    private val subtitle: String
+        get() = resources.youHaveChannels(interactor.channelsCount())
 
     override fun onStart(viewCreated: Boolean) {
         super.onStart(viewCreated)
-        compositeDisposable.add(
+        disposableComposite.add(
             interactor.channelsImport()
                 .compose(composer.observable())
-                .subscribe({
-                    //TODO: map and show
-                }, {
+                .subscribe(::onChannelsImportUpdate) {
                     view?.showUnknownError()
-                })
+                }
         )
 
     }
 
+    private fun onChannelsImportUpdate(channels: List<ChannelImport>) {
+        view?.show(
+            ChooseChannelsPresentModel(
+                title = title,
+                subtitle = subtitle,
+                channels = mapperToPresentModel.map(channels)
+
+            )
+        )
+    }
+
+    fun onItemClick(model: CheckItemPresentItemModel<ChannelImport>) {
+        interactor.changeCheckStatus(model.element)
+    }
+
     override fun onViewDetached() {
-        compositeDisposable.dispose()
+        disposableComposite.dispose()
         super.onViewDetached()
     }
 
     fun onSkipClick() {
-
+        //..
     }
 
 }
 
-class ChannelImportToPresentModelListMapper : Mapper<List<ChannelImport>, List<CheckItemPresentItemModel<ChannelImport>>> {
+class ChannelImportToPresentModelListMapper :
+    Mapper<List<ChannelImport>, List<CheckItemPresentItemModel<ChannelImport>>> {
     override fun map(from: List<ChannelImport>): List<CheckItemPresentItemModel<ChannelImport>> =
         from.map {
             CheckItemPresentItemModel(
                 element = it,
                 model = CheckItemPresentModel(
                     title = it.title,
-                    isDivider = from.last() != it
+                    isDivider = from.last() != it,
+                    isChecked = it.isChecked
                 )
             )
         }

@@ -8,9 +8,9 @@ import deniskaminskiy.paperboy.presentation.view.CheckItemView
 import deniskaminskiy.paperboy.utils.DataAdapter
 import deniskaminskiy.paperboy.utils.OnItemClick
 
-class CheckItemAdapter : DataAdapter<CheckItemPresentItemModel<*>, CheckItemAdapter.ViewHolder>() {
+class CheckItemAdapter<BM> : DataAdapter<CheckItemPresentItemModel<BM>, CheckItemAdapter<BM>.ViewHolder>() {
 
-    var onItemClick: OnItemClick<CheckItemPresentModel> = {}
+    var onItemClick: OnItemClick<CheckItemPresentItemModel<BM>> = {}
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
         ViewHolder(parent.context)
@@ -27,8 +27,9 @@ class CheckItemAdapter : DataAdapter<CheckItemPresentItemModel<*>, CheckItemAdap
         init {
             checkItemView.setOnClickListener {
                 data.getOrNull(adapterPosition)
-                    ?.model
-                    ?.let(onItemClick)
+                    ?.let {
+                        onItemClick.invoke(it)
+                    }
             }
         }
 

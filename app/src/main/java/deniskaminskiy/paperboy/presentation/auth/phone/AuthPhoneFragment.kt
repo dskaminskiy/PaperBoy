@@ -36,11 +36,6 @@ class AuthPhoneFragment : BaseFragment<AuthPhonePresenter, AuthPhoneView>(), Aut
         ivPhone.requestFocus()
     }
 
-    override fun onResume() {
-        super.onResume()
-        ivPhone.requestFocus()
-    }
-
     override fun show(model: AuthPhonePresentModel) {
         ivRegion.text = model.regionAdditionalNumber
         ivPhone.text = model.phoneNumber
@@ -48,7 +43,7 @@ class AuthPhoneFragment : BaseFragment<AuthPhonePresenter, AuthPhoneView>(), Aut
 
     override fun openAuthCode() {
         AuthCodeFragment.newInstance()
-            .open(activity, android.R.id.content, AuthCodeFragment.TAG)
+            .open(activity, R.id.vgContent, AuthCodeFragment.TAG)
     }
 
 }
