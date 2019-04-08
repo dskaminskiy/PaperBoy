@@ -73,7 +73,8 @@ class ChooseChannelsPresenter(
     }
 
     fun onSkipClick() {
-        //..
+        // temp
+        view?.showRemoveTelegramChannels()
     }
 
 }

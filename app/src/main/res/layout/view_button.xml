@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:clickable="true"
+              android:focusable="true"
+              android:foreground="?android:attr/selectableItemBackground"
+              tools:background="@color/print100">
+
+    <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="18dp"
+            android:layout_marginBottom="18dp"
+            android:orientation="horizontal">
+
+        <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivLeft"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                tools:src="@drawable/ic_bookmarked"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:id="@+id/tvTitle"
+                style="@style/TextStyle.Sans.Semibold.16"
+                android:includeFontPadding="false"
+                android:paddingTop="2dp"
+                android:text="@string/remove_channels"
+                android:textColor="@color/marlboroNew"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:minHeight="20dp"
+                android:paddingBottom="2dp"
+                android:layout_height="wrap_content"/>
+
+        <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivRight"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                tools:src="@drawable/ic_bookmarked"/>
+
+    </LinearLayout>
+
+</LinearLayout>

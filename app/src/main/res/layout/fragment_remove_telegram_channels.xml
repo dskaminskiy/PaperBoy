@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:background="@color/paper"
+              android:layout_height="match_parent">
+
+    <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="match_parent"
+            android:src="@color/print20"
+            android:layout_height="400dp"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/now_you_can_remove_channels_from_telegram"
+            android:layout_marginTop="20dp"
+            android:includeFontPadding="false"
+            android:paddingTop="2dp"
+            android:layout_marginEnd="16dp"
+            android:minHeight="64dp"
+            android:paddingBottom="2dp"
+            android:layout_marginStart="16dp"
+            android:textSize="24sp"
+            android:fontFamily="@font/ibm_plex_serif_bold"
+            android:letterSpacing="0.03"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvSubtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/now_you_can_tidy_up_dialog_list_in_your_favorite_messenger"
+            android:layout_marginTop="8dp"
+            android:includeFontPadding="false"
+            android:paddingTop="2dp"
+            android:layout_marginEnd="16dp"
+            android:minHeight="44dp"
+            android:paddingBottom="2dp"
+            android:textColor="@color/print70"
+            android:layout_marginStart="16dp"
+            style="@style/TextStyle.Sans.Text.16"/>
+
+    <deniskaminskiy.paperboy.presentation.view.ButtonView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            app:title="@string/remove_channels"
+            app:leftIconConstant="ICON_TRASH"/>
+
+</LinearLayout>

@@ -10,6 +10,8 @@ interface ChooseChannelsView : View {
 
     fun showUnknownError()
 
+    fun showRemoveTelegramChannels()
+
 }
 
 data class ChooseChannelsPresentModel(

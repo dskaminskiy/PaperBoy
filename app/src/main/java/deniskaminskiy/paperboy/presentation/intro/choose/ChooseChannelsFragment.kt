@@ -8,11 +8,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import deniskaminskiy.paperboy.R
 import deniskaminskiy.paperboy.core.BaseFragment
 import deniskaminskiy.paperboy.data.channel.ChannelImport
-import deniskaminskiy.paperboy.utils.AndroidColors
-import deniskaminskiy.paperboy.utils.ContextDelegateFactory
-import deniskaminskiy.paperboy.utils.args
+import deniskaminskiy.paperboy.presentation.intro.remove.RemoveTelegramChannelsFragment
+import deniskaminskiy.paperboy.utils.*
 import deniskaminskiy.paperboy.utils.managers.AndroidResourcesManager
-import deniskaminskiy.paperboy.utils.toast
 import deniskaminskiy.paperboy.utils.view.isInvisible
 import kotlinx.android.synthetic.main.fragment_choose_channels.*
 
@@ -72,6 +70,11 @@ class ChooseChannelsFragment : BaseFragment<ChooseChannelsPresenter, ChooseChann
 
     override fun showUnknownError() {
         toast(getString(R.string.oops_something_happened))
+    }
+
+    override fun showRemoveTelegramChannels() {
+        RemoveTelegramChannelsFragment.newInstance()
+            .open(activity, android.R.id.content, RemoveTelegramChannelsFragment.TAG)
     }
 
     override fun onBackPressed() {

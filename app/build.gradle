@@ -61,6 +61,7 @@ dependencies {
     // Glide
     implementation glide.values()
     kapt glideCompiler
+    implementation glideTransformation
 
     // Google Play Services
     implementation playServices.values()

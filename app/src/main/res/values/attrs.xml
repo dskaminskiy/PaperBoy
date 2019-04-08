@@ -6,11 +6,29 @@
     <attr name="isChecked" format="boolean"/>
     <attr name="isDivider" format="boolean"/>
 
+    <attr name="leftIconConstant" format="enum">
+        <enum name="ICON_ADD" value="0" />
+        <enum name="ICON_ARROW_BACK" value="1"/>
+        <enum name="ICON_TRASH" value="2"/>
+    </attr>
+
+    <attr name="rightIconConstant" format="enum">
+        <enum name="ICON_ADD" value="0" />
+        <enum name="ICON_ARROW_BACK" value="1"/>
+        <enum name="ICON_TRASH" value="2"/>
+    </attr>
+
     <declare-styleable name="CheckItemView">
         <attr name="title"/>
         <attr name="extraTitle"/>
         <attr name="isChecked"/>
         <attr name="isDivider"/>
+    </declare-styleable>
+
+    <declare-styleable name="ButtonView">
+        <attr name="title"/>
+        <attr name="leftIconConstant"/>
+        <attr name="rightIconConstant"/>
     </declare-styleable>
 
 </resources>
