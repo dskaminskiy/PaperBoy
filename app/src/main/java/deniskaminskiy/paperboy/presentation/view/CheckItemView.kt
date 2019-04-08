@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.drawable.GradientDrawable
 import android.util.AttributeSet
 import android.view.View
+import android.widget.FrameLayout
 import android.widget.LinearLayout
 import deniskaminskiy.paperboy.R
 import deniskaminskiy.paperboy.utils.Colors
@@ -17,7 +18,7 @@ class CheckItemView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
-) : LinearLayout(context, attrs, defStyleAttr) {
+) : FrameLayout(context, attrs, defStyleAttr) {
 
     companion object {
         const val EXTRA_TITLE_CORNER_RADIUS = 4
@@ -56,6 +57,8 @@ class CheckItemView @JvmOverloads constructor(
 
     init {
         View.inflate(context, R.layout.view_check_item, this)
+
+        vgContent.setOnClickListener { this.performClick() }
 
         tvExtra.background = GradientDrawable().apply {
             shape = GradientDrawable.RECTANGLE

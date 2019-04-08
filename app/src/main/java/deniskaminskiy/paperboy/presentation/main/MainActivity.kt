@@ -19,7 +19,7 @@ class MainActivity : BaseActivity<MainPresenter, MainView>(), MainView {
 
     override fun showAuth() {
         AuthPhoneFragment.newInstance()
-            .open(this, R.id.vgContent, AuthPhoneFragment.TAG)
+            .open(this, android.R.id.content, AuthPhoneFragment.TAG)
     }
 
 }

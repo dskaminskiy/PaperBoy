@@ -42,7 +42,7 @@ class ChooseChannelsInteractorImpl(
     // getFromCloud
 
     override fun channelsImport(): Observable<List<ChannelImport>> =
-        channelsImportSubject.delay(3, TimeUnit.SECONDS)
+        channelsImportSubject
 
     override fun channelsCount(): Int = channelsImportSubject.value?.size ?: 0
 

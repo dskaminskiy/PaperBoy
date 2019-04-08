@@ -81,7 +81,7 @@ class AuthCodeFragment : BaseFragment<AuthCodePresenter, AuthCodeView>(), AuthCo
     override fun showImportChannels() {
         hideKeyboard()
         ChooseChannelsFragment.newInstance(true)
-            .open(activity, R.id.vgContent, ChooseChannelsFragment.TAG)
+            .open(activity, android.R.id.content, ChooseChannelsFragment.TAG)
     }
 
     override fun close() {

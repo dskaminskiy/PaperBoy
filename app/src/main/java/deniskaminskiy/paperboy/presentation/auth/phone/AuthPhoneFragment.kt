@@ -43,7 +43,7 @@ class AuthPhoneFragment : BaseFragment<AuthPhonePresenter, AuthPhoneView>(), Aut
 
     override fun openAuthCode() {
         AuthCodeFragment.newInstance()
-            .open(activity, R.id.vgContent, AuthCodeFragment.TAG)
+            .open(activity, android.R.id.content, AuthCodeFragment.TAG)
     }
 
 }
