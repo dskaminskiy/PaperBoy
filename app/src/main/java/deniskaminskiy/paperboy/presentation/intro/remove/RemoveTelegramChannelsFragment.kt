@@ -6,6 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import deniskaminskiy.paperboy.R
 import deniskaminskiy.paperboy.core.BaseFragment
+import deniskaminskiy.paperboy.utils.ColorsFactory
+import deniskaminskiy.paperboy.utils.managers.AndroidResourcesManager
+import kotlinx.android.synthetic.main.fragment_remove_telegram_channels.*
 
 class RemoveTelegramChannelsFragment : BaseFragment<RemoveTelegramChannelsPresenter, RemoveTelegramChannelsView>(),
     RemoveTelegramChannelsView {
@@ -22,7 +25,14 @@ class RemoveTelegramChannelsFragment : BaseFragment<RemoveTelegramChannelsPresen
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        presenter = RemoveTelegramChannelsPresenter(this)
+        presenter = RemoveTelegramChannelsPresenter(
+            view = this,
+            resources = AndroidResourcesManager.create(this),
+            colors = ColorsFactory.create(this))
+    }
+
+    override fun show(model: RemoveTelegramChannelsPresentModel) {
+        tvTitle.text = model.title
     }
 
 }

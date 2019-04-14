@@ -18,7 +18,7 @@
                 android:id="@+id/tvTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/choose_channels_you_want_import"
+                android:text="@string/choose_channels_you_want_import_sentence"
                 android:layout_marginTop="40dp"
                 android:includeFontPadding="false"
                 android:paddingTop="2dp"
@@ -26,6 +26,7 @@
                 android:minHeight="64dp"
                 android:paddingBottom="2dp"
                 android:layout_marginStart="16dp"
+                android:textColor="@color/print100"
                 android:textSize="24sp"
                 android:fontFamily="@font/ibm_plex_serif_bold"
                 android:letterSpacing="0.03"/>

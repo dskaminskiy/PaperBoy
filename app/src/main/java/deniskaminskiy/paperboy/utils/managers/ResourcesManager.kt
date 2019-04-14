@@ -2,7 +2,11 @@ package deniskaminskiy.paperboy.utils.managers
 
 interface ResourcesManager {
 
-    val chooseChannelsYouWantImport: String
+    val chooseChannelsYouWantImportSentence: String
+    val chooseChannelsYouWantImportAccentWord: String
+
+    val nowYouCanRemoveChannelsFromTelegramSentence: String
+    val nowYouCanRemoveChannelsFromTelegramAccentWord: String
 
     fun youHaveChannels(count: Int): String
 

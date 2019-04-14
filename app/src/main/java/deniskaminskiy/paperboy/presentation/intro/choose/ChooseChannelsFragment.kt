@@ -44,8 +44,10 @@ class ChooseChannelsFragment : BaseFragment<ChooseChannelsPresenter, ChooseChann
         super.onActivityCreated(savedInstanceState)
 
         presenter = ChooseChannelsPresenter(
-            this, isChannelsFetched, AndroidResourcesManager.create(this),
-            AndroidColors(ContextDelegateFactory.create(this))
+            view = this,
+            isChannelsFetched = isChannelsFetched,
+            resources = AndroidResourcesManager.create(this),
+            colors = AndroidColors(ContextDelegateFactory.create(this))
         ).apply {
             tvSkip.setOnClickListener { onSkipClick() }
             adapter.onItemClick = ::onItemClick
@@ -56,9 +58,7 @@ class ChooseChannelsFragment : BaseFragment<ChooseChannelsPresenter, ChooseChann
     }
 
     override fun show(model: ChooseChannelsPresentModel) {
-        if (tvTitle.text.toString() != model.title.toString()) {
-            tvTitle.text = model.title
-        }
+        tvTitle.text = model.title
 
         if (tvSubtitle.text.toString() != model.subtitle) {
             tvSubtitle.text = model.subtitle

@@ -20,8 +20,17 @@ class AndroidResourcesManager private constructor(
 
     constructor(context: Context) : this(ContextContextDelegate(context))
 
-    override val chooseChannelsYouWantImport: String
-        get() = getString(R.string.choose_channels_you_want_import)
+    override val chooseChannelsYouWantImportSentence: String
+        get() = getString(R.string.choose_channels_you_want_import_sentence)
+
+    override val chooseChannelsYouWantImportAccentWord: String
+        get() = getString(R.string.choose_channels_you_want_import_accent_word)
+
+    override val nowYouCanRemoveChannelsFromTelegramSentence: String
+        get() = getString(R.string.now_you_can_remove_channels_from_telegram_sentence)
+
+    override val nowYouCanRemoveChannelsFromTelegramAccentWord: String
+        get() = getString(R.string.now_you_can_remove_channels_from_telegram_accent_word)
 
     override fun youHaveChannels(count: Int): String =
         getContext()?.getString(R.string.template_you_have_channels_you_always_can_import, count) ?: ""

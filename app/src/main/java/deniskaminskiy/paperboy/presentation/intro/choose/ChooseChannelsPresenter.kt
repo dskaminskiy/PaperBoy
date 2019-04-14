@@ -6,8 +6,8 @@ import deniskaminskiy.paperboy.core.Mapper
 import deniskaminskiy.paperboy.data.channel.ChannelImport
 import deniskaminskiy.paperboy.presentation.view.CheckItemPresentModel
 import deniskaminskiy.paperboy.utils.Colors
-import deniskaminskiy.paperboy.utils.TextUtils
 import deniskaminskiy.paperboy.utils.managers.ResourcesManager
+import deniskaminskiy.paperboy.utils.paintWord
 import deniskaminskiy.paperboy.utils.rx.Composer
 import deniskaminskiy.paperboy.utils.rx.SchedulerComposerFactory
 import io.reactivex.disposables.CompositeDisposable
@@ -26,15 +26,8 @@ class ChooseChannelsPresenter(
 ) : BasePresenterImpl<ChooseChannelsView>(view) {
 
     private val title: SpannableStringBuilder by lazy {
-        resources.chooseChannelsYouWantImport.let { sentence ->
-            val lastWord = sentence.substring(sentence.lastIndexOf(" ") + 1)
-            val otherSentence = sentence.dropLast(lastWord.length)
-
-            SpannableStringBuilder().append(
-                TextUtils.paintString(otherSentence, colors.print100),
-                TextUtils.paintString(lastWord, colors.marlboroNew)
-            )
-        }
+        resources.chooseChannelsYouWantImportSentence
+            .paintWord(resources.chooseChannelsYouWantImportAccentWord ,colors.marlboroNew)
     }
 
     private val subtitle: String
