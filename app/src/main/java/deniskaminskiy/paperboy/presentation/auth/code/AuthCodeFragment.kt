@@ -81,16 +81,17 @@ class AuthCodeFragment : BaseFragment<AuthCodePresenter, AuthCodeView>(), AuthCo
 
     override fun showAuthSecurityCode() {
         AuthSecurityCodeFragment.newInstance()
-            .open(activity, android.R.id.content, AuthSecurityCodeFragment.TAG)
+            .open(activity, R.id.vgContent, AuthSecurityCodeFragment.TAG)
     }
 
     override fun showImportChannels() {
         hideKeyboard()
         ChooseChannelsFragment.newInstance(true)
-            .open(activity, android.R.id.content, ChooseChannelsFragment.TAG)
+            .open(activity, R.id.vgContent, ChooseChannelsFragment.TAG)
     }
 
     override fun close() {
+        hideKeyboard()
         activity?.supportFragmentManager?.popBackStack()
     }
 

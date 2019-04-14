@@ -6,5 +6,8 @@ class AuthSecurityCodePresenter(
     view: AuthSecurityCodeView
 ) : BasePresenterImpl<AuthSecurityCodeView>(view) {
 
+    fun onBackClick() {
+        view?.close()
+    }
 
 }

@@ -89,7 +89,7 @@ abstract class BaseActivity<P : Presenter<V>, V : View> : AppCompatActivity(), V
     }
 
     fun backPress() {
-        onBackPressed()
+        super.onBackPressed()
     }
 
 }

@@ -11,7 +11,7 @@ class AuthPhonePresenter(
 
     companion object {
         private const val MAX_LENGTH_REIGN_NUMBER = 3
-        private const val MAX_LENGTH_PHONE_NUMBER = 10
+        private const val MAX_LENGTH_PHONE_NUMBER = 2 // 10
     }
 
     var authPhone = AuthPhone.EMPTY

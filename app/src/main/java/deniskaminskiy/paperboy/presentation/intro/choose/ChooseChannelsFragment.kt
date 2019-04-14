@@ -74,7 +74,7 @@ class ChooseChannelsFragment : BaseFragment<ChooseChannelsPresenter, ChooseChann
 
     override fun showRemoveTelegramChannels() {
         RemoveTelegramChannelsFragment.newInstance()
-            .open(activity, android.R.id.content, RemoveTelegramChannelsFragment.TAG)
+            .open(activity, R.id.vgContent, RemoveTelegramChannelsFragment.TAG)
     }
 
     override fun onBackPressed() {

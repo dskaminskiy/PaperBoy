@@ -23,11 +23,17 @@ class AuthSecurityCodeFragment : BaseFragment<AuthSecurityCodePresenter, AuthSec
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        presenter = AuthSecurityCodePresenter(this)
+        presenter = AuthSecurityCodePresenter(this).apply {
+            vBack.setOnClickListener { onBackClick() }
+        }
 
         ivPasscode.post {
             ivPasscode.requestFocus()
         }
+    }
+
+    override fun close() {
+        onBackPressed()
     }
 
 }

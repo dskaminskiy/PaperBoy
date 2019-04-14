@@ -32,7 +32,10 @@ class AuthPhoneFragment : BaseFragment<AuthPhonePresenter, AuthPhoneView>(), Aut
         ivRegion.onFocusChanged = { hasFocus ->
             if (hasFocus) ivRegion.setSelectionToEnd()
         }
+    }
 
+    override fun onResume() {
+        super.onResume()
         ivPhone.requestFocus()
     }
 
@@ -43,7 +46,7 @@ class AuthPhoneFragment : BaseFragment<AuthPhonePresenter, AuthPhoneView>(), Aut
 
     override fun showAuthCode() {
         AuthCodeFragment.newInstance()
-            .open(activity, android.R.id.content, AuthCodeFragment.TAG)
+            .open(activity, R.id.vgContent, AuthCodeFragment.TAG)
     }
 
 }
