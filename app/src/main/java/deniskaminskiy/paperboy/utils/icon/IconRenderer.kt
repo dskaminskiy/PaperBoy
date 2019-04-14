@@ -26,8 +26,9 @@ object IconRendererFactory {
                placeholder: Int = R.drawable.oval_solid_print_40): IconRenderer {
 
         return when (icon) {
-            is UrlIcon              -> UrlIconRenderer(icon.url, isCircle, placeholder)
+            is UrlIcon              -> UrlIconRenderer(icon, isCircle, placeholder)
             is DrawableConstantIcon -> DrawableConstantIconRenderer(icon)
+            is DrawableIcon         -> DrawableIconRenderer(icon)
             else                    -> PlaceholderIconRenderer(placeholder)
         }
     }
@@ -44,6 +45,16 @@ data class DrawableConstantIconRenderer(
 
 }
 
+data class DrawableIconRenderer(
+    private val icon: DrawableIcon
+) : IconRenderer {
+
+    override fun render(imageView: ImageView) {
+        imageView.setImageDrawable(icon.drawable)
+    }
+
+}
+
 data class PlaceholderIconRenderer(
         @DrawableRes private val placeholder: Int
 ) : IconRenderer {
@@ -53,13 +64,13 @@ data class PlaceholderIconRenderer(
 }
 
 data class UrlIconRenderer(
-        private val url: String,
+        private val icon: UrlIcon,
         private val isCircle: Boolean,
         @DrawableRes private val placeholder: Int
 ) : IconRenderer {
     override fun render(imageView: ImageView) {
 //        GlideApp.with(imageView)
-//                .load(url)
+//                .load(icon.url)
 //                .placeholder(placeholder)
 //                .error(placeholder)
 //                .centerCrop()

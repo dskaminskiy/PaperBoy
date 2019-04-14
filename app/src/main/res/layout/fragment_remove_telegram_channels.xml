@@ -22,6 +22,7 @@
             android:layout_marginEnd="16dp"
             android:minHeight="64dp"
             android:paddingBottom="2dp"
+            android:textColor="@color/print100"
             android:layout_marginStart="16dp"
             android:textSize="24sp"
             android:fontFamily="@font/ibm_plex_serif_bold"

@@ -5,14 +5,18 @@
     <attr name="extraTitle" format="string"/>
     <attr name="isChecked" format="boolean"/>
     <attr name="isDivider" format="boolean"/>
+    <attr name="leftIconColor" format="color"/>
+    <attr name="rightIconColor" format="color"/>
+    <attr name="backgroundColor" format="color"/>
+    <attr name="titleColor" format="color"/>
 
+    <!-- ICONS -->
     <attr name="leftIconConstant" format="enum">
         <enum name="ICON_ADD" value="0" />
         <enum name="ICON_ARROW_BACK" value="1"/>
         <enum name="ICON_TRASH" value="2"/>
     </attr>
-
-    <attr name="rightIconConstant" format="enum">
+    <attr name="rightIconConstant">
         <enum name="ICON_ADD" value="0" />
         <enum name="ICON_ARROW_BACK" value="1"/>
         <enum name="ICON_TRASH" value="2"/>
@@ -27,8 +31,12 @@
 
     <declare-styleable name="ButtonView">
         <attr name="title"/>
+        <attr name="titleColor"/>
+        <attr name="backgroundColor"/>
         <attr name="leftIconConstant"/>
         <attr name="rightIconConstant"/>
+        <attr name="leftIconColor"/>
+        <attr name="rightIconColor"/>
     </declare-styleable>
 
 </resources>

@@ -4,9 +4,9 @@ package deniskaminskiy.paperboy.utils.icon
 object IconFactory {
 
     private val drawableIconsDictionary = mutableListOf(
-        IconConstant.ADD to DrawableConstantIcon(IconDrawableContainer.ADD),
-        IconConstant.ARROW_BACK to DrawableConstantIcon(IconDrawableContainer.ARROW_BACK),
-        IconConstant.TRASH to DrawableConstantIcon(IconDrawableContainer.TRASH)
+        IconConstant.ADD to DrawableConstantIcon(DrawableIconConstant.ADD),
+        IconConstant.ARROW_BACK to DrawableConstantIcon(DrawableIconConstant.ARROW_BACK),
+        IconConstant.TRASH to DrawableConstantIcon(DrawableIconConstant.TRASH)
 
     )
 
