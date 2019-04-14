@@ -27,7 +27,8 @@ class AuthCodePresenter(
             if (newNumber.isNotEmpty()) {
                 code += newNumber
                 if (code.length >= CODE_LENGTH) {
-                    view?.showImportChannels()
+                    //view?.showImportChannels()
+                    view?.showAuthSecurityCode()
                 }
             } else {
                 if (code.isNotEmpty()) {

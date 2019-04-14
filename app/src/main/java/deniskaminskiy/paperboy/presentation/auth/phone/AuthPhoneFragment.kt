@@ -41,7 +41,7 @@ class AuthPhoneFragment : BaseFragment<AuthPhonePresenter, AuthPhoneView>(), Aut
         ivPhone.text = model.phoneNumber
     }
 
-    override fun openAuthCode() {
+    override fun showAuthCode() {
         AuthCodeFragment.newInstance()
             .open(activity, android.R.id.content, AuthCodeFragment.TAG)
     }

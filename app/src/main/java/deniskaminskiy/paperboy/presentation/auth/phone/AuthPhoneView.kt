@@ -6,7 +6,7 @@ interface AuthPhoneView : View {
 
     fun show(model: AuthPhonePresentModel)
 
-    fun openAuthCode()
+    fun showAuthCode()
 
 }
 

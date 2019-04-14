@@ -9,8 +9,12 @@
             android:layout_width="match_parent"
             android:layout_gravity="bottom"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginStart="14dp"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:paddingStart="2dp"
+            android:paddingEnd="2dp"
+            android:layout_marginEnd="14dp"
             android:layout_marginBottom="40dp"
             android:orientation="vertical">
 
@@ -46,7 +50,7 @@
                 android:layout_marginTop="14dp"
                 style="@style/TextStyle.Serif.Bold.24"
                 android:minHeight="32dp"
-                android:text="@string/enter_pass_code"/>
+                android:text="@string/enter_security_passcode"/>
 
         <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
@@ -57,55 +61,23 @@
                 android:layout_marginTop="8dp"
                 android:text="@string/telegram_sent_code_to_you"/>
 
-        <LinearLayout
-                android:layout_width="wrap_content"
+        <deniskaminskiy.paperboy.presentation.view.TextPasswordInputView
+                android:id="@+id/ivPasscode"
+                android:layout_width="match_parent"
+                android:layout_marginEnd="24dp"
+                app:hintText="@string/enter_pass_code"
+                android:layout_marginTop="24dp"
+                android:layout_height="56dp"
+                android:focusableInTouchMode="false"/>
+
+        <deniskaminskiy.paperboy.presentation.view.ButtonView
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:clipChildren="false"
-                android:gravity="center_vertical"
-                android:padding="2dp"
-                android:clipToPadding="false"
-                android:layout_marginTop="16dp">
-
-            <deniskaminskiy.paperboy.presentation.view.NumberInputView
-                    android:id="@+id/ivFirst"
-                    android:layout_width="56dp"
-                    android:nextFocusForward="@id/ivSecond"
-                    android:layout_height="56dp"
-                    android:focusableInTouchMode="false"/>
-
-            <deniskaminskiy.paperboy.presentation.view.NumberInputView
-                    android:id="@+id/ivSecond"
-                    android:layout_width="56dp"
-                    android:layout_marginStart="8dp"
-                    android:nextFocusForward="@id/ivThird"
-                    android:layout_height="56dp"
-                    android:focusableInTouchMode="false"/>
-
-            <deniskaminskiy.paperboy.presentation.view.NumberInputView
-                    android:id="@+id/ivThird"
-                    android:layout_width="56dp"
-                    android:layout_marginStart="8dp"
-                    android:nextFocusForward="@id/ivFourth"
-                    android:layout_height="56dp"
-                    android:focusableInTouchMode="false"/>
-
-            <deniskaminskiy.paperboy.presentation.view.NumberInputView
-                    android:id="@+id/ivFourth"
-                    android:layout_width="56dp"
-                    android:layout_marginStart="8dp"
-                    android:nextFocusForward="@id/ivFifth"
-                    android:layout_height="56dp"
-                    android:focusableInTouchMode="false"/>
-
-            <deniskaminskiy.paperboy.presentation.view.NumberInputView
-                    android:id="@+id/ivFifth"
-                    android:layout_width="56dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_height="56dp"
-                    android:focusableInTouchMode="false"/>
-
-        </LinearLayout>
+                android:layout_marginTop="24dp"
+                app:titleColor="@color/paper"
+                app:title="@string/next"
+                app:rightIconConstant="ICON_ARROW_FORWARD"
+                app:rightIconColor="@color/paper"/>
 
     </LinearLayout>
 

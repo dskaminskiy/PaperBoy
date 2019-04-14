@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.annotation.IntRange
 import deniskaminskiy.paperboy.R
 import deniskaminskiy.paperboy.core.BaseFragment
+import deniskaminskiy.paperboy.presentation.auth.security.AuthSecurityCodeFragment
 import deniskaminskiy.paperboy.presentation.intro.choose.ChooseChannelsFragment
 import deniskaminskiy.paperboy.utils.hideKeyboard
 import deniskaminskiy.paperboy.utils.open
@@ -76,6 +77,11 @@ class AuthCodeFragment : BaseFragment<AuthCodePresenter, AuthCodeView>(), AuthCo
             4 -> ivFourth.text = newText
             else -> ivFifth.text = newText
         }
+    }
+
+    override fun showAuthSecurityCode() {
+        AuthSecurityCodeFragment.newInstance()
+            .open(activity, android.R.id.content, AuthSecurityCodeFragment.TAG)
     }
 
     override fun showImportChannels() {

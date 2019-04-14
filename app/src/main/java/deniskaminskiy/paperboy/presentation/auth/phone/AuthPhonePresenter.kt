@@ -70,7 +70,7 @@ class AuthPhonePresenter(
             try {
                 phoneNumber = clearNumber.toLong()
                 //if (clearNumber.length > MAX_LENGTH_PHONE_NUMBER) throw java.lang.NumberFormatException()
-                if (clearNumber.length >= MAX_LENGTH_PHONE_NUMBER) view?.openAuthCode()
+                if (clearNumber.length >= MAX_LENGTH_PHONE_NUMBER) view?.showAuthCode()
             } catch (e: NumberFormatException) {
                 onPhoneNumberChanged(newNumber.dropLast(1))
             }

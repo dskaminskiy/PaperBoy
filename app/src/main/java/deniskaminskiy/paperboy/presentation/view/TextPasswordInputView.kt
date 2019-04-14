@@ -2,9 +2,7 @@ package deniskaminskiy.paperboy.presentation.view
 
 import android.content.Context
 import android.graphics.Color
-import android.graphics.Rect
 import android.graphics.drawable.GradientDrawable
-import android.text.method.TransformationMethod
 import android.util.AttributeSet
 import android.view.KeyEvent
 import android.view.View
@@ -15,13 +13,9 @@ import deniskaminskiy.paperboy.utils.Colors
 import deniskaminskiy.paperboy.utils.ColorsFactory
 import deniskaminskiy.paperboy.utils.dp
 import deniskaminskiy.paperboy.utils.view.addOnTextChangedListener
-import kotlinx.android.synthetic.main.view_input.view.*
+import kotlinx.android.synthetic.main.view_number_input.view.*
 
-typealias OnTextChanged = (String) -> Unit
-typealias OnFocusChanged = (Boolean) -> Unit
-typealias OnBackspacePressedWithEmptyText = () -> Unit
-
-class InputView @JvmOverloads constructor(
+class TextPasswordInputView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
@@ -68,11 +62,17 @@ class InputView @JvmOverloads constructor(
         }
     }
 
+    var hintText: String
+        get() = etText.hint.toString()
+        set(value) {
+            etText.hint = value
+        }
+
     private val dpStrokeWidth = STROKE_WIDTH.dp(context)
     private val dpCornerRadius = CORNER_RADIUS.dp(context).toFloat()
 
     init {
-        View.inflate(context, R.layout.view_input, this)
+        View.inflate(context, R.layout.view_text_password_input, this)
 
         // При фокусе - показывать обводку и ставить курсор в конец
         etText.onFocusChangeListener = OnFocusChangeListener { v, hasFocus ->
@@ -91,30 +91,21 @@ class InputView @JvmOverloads constructor(
 
         // Отправляем ивент о попытке стереть пустую строку
         etText.setOnKeyListener { v, keyCode, event ->
-            if(event.action == KeyEvent.ACTION_DOWN && event.keyCode == KeyEvent.KEYCODE_DEL && text.isEmpty()) {
+            if (event.action == KeyEvent.ACTION_DOWN && event.keyCode == KeyEvent.KEYCODE_DEL && text.isEmpty()) {
                 onBackspacePressedWithEmptyText.invoke()
             }
             false
         }
 
-        // Нужная клавиатура достигается путем "клавы для пароля", но та скрывает введенные символы
-        // Меняем логику скрытия символов и просто отображаем их
-        etText.transformationMethod = object: TransformationMethod {
-            override fun getTransformation(source: CharSequence, view: View): CharSequence = source
-
-            override fun onFocusChanged(
-                view: View?,
-                sourceText: CharSequence?,
-                focused: Boolean,
-                direction: Int,
-                previouslyFocusedRect: Rect?
-            ) {
-
-            }
-
-        }
-
         background = defaultBackground
+    }
+
+    init {
+        val a = context.theme.obtainStyledAttributes(attrs, R.styleable.TextPasswordInputView, 0, 0)
+
+        hintText = a.getString(R.styleable.TextPasswordInputView_hintText) ?: ""
+
+        a.recycle()
     }
 
     fun setSelectionToEnd() {

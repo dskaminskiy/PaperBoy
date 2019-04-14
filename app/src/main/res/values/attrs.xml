@@ -9,17 +9,20 @@
     <attr name="rightIconColor" format="color"/>
     <attr name="backgroundColor" format="color"/>
     <attr name="titleColor" format="color"/>
+    <attr name="hintText" format="string"/>
 
     <!-- ICONS -->
     <attr name="leftIconConstant" format="enum">
-        <enum name="ICON_ADD" value="0" />
+        <enum name="ICON_ADD" value="0"/>
         <enum name="ICON_ARROW_BACK" value="1"/>
         <enum name="ICON_TRASH" value="2"/>
+        <enum name="ICON_ARROW_FORWARD" value="3"/>
     </attr>
     <attr name="rightIconConstant">
-        <enum name="ICON_ADD" value="0" />
+        <enum name="ICON_ADD" value="0"/>
         <enum name="ICON_ARROW_BACK" value="1"/>
         <enum name="ICON_TRASH" value="2"/>
+        <enum name="ICON_ARROW_FORWARD" value="3"/>
     </attr>
 
     <declare-styleable name="CheckItemView">
@@ -37,6 +40,14 @@
         <attr name="rightIconConstant"/>
         <attr name="leftIconColor"/>
         <attr name="rightIconColor"/>
+    </declare-styleable>
+
+    <declare-styleable name="NumberInputView">
+        <attr name="hintText"/>
+    </declare-styleable>
+
+    <declare-styleable name="TextPasswordInputView">
+        <attr name="hintText"/>
     </declare-styleable>
 
 </resources>
