@@ -25,6 +25,7 @@ class AuthSecurityCodeFragment : BaseFragment<AuthSecurityCodePresenter, AuthSec
 
         presenter = AuthSecurityCodePresenter(this).apply {
             vBack.setOnClickListener { onBackClick() }
+            vNext.setOnClickListener { onBackClick() }
         }
 
         ivPasscode.post {
