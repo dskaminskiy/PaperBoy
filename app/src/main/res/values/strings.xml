@@ -19,4 +19,6 @@
     <string name="enter_security_passcode">Enter security passcode</string>
     <string name="enter_passcode">Enter passcode</string>
     <string name="next">Next</string>
+    <string name="send_code_as_sms">Send code as an SMS</string>
+    <string name="code_was_sent_to_you_by_sms">The code was sent to you by SMS</string>
 </resources>

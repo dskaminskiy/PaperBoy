@@ -13,7 +13,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            android:layout_marginBottom="40dp"
+            android:layout_marginBottom="36dp"
             android:orientation="vertical">
 
         <LinearLayout
@@ -108,6 +108,19 @@
                     android:focusableInTouchMode="false"/>
 
         </LinearLayout>
+
+        <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/vSendSms"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/send_code_as_sms"
+                android:gravity="center_vertical"
+                android:paddingEnd="4dp"
+                android:includeFontPadding="false"
+                android:layout_marginTop="28dp"
+                android:minHeight="28dp"
+                style="@style/TextStyle.Sans.Semibold.16"
+                android:textColor="@color/admiral"/>
 
     </LinearLayout>
 

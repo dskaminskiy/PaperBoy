@@ -39,6 +39,10 @@ class AuthCodePresenter(
         }
     }
 
+    fun onSendSmsClick() {
+        view?.showSmsSended()
+    }
+
     private fun updateView() {
         isInputsUpdating = true
         view?.show(AuthCodePresentModel(code))

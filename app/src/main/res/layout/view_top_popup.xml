@@ -10,8 +10,9 @@
             android:id="@+id/ivIcon"
             android:layout_width="24dp"
             android:layout_height="24dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="28dp"
             tools:src="@drawable/ic_arrow_up"
-            android:layout_gravity="center_vertical"
             android:layout_marginStart="16dp"
             tools:tint="@color/paper"/>
 
@@ -32,7 +33,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 tools:text="Oops, something just happend"
-                style="@style/TextStyle.Sans.Semibold.20"
+                style="@style/TextStyle.Sans.Semibold.16"
                 android:minHeight="20dp"
                 android:textColor="@color/paper"
                 android:includeFontPadding="false"
@@ -44,7 +45,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 tools:text="It was shit. Sometimes shit happens"
-                style="@style/TextStyle.Sans.Semibold.16"
+                style="@style/TextStyle.Sans.Medium.14"
                 android:minHeight="16dp"
                 android:textColor="@color/print40"
                 android:includeFontPadding="false"

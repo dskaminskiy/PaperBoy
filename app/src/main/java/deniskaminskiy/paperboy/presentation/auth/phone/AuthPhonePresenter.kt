@@ -11,7 +11,7 @@ class AuthPhonePresenter(
 
     companion object {
         private const val MAX_LENGTH_REIGN_NUMBER = 3
-        private const val MAX_LENGTH_PHONE_NUMBER = 2 // 10
+        private const val MAX_LENGTH_PHONE_NUMBER = 10
     }
 
     var authPhone = AuthPhone.EMPTY
@@ -38,6 +38,10 @@ class AuthPhonePresenter(
 
     private fun updateView() {
         view?.show(presentMapper.map(authPhone))
+    }
+
+    fun onNextClick() {
+        view?.showAuthCode()
     }
 
     /**
@@ -69,8 +73,7 @@ class AuthPhonePresenter(
 
             try {
                 phoneNumber = clearNumber.toLong()
-                //if (clearNumber.length > MAX_LENGTH_PHONE_NUMBER) throw java.lang.NumberFormatException()
-                if (clearNumber.length >= MAX_LENGTH_PHONE_NUMBER) view?.showAuthCode()
+                if (clearNumber.length > MAX_LENGTH_PHONE_NUMBER) throw java.lang.NumberFormatException()
             } catch (e: NumberFormatException) {
                 onPhoneNumberChanged(newNumber.dropLast(1))
             }

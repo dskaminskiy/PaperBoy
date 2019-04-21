@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             android:layout_width="match_parent"
+             xmlns:app="http://schemas.android.com/apk/res-auto" android:layout_width="match_parent"
              android:clickable="true"
              android:focusable="true"
              android:layout_height="match_parent"
@@ -56,6 +56,16 @@
                     android:minWidth="200dp"/>
 
         </LinearLayout>
+
+        <deniskaminskiy.paperboy.presentation.view.ButtonView
+                android:id="@+id/vNext"
+                android:layout_width="match_parent"
+                android:layout_marginTop="24dp"
+                app:title="@string/next"
+                app:titleColor="@color/paper"
+                app:rightIconConstant="ICON_ARROW_FORWARD"
+                app:rightIconColor="@color/paper"
+                android:layout_height="wrap_content"/>
 
     </LinearLayout>
 

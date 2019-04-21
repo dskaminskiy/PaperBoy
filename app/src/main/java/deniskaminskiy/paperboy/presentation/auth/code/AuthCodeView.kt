@@ -12,6 +12,8 @@ interface AuthCodeView : View {
 
     fun showImportChannels()
 
+    fun showSmsSended()
+
 }
 
 data class AuthCodePresentModel(

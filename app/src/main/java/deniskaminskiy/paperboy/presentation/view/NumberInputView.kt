@@ -47,6 +47,7 @@ class NumberInputView @JvmOverloads constructor(
         set(value) {
             if (etText.text.toString() != value) {
                 etText.setText(value)
+                setSelectionToEnd()
             }
         }
         get() = etText.text.toString()

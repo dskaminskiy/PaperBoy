@@ -11,6 +11,7 @@ import deniskaminskiy.paperboy.presentation.auth.security.AuthSecurityCodeFragme
 import deniskaminskiy.paperboy.presentation.intro.choose.ChooseChannelsFragment
 import deniskaminskiy.paperboy.utils.hideKeyboard
 import deniskaminskiy.paperboy.utils.open
+import deniskaminskiy.paperboy.utils.toast
 import kotlinx.android.synthetic.main.fragment_auth_code.*
 
 class AuthCodeFragment : BaseFragment<AuthCodePresenter, AuthCodeView>(), AuthCodeView {
@@ -34,6 +35,7 @@ class AuthCodeFragment : BaseFragment<AuthCodePresenter, AuthCodeView>(), AuthCo
             }
 
             vBack.setOnClickListener { presenter.onBackClick() }
+            vSendSms.setOnClickListener { presenter.onSendSmsClick() }
         }
 
     }
@@ -90,8 +92,11 @@ class AuthCodeFragment : BaseFragment<AuthCodePresenter, AuthCodeView>(), AuthCo
             .open(activity, R.id.vgContent, ChooseChannelsFragment.TAG)
     }
 
+    override fun showSmsSended() {
+        toast(getString(R.string.code_was_sent_to_you_by_sms))
+    }
+
     override fun close() {
-        hideKeyboard()
         activity?.supportFragmentManager?.popBackStack()
     }
 
