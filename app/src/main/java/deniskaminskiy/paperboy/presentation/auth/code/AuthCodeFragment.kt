@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.IntRange
+import androidx.fragment.app.FragmentManager
 import deniskaminskiy.paperboy.R
 import deniskaminskiy.paperboy.core.BaseFragment
 import deniskaminskiy.paperboy.presentation.auth.security.AuthSecurityCodeFragment
@@ -20,6 +21,14 @@ class AuthCodeFragment : BaseFragment<AuthCodePresenter, AuthCodeView>(), AuthCo
         const val TAG = "AuthCodeFragment"
 
         fun newInstance() = AuthCodeFragment()
+    }
+
+    private val onBackStackChangedListener = FragmentManager.OnBackStackChangedListener {
+        if (activity?.supportFragmentManager?.fragments?.last() == this) {
+            ivFirst.post {
+                ivFirst.requestFocus()
+            }
+        }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
@@ -38,6 +47,12 @@ class AuthCodeFragment : BaseFragment<AuthCodePresenter, AuthCodeView>(), AuthCo
             vSendSms.setOnClickListener { presenter.onSendSmsClick() }
         }
 
+        activity?.supportFragmentManager?.addOnBackStackChangedListener(onBackStackChangedListener)
+    }
+
+    override fun onDestroyView() {
+        activity?.supportFragmentManager?.removeOnBackStackChangedListener(onBackStackChangedListener)
+        super.onDestroyView()
     }
 
     override fun show(model: AuthCodePresentModel) {
@@ -53,6 +68,10 @@ class AuthCodeFragment : BaseFragment<AuthCodePresenter, AuthCodeView>(), AuthCo
                 updateInputText(i, "")
             }
         } else {
+            ivFifth.text = ""
+            ivFourth.text = ""
+            ivThird.text = ""
+            ivSecond.text = ""
             ivFirst.text = ""
         }
 

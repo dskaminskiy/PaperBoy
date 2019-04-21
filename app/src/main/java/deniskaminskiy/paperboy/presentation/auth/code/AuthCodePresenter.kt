@@ -28,6 +28,7 @@ class AuthCodePresenter(
                 code += newNumber
                 if (code.length >= CODE_LENGTH) {
                     //view?.showImportChannels()
+                    clearInputs()
                     view?.showAuthSecurityCode()
                 }
             } else {
@@ -37,6 +38,11 @@ class AuthCodePresenter(
             }
             updateView()
         }
+    }
+
+    private fun clearInputs() {
+        code = ""
+        updateView()
     }
 
     fun onSendSmsClick() {

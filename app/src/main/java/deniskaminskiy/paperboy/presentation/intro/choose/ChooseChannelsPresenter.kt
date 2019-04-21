@@ -50,8 +50,8 @@ class ChooseChannelsPresenter(
             ChooseChannelsPresentModel(
                 title = title,
                 subtitle = subtitle,
-                channels = mapperToPresentModel.map(channels)
-
+                channels = mapperToPresentModel.map(channels),
+                isFabVisible = channels.any { it.isChecked }
             )
         )
     }
@@ -67,6 +67,10 @@ class ChooseChannelsPresenter(
 
     fun onSkipClick() {
         // temp
+        view?.showRemoveTelegramChannels()
+    }
+
+    fun onFabClick() {
         view?.showRemoveTelegramChannels()
     }
 

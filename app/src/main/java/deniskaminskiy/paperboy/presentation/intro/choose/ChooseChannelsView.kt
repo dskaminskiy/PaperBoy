@@ -17,5 +17,6 @@ interface ChooseChannelsView : View {
 data class ChooseChannelsPresentModel(
     val title: SpannableStringBuilder,
     val subtitle: String,
-    val channels: List<CheckItemPresentItemModel<ChannelImport>>
+    val channels: List<CheckItemPresentItemModel<ChannelImport>>,
+    val isFabVisible: Boolean
 )

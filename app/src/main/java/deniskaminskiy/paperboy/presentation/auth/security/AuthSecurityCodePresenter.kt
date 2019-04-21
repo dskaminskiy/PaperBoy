@@ -10,4 +10,8 @@ class AuthSecurityCodePresenter(
         view?.close()
     }
 
+    fun onNextClick() {
+        view?.showImportChannels()
+    }
+
 }

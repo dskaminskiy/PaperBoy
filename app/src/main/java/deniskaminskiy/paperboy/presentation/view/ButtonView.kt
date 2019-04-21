@@ -26,6 +26,9 @@ class ButtonView @JvmOverloads constructor(
         const val CORNER_RADIUS = 12
     }
 
+    private val palette: Colors by lazy { ColorsFactory.create(context) }
+    private val dpCornerRadius = CORNER_RADIUS.dp(context).toFloat()
+
     var leftIcon: Icon? = null
         set(value) {
             field = value
@@ -54,15 +57,21 @@ class ButtonView @JvmOverloads constructor(
             }
         }
 
-    private val palette: Colors by lazy { ColorsFactory.create(context) }
-
-    private val dpCornerRadius = CORNER_RADIUS.dp(context).toFloat()
+    var mBackgroundColor: Int = palette.print100
+        set(value) {
+            field = value
+            if (value != -1) {
+                background = defaultBackground.apply {
+                    setColor(value)
+                }
+            }
+        }
 
     private val defaultBackground by lazy {
         GradientDrawable().apply {
             shape = GradientDrawable.RECTANGLE
             cornerRadius = dpCornerRadius
-            setColor(palette.print100)
+            setColor(mBackgroundColor)
         }
     }
 
@@ -98,7 +107,7 @@ class ButtonView @JvmOverloads constructor(
         rightIcon = model.rightIcon
         setRightIconColor(model.rightIconColor)
 
-        setBackgroundColor(model.backgroundColor)
+        mBackgroundColor = model.backgroundColor
     }
 
     /**
@@ -123,11 +132,10 @@ class ButtonView @JvmOverloads constructor(
         }
     }
 
-    override fun setBackgroundColor(color: Int) {
-        if (color != -1) {
-            background = defaultBackground.apply {
-                setColor(color)
-            }
+    override fun setEnabled(enabled: Boolean) {
+        super.setEnabled(enabled)
+        background = defaultBackground.apply {
+            setColor(if (enabled) mBackgroundColor else palette.print40)
         }
     }
 

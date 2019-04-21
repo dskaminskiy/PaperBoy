@@ -27,7 +27,6 @@ class AuthPhoneFragment : BaseFragment<AuthPhonePresenter, AuthPhoneView>(), Aut
         }
     }
 
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
         inflater.inflate(R.layout.fragment_auth_phone, container, false)
 
@@ -51,9 +50,9 @@ class AuthPhoneFragment : BaseFragment<AuthPhonePresenter, AuthPhoneView>(), Aut
         activity?.supportFragmentManager?.addOnBackStackChangedListener(onBackStackChangedListener)
     }
 
-    override fun onDetach() {
+    override fun onDestroyView() {
         activity?.supportFragmentManager?.removeOnBackStackChangedListener(onBackStackChangedListener)
-        super.onDetach()
+        super.onDestroyView()
     }
 
     override fun show(model: AuthPhonePresentModel) {

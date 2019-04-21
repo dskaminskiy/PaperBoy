@@ -6,4 +6,6 @@ interface AuthSecurityCodeView : View {
 
     fun close()
 
+    fun showImportChannels()
+
 }
