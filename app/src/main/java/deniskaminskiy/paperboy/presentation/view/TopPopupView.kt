@@ -1,19 +1,27 @@
 package deniskaminskiy.paperboy.presentation.view
 
+import android.animation.Animator
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
 import android.content.Context
 import android.graphics.drawable.GradientDrawable
 import android.util.AttributeSet
 import android.view.View
+import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.LinearLayout
 import androidx.annotation.ColorInt
 import deniskaminskiy.paperboy.R
 import deniskaminskiy.paperboy.utils.Colors
 import deniskaminskiy.paperboy.utils.ColorsFactory
+import deniskaminskiy.paperboy.utils.SimpleAnimatorListener
 import deniskaminskiy.paperboy.utils.dp
 import deniskaminskiy.paperboy.utils.icon.Icon
 import deniskaminskiy.paperboy.utils.icon.IconFactory
 import deniskaminskiy.paperboy.utils.icon.IconRendererFactory
 import deniskaminskiy.paperboy.utils.icon.PaintedIcon
+import deniskaminskiy.paperboy.utils.view.gone
+import deniskaminskiy.paperboy.utils.view.visible
+import kotlinx.android.synthetic.main.fragment_auth_code.*
 import kotlinx.android.synthetic.main.view_top_popup.view.*
 
 class TopPopupView @JvmOverloads constructor(
@@ -24,6 +32,53 @@ class TopPopupView @JvmOverloads constructor(
 
     companion object {
         const val CORNER_RADIUS = 12
+
+        private const val DURATION_ANIM: Long = 350
+        private const val DELAY_START_HIDING_ANIM: Long = 2000
+
+        private const val PROPERTY_TRANSLATION_Y = "translationY"
+        private const val PROPERTY_ALPHA = "alpha"
+
+        private const val TRANSLATION_Y_OFFSET = -40f
+        private const val TRANSLATION_Y_ORIGIN = 0f
+
+        private const val ALPHA_VISIBLE = 1f
+        private const val ALPHA_GONE = 0f
+    }
+
+    private val palette: Colors by lazy { ColorsFactory.create(context) }
+
+    private val dpCornerRadius = CORNER_RADIUS.dp(context).toFloat()
+
+    private val defaultBackground by lazy {
+        GradientDrawable().apply {
+            shape = GradientDrawable.RECTANGLE
+            cornerRadius = dpCornerRadius
+            setColor(palette.print100)
+        }
+    }
+
+    private val animShow = AnimatorSet().apply {
+        playTogether(
+            ObjectAnimator.ofFloat(this@TopPopupView, PROPERTY_TRANSLATION_Y, TRANSLATION_Y_OFFSET, TRANSLATION_Y_ORIGIN),
+            ObjectAnimator.ofFloat(this@TopPopupView, PROPERTY_ALPHA, ALPHA_GONE, ALPHA_VISIBLE)
+        )
+        interpolator = AccelerateDecelerateInterpolator()
+        duration = DURATION_ANIM
+    }
+
+    private val animHide = AnimatorSet().apply {
+        playTogether(
+            ObjectAnimator.ofFloat(this@TopPopupView, PROPERTY_TRANSLATION_Y, TRANSLATION_Y_ORIGIN, TRANSLATION_Y_OFFSET),
+            ObjectAnimator.ofFloat(this@TopPopupView, PROPERTY_ALPHA, ALPHA_VISIBLE, ALPHA_GONE)
+        )
+        duration = DURATION_ANIM
+        startDelay = DELAY_START_HIDING_ANIM
+        interpolator = AccelerateDecelerateInterpolator()
+    }
+
+    private val animSet = AnimatorSet().apply {
+        play(animShow).before(animHide)
     }
 
     var title: String
@@ -61,18 +116,6 @@ class TopPopupView @JvmOverloads constructor(
                 ?.render(ivIcon)
         }
 
-    private val palette: Colors by lazy { ColorsFactory.create(context) }
-
-    private val dpCornerRadius = CORNER_RADIUS.dp(context).toFloat()
-
-    private val defaultBackground by lazy {
-        GradientDrawable().apply {
-            shape = GradientDrawable.RECTANGLE
-            cornerRadius = dpCornerRadius
-            setColor(palette.print100)
-        }
-    }
-
     init {
         View.inflate(context, R.layout.view_top_popup, this)
 
@@ -104,6 +147,44 @@ class TopPopupView @JvmOverloads constructor(
         setBackgroundColor(model.backgroundColor)
     }
 
+    fun showWithAnimation(model: TopPopupPresentModel, listener: OnPopupAnimationListener? = null) {
+        show(model)
+
+        if (animSet.isRunning || animSet.isStarted) {
+            animSet.cancel()
+        }
+
+        animShow.removeAllListeners()
+        animShow.addListener(object : SimpleAnimatorListener() {
+            override fun onAnimationStart(animation: Animator) {
+                listener?.onAnimationStart()
+                visible()
+                super.onAnimationStart(animation)
+            }
+
+            override fun onAnimationEnd(animation: Animator) {
+                listener?.onAnimationEnd()
+                super.onAnimationEnd(animation)
+            }
+        })
+
+        animHide.removeAllListeners()
+        animHide.addListener(object : SimpleAnimatorListener() {
+            override fun onAnimationStart(animation: Animator) {
+                listener?.onAnimationStart()
+                super.onAnimationStart(animation)
+            }
+
+            override fun onAnimationEnd(animation: Animator) {
+                listener?.onAnimationEnd()
+                gone()
+                super.onAnimationEnd(animation)
+            }
+        })
+
+        animSet.start()
+    }
+
 
     fun setIconColor(@ColorInt color: Int) {
         if (color != -1) {
@@ -119,6 +200,14 @@ class TopPopupView @JvmOverloads constructor(
                 setColor(color)
             }
         }
+    }
+
+    interface OnPopupAnimationListener {
+
+        fun onAnimationStart()
+
+        fun onAnimationEnd()
+
     }
 
 }
