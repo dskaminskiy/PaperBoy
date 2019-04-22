@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.animation.AnimationSet
 import androidx.annotation.IntRange
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentManager
 import deniskaminskiy.paperboy.R
 import deniskaminskiy.paperboy.core.BaseFragment
@@ -17,12 +18,9 @@ import deniskaminskiy.paperboy.presentation.auth.security.AuthSecurityCodeFragme
 import deniskaminskiy.paperboy.presentation.intro.choose.ChooseChannelsFragment
 import deniskaminskiy.paperboy.presentation.view.TopPopupPresentModel
 import deniskaminskiy.paperboy.presentation.view.TopPopupView
-import deniskaminskiy.paperboy.utils.SimpleAnimatorListener
-import deniskaminskiy.paperboy.utils.hideKeyboard
+import deniskaminskiy.paperboy.utils.*
 import deniskaminskiy.paperboy.utils.icon.IconConstant
 import deniskaminskiy.paperboy.utils.icon.IconFactory
-import deniskaminskiy.paperboy.utils.open
-import deniskaminskiy.paperboy.utils.toast
 import deniskaminskiy.paperboy.utils.view.gone
 import deniskaminskiy.paperboy.utils.view.visible
 import kotlinx.android.synthetic.main.fragment_auth_code.*
@@ -130,7 +128,8 @@ class AuthCodeFragment : BaseFragment<AuthCodePresenter, AuthCodeView>(), AuthCo
             TopPopupPresentModel(
                 "Something happened!",
                 "Sometimes shit happens :(",
-                icon = IconFactory.create(IconConstant.TRASH.constant)
+                icon = IconFactory.create(IconConstant.TRASH.constant),
+                iconColor = ColorsFactory.create(this).marlboroNew
             ),
             object : TopPopupView.OnPopupAnimationListener {
                 override fun onAnimationStart() {
