@@ -1,18 +1,26 @@
 package deniskaminskiy.paperboy.presentation.auth.code
 
+import android.animation.Animator
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AccelerateDecelerateInterpolator
+import android.view.animation.AnimationSet
 import androidx.annotation.IntRange
 import androidx.fragment.app.FragmentManager
 import deniskaminskiy.paperboy.R
 import deniskaminskiy.paperboy.core.BaseFragment
 import deniskaminskiy.paperboy.presentation.auth.security.AuthSecurityCodeFragment
 import deniskaminskiy.paperboy.presentation.intro.choose.ChooseChannelsFragment
+import deniskaminskiy.paperboy.utils.SimpleAnimatorListener
 import deniskaminskiy.paperboy.utils.hideKeyboard
 import deniskaminskiy.paperboy.utils.open
 import deniskaminskiy.paperboy.utils.toast
+import deniskaminskiy.paperboy.utils.view.gone
+import deniskaminskiy.paperboy.utils.view.visible
 import kotlinx.android.synthetic.main.fragment_auth_code.*
 
 class AuthCodeFragment : BaseFragment<AuthCodePresenter, AuthCodeView>(), AuthCodeView {
@@ -109,6 +117,58 @@ class AuthCodeFragment : BaseFragment<AuthCodePresenter, AuthCodeView>(), AuthCo
         hideKeyboard()
         ChooseChannelsFragment.newInstance(true)
             .open(activity, R.id.vgContent, ChooseChannelsFragment.TAG)
+    }
+
+    override fun showError() {
+        val showAnim = AnimatorSet().apply {
+            playTogether(
+                ObjectAnimator.ofFloat(vTopPopup, "translationY", -80f, 0f),
+                ObjectAnimator.ofFloat(vTopPopup, "alpha", 0f, 1f)
+            )
+            interpolator = AccelerateDecelerateInterpolator()
+            duration = 350
+        }
+
+        val hideAnim = AnimatorSet().apply {
+            playTogether(
+                ObjectAnimator.ofFloat(vTopPopup, "translationY", 0f, -80f),
+                ObjectAnimator.ofFloat(vTopPopup, "alpha", 1f, 0f)
+            )
+            duration = 350
+            startDelay = 1000
+            interpolator = AccelerateDecelerateInterpolator()
+        }
+
+        showAnim.addListener(object : SimpleAnimatorListener() {
+            override fun onAnimationStart(animation: Animator) {
+                presenter?.onAnimationStart()
+                vTopPopup.visible()
+                super.onAnimationStart(animation)
+            }
+
+            override fun onAnimationEnd(animation: Animator) {
+                presenter?.onAnimationEnd()
+                super.onAnimationEnd(animation)
+            }
+        })
+
+        hideAnim.addListener(object : SimpleAnimatorListener() {
+            override fun onAnimationStart(animation: Animator) {
+                presenter?.onAnimationStart()
+                super.onAnimationStart(animation)
+            }
+
+            override fun onAnimationEnd(animation: Animator) {
+                presenter?.onAnimationEnd()
+                vTopPopup.gone()
+                super.onAnimationEnd(animation)
+            }
+        })
+
+        val anim = AnimatorSet().apply {
+            play(showAnim).before(hideAnim)
+        }.start()
+
     }
 
     override fun showSmsSended() {

@@ -13,6 +13,7 @@ class AuthCodePresenter(
     private var code = ""
 
     private var isInputsUpdating = false
+    private var isAnimationRunning = false
 
     override fun onStart(viewCreated: Boolean) {
         super.onStart(viewCreated)
@@ -46,7 +47,8 @@ class AuthCodePresenter(
     }
 
     fun onSendSmsClick() {
-        view?.showSmsSended()
+        //view?.showSmsSended()
+        view?.showError()
     }
 
     private fun updateView() {
@@ -60,6 +62,14 @@ class AuthCodePresenter(
 
     fun onBackClick() {
         view?.close()
+    }
+
+    fun onAnimationStart() {
+        isAnimationRunning = true
+    }
+
+    fun onAnimationEnd() {
+        isAnimationRunning = false
     }
 
     fun onBackspacePressedWithEmptyText() {

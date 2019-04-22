@@ -86,6 +86,7 @@ class TopPopupView @JvmOverloads constructor(
                 subtitleColor = a.getColor(R.styleable.TopPopupView_subtitleColor, palette.print40),
                 icon = a.getInt(R.styleable.TopPopupView_iconConstant, -1)
                     .takeIf { it != -1 }?.let(IconFactory::create),
+                iconColor = a.getInt(R.styleable.TopPopupView_iconColor, palette.marlboroNew),
                 backgroundColor = a.getColor(R.styleable.TopPopupView_backgroundColor, palette.print100)
             )
         )
@@ -98,6 +99,7 @@ class TopPopupView @JvmOverloads constructor(
         subtitle = model.subtitle
         titleColor = model.titleColor
         subtitleColor = model.subtitleColor
+        icon = model.icon
         setIconColor(model.iconColor)
         setBackgroundColor(model.backgroundColor)
     }

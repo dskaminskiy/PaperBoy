@@ -6,6 +6,8 @@ interface AuthCodeView : View {
 
     fun show(model: AuthCodePresentModel)
 
+    fun showError()
+
     fun close()
 
     fun showAuthSecurityCode()

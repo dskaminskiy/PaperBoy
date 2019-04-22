@@ -66,6 +66,7 @@
         <attr name="subtitle"/>
         <attr name="subtitleColor"/>
         <attr name="iconConstant"/>
+        <attr name="iconColor"/>
         <attr name="backgroundColor"/>
     </declare-styleable>
 
