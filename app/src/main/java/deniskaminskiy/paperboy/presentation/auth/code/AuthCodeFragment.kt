@@ -66,6 +66,8 @@ class AuthCodeFragment : BaseFragment<AuthCodePresenter, AuthCodeView>(), AuthCo
     }
 
     override fun show(model: AuthCodePresentModel) {
+        vLoading.gone()
+
         val textLength = model.code.length
 
         if (textLength >= 1) {
@@ -98,6 +100,10 @@ class AuthCodeFragment : BaseFragment<AuthCodePresenter, AuthCodeView>(), AuthCo
         presenter?.onInputsUpdateFinish()
     }
 
+    override fun showLoading() {
+        vLoading.visible()
+    }
+
     private fun updateInputText(
         @IntRange(from = 1, to = 5) inputViewNumber: Int,
         newText: String
@@ -124,6 +130,8 @@ class AuthCodeFragment : BaseFragment<AuthCodePresenter, AuthCodeView>(), AuthCo
     }
 
     override fun showError() {
+        vLoading.gone()
+
         vTopPopup.showWithAnimation(
             TopPopupPresentModel(
                 "Something happened!",

@@ -8,6 +8,8 @@ interface AuthCodeView : View {
 
     fun showError()
 
+    fun showLoading()
+
     fun close()
 
     fun showAuthSecurityCode()

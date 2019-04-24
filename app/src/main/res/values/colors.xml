@@ -10,8 +10,7 @@
     <color name="iconLightAccent">@color/print70</color>
 
     <color name="inputCursorColor">@color/print50</color>
-
-    <color name="navigation_bar_color">@color/print100</color>
+    <color name="loading_view_shadow_color">#59000000</color>
 
     <color name="paper">#fafaf7</color>
 
