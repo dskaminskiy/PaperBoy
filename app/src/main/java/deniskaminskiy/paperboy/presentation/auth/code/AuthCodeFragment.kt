@@ -80,11 +80,9 @@ class AuthCodeFragment : BaseFragment<AuthCodePresenter, AuthCodeView>(), AuthCo
                 updateInputText(i, "")
             }
         } else {
-            ivFifth.text = ""
-            ivFourth.text = ""
-            ivThird.text = ""
-            ivSecond.text = ""
-            ivFirst.text = ""
+            for (i in 1..5) {
+                updateInputText(i, "")
+            }
         }
 
         textLength.let {
