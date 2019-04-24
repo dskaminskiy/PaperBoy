@@ -6,12 +6,14 @@
     <attr name="extraTitle" format="string"/>
     <attr name="isChecked" format="boolean"/>
     <attr name="isDivider" format="boolean"/>
+    <attr name="iconColor" format="color"/>
     <attr name="leftIconColor" format="color"/>
     <attr name="rightIconColor" format="color"/>
     <attr name="backgroundColor" format="color"/>
     <attr name="titleColor" format="color"/>
     <attr name="subtitleColor" format="color"/>
     <attr name="hintText" format="string"/>
+    <attr name="iconBackgroundColor" format="color"/>
 
 
     <!-- ICONS -->
@@ -68,6 +70,16 @@
         <attr name="iconConstant"/>
         <attr name="iconColor"/>
         <attr name="backgroundColor"/>
+    </declare-styleable>
+
+    <declare-styleable name="MiddleItemView">
+        <attr name="title"/>
+        <attr name="subtitle"/>
+        <attr name="extraTitle"/>
+        <attr name="isDivider"/>
+        <attr name="iconConstant"/>
+        <attr name="iconColor"/>
+        <attr name="iconBackgroundColor"/>
     </declare-styleable>
 
 </resources>

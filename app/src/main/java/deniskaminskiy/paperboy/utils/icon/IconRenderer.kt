@@ -1,5 +1,8 @@
 package deniskaminskiy.paperboy.utils.icon
 
+import android.graphics.Color
+import android.graphics.drawable.Drawable
+import android.graphics.drawable.GradientDrawable
 import android.widget.ImageView
 import androidx.annotation.DrawableRes
 import deniskaminskiy.paperboy.R
@@ -12,6 +15,13 @@ interface IconRenderer {
 
 object IconRendererFactory {
 
+    private val defaultPlaceholder: Drawable by lazy {
+        GradientDrawable().apply {
+            shape = GradientDrawable.OVAL
+            setColor(Color.GRAY)
+        }
+    }
+
     /**
      * Возвращает экземпляр интерфейса [IconRenderer], способного отображать все форматы иконок,
      * описанные моделью [Icon]
@@ -20,23 +30,26 @@ object IconRendererFactory {
      * @param isCircle          - флаг, указывающий должна ли иконка обрезаться по кругу
      * @param placeholder       - заглушка, используемая при отсутсвии или возникновении проблем с
      *                            установлением иконки
+     * @param cornersRadius     - значение закругления углов ( dp )
      */
     @JvmStatic
-    fun create(icon: Icon?, isCircle: Boolean = false,
-               placeholder: Int = R.drawable.oval_solid_print_40): IconRenderer {
+    fun create(
+        icon: Icon?, urlIconShape: UrlIconShape = UrlIconShape.SQUARE,
+        placeholder: Drawable = defaultPlaceholder
+    ): IconRenderer {
 
         return when (icon) {
-            is UrlIcon              -> UrlIconRenderer(icon, isCircle, placeholder)
+            is UrlIcon -> UrlIconRenderer(icon, urlIconShape, placeholder)
             is DrawableConstantIcon -> DrawableConstantIconRenderer(icon)
-            is DrawableIcon         -> DrawableIconRenderer(icon)
-            else                    -> PlaceholderIconRenderer(placeholder)
+            is DrawableIcon -> DrawableIconRenderer(icon)
+            else -> PlaceholderIconRenderer(placeholder)
         }
     }
 
 }
 
 data class DrawableConstantIconRenderer(
-        private val icon: DrawableConstantIcon
+    private val icon: DrawableConstantIcon
 ) : IconRenderer {
 
     override fun render(imageView: ImageView) {
@@ -56,17 +69,17 @@ data class DrawableIconRenderer(
 }
 
 data class PlaceholderIconRenderer(
-        @DrawableRes private val placeholder: Int
+    @DrawableRes private val placeholder: Drawable
 ) : IconRenderer {
     override fun render(imageView: ImageView) {
-        imageView.setImageResource(placeholder)
+        imageView.setImageDrawable(placeholder)
     }
 }
 
 data class UrlIconRenderer(
-        private val icon: UrlIcon,
-        private val isCircle: Boolean,
-        @DrawableRes private val placeholder: Int
+    private val icon: UrlIcon,
+    private val shape: UrlIconShape,
+    @DrawableRes private val placeholder: Drawable
 ) : IconRenderer {
     override fun render(imageView: ImageView) {
 //        GlideApp.with(imageView)
@@ -74,9 +87,18 @@ data class UrlIconRenderer(
 //                .placeholder(placeholder)
 //                .error(placeholder)
 //                .centerCrop()
-//                .apply { if (isCircle) this.circleCrop() }
+//                .apply { if (shape == UrlIconShape.CIRCLE) this.circleCrop() }
 //                .into(imageView)
+
+        // TODO: CORNERS
+        // https://stackoverflow.com/questions/45186181/glide-rounded-corner-transform-issue
     }
 
+}
+
+enum class UrlIconShape(val cornersRadius: Int) {
+    SQUARE(0),
+    CIRCLE(0),
+    SUPER_ELLIPSE(4)
 }
 

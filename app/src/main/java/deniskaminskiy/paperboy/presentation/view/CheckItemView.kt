@@ -21,9 +21,14 @@ class CheckItemView @JvmOverloads constructor(
 ) : FrameLayout(context, attrs, defStyleAttr) {
 
     companion object {
-        const val EXTRA_TITLE_CORNER_RADIUS = 4
-        const val EXTRA_TITLE_STROKE_WIDTH = 1
+        private const val EXTRA_TITLE_CORNER_RADIUS = 4
+        private const val EXTRA_TITLE_STROKE_WIDTH = 1
     }
+
+    private val palette: Colors by lazy { ColorsFactory.create(context) }
+
+    private val dpStrokeWidth = EXTRA_TITLE_STROKE_WIDTH.dp(context)
+    private val dpCornerRadius = EXTRA_TITLE_CORNER_RADIUS.dp(context).toFloat()
 
     var title: String
         get() = tvTitle.text.toString()
@@ -49,11 +54,6 @@ class CheckItemView @JvmOverloads constructor(
         set(value) {
             vDivider goneIf !value
         }
-
-    private val palette: Colors by lazy { ColorsFactory.create(context) }
-
-    private val dpStrokeWidth = EXTRA_TITLE_STROKE_WIDTH.dp(context)
-    private val dpCornerRadius = EXTRA_TITLE_CORNER_RADIUS.dp(context).toFloat()
 
     init {
         View.inflate(context, R.layout.view_check_item, this)

@@ -29,6 +29,14 @@ class ButtonView @JvmOverloads constructor(
     private val palette: Colors by lazy { ColorsFactory.create(context) }
     private val dpCornerRadius = CORNER_RADIUS.dp(context).toFloat()
 
+    private val defaultBackground by lazy {
+        GradientDrawable().apply {
+            shape = GradientDrawable.RECTANGLE
+            cornerRadius = dpCornerRadius
+            setColor(mBackgroundColor)
+        }
+    }
+
     var leftIcon: Icon? = null
         set(value) {
             field = value
@@ -66,14 +74,6 @@ class ButtonView @JvmOverloads constructor(
                 }
             }
         }
-
-    private val defaultBackground by lazy {
-        GradientDrawable().apply {
-            shape = GradientDrawable.RECTANGLE
-            cornerRadius = dpCornerRadius
-            setColor(mBackgroundColor)
-        }
-    }
 
     init {
         View.inflate(context, R.layout.view_button, this)

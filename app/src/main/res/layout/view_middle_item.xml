@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content">
+
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivIcon"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                tools:src="#FF9800"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:layout_marginStart="16dp"/>
+
+        <LinearLayout
+                android:layout_width="0dp"
+                android:orientation="vertical"
+                android:gravity="center_vertical"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:layout_weight="1"
+                android:minHeight="40dp">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:text="Channel title"
+                    android:includeFontPadding="false"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:paddingTop="2dp"
+                    android:paddingBottom="2dp"
+                    style="@style/TextStyle.Sans.Semibold.16"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvSubtitle"
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="4dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/print70"
+                    tools:text="Дебаты Порошенко и Зеленского сложно понять, зачем были нужны столь громкие обещания"
+                    android:includeFontPadding="false"
+                    android:maxLines="2"
+                    android:ellipsize="end"
+                    android:paddingTop="2dp"
+                    android:paddingBottom="2dp"
+                    style="@style/TextStyle.Sans.Medium.14"/>
+
+        </LinearLayout>
+
+        <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvExtra"
+                android:layout_width="wrap_content"
+                android:layout_height="28dp"
+                android:layout_marginTop="16dp"
+                android:minWidth="24dp"
+                android:gravity="center"
+                style="@style/TextStyle.Sans.Medium.14"
+                android:includeFontPadding="false"
+                android:layout_marginEnd="16dp"
+                tools:text="4"/>
+
+    </LinearLayout>
+
+    <View
+            android:id="@+id/vDivider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginStart="72dp"
+            android:layout_gravity="bottom"
+            android:background="@color/print40"/>
+
+</FrameLayout>
