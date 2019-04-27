@@ -9,7 +9,7 @@ object ApiService {
 
     val paperboyApi: PaperboyApi by lazy {
         Retrofit.Builder()
-            .baseUrl("http://5.101.180.46/api/v1")
+            .baseUrl("http://5.101.180.46:8080/api/v1")
             .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(RxJava2CallAdapterFactory
                     .createWithScheduler(Schedulers.newThread()))
