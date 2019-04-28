@@ -1,5 +1,6 @@
 package deniskaminskiy.paperboy.data.api
 
+import com.readystatesoftware.chuck.BuildConfig
 import com.readystatesoftware.chuck.ChuckInterceptor
 import deniskaminskiy.paperboy.core.Factory
 import deniskaminskiy.paperboy.data.api.interceptors.ApplicationVersionInterceptor
@@ -17,6 +18,13 @@ class OkHttpClientFactory(
         val builder = okHttpBuilderFactory.create()
             .addInterceptor(ApplicationVersionInterceptor())
             .addInterceptor(ChuckInterceptor(contextDelegate.getContext()))
+
+        if (BuildConfig.DEBUG) {
+            builder.addInterceptor(HttpLoggingInterceptor(logger)
+                .apply {
+                    level = HttpLoggingInterceptor.Level.BODY
+                })
+        }
 
         return builder.build()
     }

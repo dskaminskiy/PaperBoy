@@ -1,9 +1,15 @@
 package deniskaminskiy.paperboy
 
-import android.app.Application
+import androidx.multidex.MultiDexApplication
+import deniskaminskiy.paperboy.data.api.ApiService
+import deniskaminskiy.paperboy.utils.ContextDelegateFactory
 
-class PaperBoyApplication : Application() {
+class PaperBoyApplication : MultiDexApplication() {
 
+    override fun onCreate() {
+        super.onCreate()
 
+        ApiService.init(ContextDelegateFactory.create(this))
+    }
 
 }
