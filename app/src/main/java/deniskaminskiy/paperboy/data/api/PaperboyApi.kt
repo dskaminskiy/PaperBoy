@@ -1,13 +1,23 @@
 package deniskaminskiy.paperboy.data.api
 
+import deniskaminskiy.paperboy.data.api.json.auth.AuthCodeRequest
+import deniskaminskiy.paperboy.data.api.json.auth.AuthCodeResponse
 import deniskaminskiy.paperboy.data.api.json.auth.AuthResponseJson
 import io.reactivex.Single
+import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.POST
 import retrofit2.http.Query
 
 interface PaperboyApi {
 
+    /**
+     * @param phoneNumber     - телефон передается в международном формате (пр: "+79261342532")
+     */
     @GET("auth")
-    fun auth(@Query("phoneNumber") phoneNumber: String) : Single<AuthResponseJson>
+    fun auth(@Query("phoneNumber") phoneNumber: String): Single<AuthResponseJson>
+
+    @POST("auth/code")
+    fun authCode(@Body codeRequest: AuthCodeRequest): Single<AuthCodeResponse>
 
 }

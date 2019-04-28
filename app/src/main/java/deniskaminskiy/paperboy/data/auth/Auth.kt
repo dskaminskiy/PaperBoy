@@ -1,6 +1,6 @@
 package deniskaminskiy.paperboy.data.auth
 
-data class AuthCode(
+data class Auth(
     val token: String,
     val error: String
 )

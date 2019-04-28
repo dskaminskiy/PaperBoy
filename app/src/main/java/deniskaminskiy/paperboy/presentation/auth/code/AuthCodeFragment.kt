@@ -1,16 +1,10 @@
 package deniskaminskiy.paperboy.presentation.auth.code
 
-import android.animation.Animator
-import android.animation.AnimatorSet
-import android.animation.ObjectAnimator
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AccelerateDecelerateInterpolator
-import android.view.animation.AnimationSet
 import androidx.annotation.IntRange
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentManager
 import deniskaminskiy.paperboy.R
 import deniskaminskiy.paperboy.core.BaseFragment
@@ -19,8 +13,6 @@ import deniskaminskiy.paperboy.presentation.intro.choose.ChooseChannelsFragment
 import deniskaminskiy.paperboy.presentation.view.TopPopupPresentModel
 import deniskaminskiy.paperboy.presentation.view.TopPopupView
 import deniskaminskiy.paperboy.utils.*
-import deniskaminskiy.paperboy.utils.icon.IconConstant
-import deniskaminskiy.paperboy.utils.icon.IconFactory
 import deniskaminskiy.paperboy.utils.view.gone
 import deniskaminskiy.paperboy.utils.view.visible
 import kotlinx.android.synthetic.main.fragment_auth_code.*
@@ -47,15 +39,16 @@ class AuthCodeFragment : BaseFragment<AuthCodePresenter, AuthCodeView>(), AuthCo
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        presenter = AuthCodePresenter(this).also { presenter ->
-            listOf(ivFirst, ivSecond, ivThird, ivFourth, ivFifth).apply {
-                forEach { it.onTextChanged = presenter::onPassCodeChanged }
-                forEach { it.onBackspacePressedWithEmptyText = presenter::onBackspacePressedWithEmptyText }
-            }
+        presenter = AuthCodePresenter(this, ColorsFactory.create(this), ContextDelegateFactory.create(this))
+            .also { presenter ->
+                listOf(ivFirst, ivSecond, ivThird, ivFourth, ivFifth).apply {
+                    forEach { it.onTextChanged = presenter::onPassCodeChanged }
+                    forEach { it.onBackspacePressedWithEmptyText = presenter::onBackspacePressedWithEmptyText }
+                }
 
-            vBack.setOnClickListener { presenter.onBackClick() }
-            vSendSms.setOnClickListener { presenter.onSendSmsClick() }
-        }
+                vBack.setOnClickListener { presenter.onBackClick() }
+                vSendSms.setOnClickListener { presenter.onSendSmsClick() }
+            }
 
         activity?.supportFragmentManager?.addOnBackStackChangedListener(onBackStackChangedListener)
     }
@@ -127,16 +120,11 @@ class AuthCodeFragment : BaseFragment<AuthCodePresenter, AuthCodeView>(), AuthCo
             .open(activity, R.id.vgContent, ChooseChannelsFragment.TAG)
     }
 
-    override fun showError() {
+    override fun showError(model: TopPopupPresentModel) {
         vLoading.gone()
 
         vTopPopup.showWithAnimation(
-            TopPopupPresentModel(
-                "Something happened!",
-                "Sometimes shit happens :(",
-                icon = IconFactory.create(IconConstant.TRASH.constant),
-                iconColor = ColorsFactory.create(this).marlboroNew
-            ),
+            model,
             object : TopPopupView.OnPopupAnimationListener {
                 override fun onAnimationStart() {
                     presenter?.onAnimationStart()
