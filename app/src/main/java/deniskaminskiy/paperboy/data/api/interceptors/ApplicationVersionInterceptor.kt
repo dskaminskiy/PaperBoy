@@ -2,9 +2,9 @@ package deniskaminskiy.paperboy.data.api.interceptors
 
 import android.os.Build
 import deniskaminskiy.paperboy.BuildConfig
-import okhttp3.Interceptor
-import okhttp3.Request
-import okhttp3.Response
+import deniskaminskiy.paperboy.utils.InterceptorsUtils
+import okhttp3.*
+import org.json.JSONException
 import org.json.JSONObject
 
 class ApplicationVersionInterceptor : Interceptor {
@@ -15,12 +15,22 @@ class ApplicationVersionInterceptor : Interceptor {
         private const val PROPERTY_OS_VERSION = "osVersion"
         private const val PROPERTY_DEVICE = "device"
 
+        private const val PROPERTY_APP_OS = "application[os]"
+        private const val PROPERTY_APP_VERSION = "application[version]"
+        private const val PROPERTY_APP_OS_VERSION = "application[osVersion]"
+        private const val PROPERTY_APP_DEVICE = "application[device]"
+
+        private const val PROPERTY_APPLICATION = "application"
+
         private const val POST = "POST"
         private const val DELETE = "DELETE"
-        private const val GET = "GET"
 
         private const val PARAM_OS = "android"
+
+        private const val DEFAULT_MEDIA_TYPE = "application/json; charset=utf-8"
     }
+
+    private val defaultMediaType by lazy { MediaType.parse(DEFAULT_MEDIA_TYPE) }
 
     override fun intercept(chain: Interceptor.Chain): Response {
         val request = chain.request()
@@ -36,11 +46,30 @@ class ApplicationVersionInterceptor : Interceptor {
     }
 
     private fun addAppVersionInPostOrDeleteRequest(originalRequest: Request): Request {
+        val builder = originalRequest.newBuilder()
+        val bodyStr = InterceptorsUtils.bodyToString(originalRequest.body())
 
-    }
+        var jsonBody = JSONObject()
 
-    private fun addAppVersionInGetRequest(originalRequest: Request): Request {
+        try {
+            if (!bodyStr.isEmpty()) jsonBody = JSONObject(bodyStr)
 
+            jsonBody.put(PROPERTY_APPLICATION, generateAppVersionJsonObject())
+
+            if (originalRequest.method().equals(POST, true)) {
+                return builder
+                    .post(RequestBody.create(defaultMediaType, jsonBody.toString()))
+                    .build()
+            } else if (originalRequest.method().equals(DELETE, true)) {
+                return builder
+                    .delete(RequestBody.create(defaultMediaType, jsonBody.toString()))
+                    .build()
+            }
+        } catch (e: JSONException) {
+            //..
+        }
+
+        return builder.build()
     }
 
     private fun generateAppVersionJsonObject() = JSONObject().apply {
@@ -49,5 +78,16 @@ class ApplicationVersionInterceptor : Interceptor {
         put(PROPERTY_OS_VERSION, Build.VERSION.RELEASE)
         put(PROPERTY_DEVICE, Build.MODEL)
     }
+
+    private fun addAppVersionInGetRequest(originalRequest: Request): Request =
+        originalRequest.newBuilder()
+            .url(
+                originalRequest.url().newBuilder()
+                    .setQueryParameter(PROPERTY_APP_OS, PARAM_OS)
+                    .setQueryParameter(PROPERTY_APP_VERSION, BuildConfig.VERSION_NAME)
+                    .setQueryParameter(PROPERTY_APP_OS_VERSION, Build.VERSION.RELEASE)
+                    .setQueryParameter(PROPERTY_APP_DEVICE, Build.MODEL)
+                    .build()
+            ).build()
 
 }
