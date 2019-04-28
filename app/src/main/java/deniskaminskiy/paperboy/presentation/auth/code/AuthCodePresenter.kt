@@ -76,6 +76,8 @@ class AuthCodePresenter(
         try {
             disposableSendCode = repository.sendCode(code.toInt(), userToken)
                 .compose(composer.observable())
+                .doOnSubscribe { view?.showLoading() }
+                .doFinally { clearInputs() }
                 .subscribe({
                     if (it == AuthResponseState.AUTHORIZED) {
                         view?.showImportChannels()
