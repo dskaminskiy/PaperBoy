@@ -12,5 +12,6 @@ interface AuthPhoneView : View {
 
 data class AuthPhonePresentModel(
     val regionAdditionalNumber: String,
-    val phoneNumber: String
+    val phoneNumber: String,
+    val isNextButtonEnable: Boolean
 )

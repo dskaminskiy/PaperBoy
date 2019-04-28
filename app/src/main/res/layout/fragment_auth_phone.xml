@@ -36,6 +36,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:clipChildren="false"
+                android:padding="2dp"
                 android:gravity="center_vertical"
                 android:clipToPadding="false"
                 android:layout_marginTop="16dp">

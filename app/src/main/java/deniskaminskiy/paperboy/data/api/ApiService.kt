@@ -8,10 +8,11 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object ApiService {
 
-    private const val BASE_URL = "https://paperboy.kardanov.dev"
+    private const val BASE_URL = "http://5.101.180.46:8080/api/v1/"
 
     var paperboyApi: PaperboyApi = Retrofit
         .Builder()
+        .baseUrl(BASE_URL)
         .build()
         .create(PaperboyApi::class.java)
 

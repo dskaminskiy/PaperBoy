@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentManager
 import deniskaminskiy.paperboy.R
 import deniskaminskiy.paperboy.core.BaseFragment
 import deniskaminskiy.paperboy.presentation.auth.code.AuthCodeFragment
+import deniskaminskiy.paperboy.utils.ContextDelegateFactory
 import deniskaminskiy.paperboy.utils.open
 import kotlinx.android.synthetic.main.fragment_auth_phone.*
 
@@ -33,7 +34,7 @@ class AuthPhoneFragment : BaseFragment<AuthPhonePresenter, AuthPhoneView>(), Aut
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        presenter = AuthPhonePresenter(this).also { presenter ->
+        presenter = AuthPhonePresenter(this, ContextDelegateFactory.create(this)).also { presenter ->
             ivRegion.onTextChanged = presenter::onReignAdditionalNumberChanged
             ivPhone.onTextChanged = presenter::onPhoneNumberChanged
             vNext.setOnClickListener { presenter.onNextClick() }
@@ -58,6 +59,7 @@ class AuthPhoneFragment : BaseFragment<AuthPhonePresenter, AuthPhoneView>(), Aut
     override fun show(model: AuthPhonePresentModel) {
         ivRegion.text = model.regionAdditionalNumber
         ivPhone.text = model.phoneNumber
+        vNext.isEnabled = model.isNextButtonEnable
     }
 
     override fun showAuthCode() {
