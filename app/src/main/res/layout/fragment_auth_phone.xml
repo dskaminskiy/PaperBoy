@@ -69,4 +69,10 @@
 
     </LinearLayout>
 
+    <deniskaminskiy.paperboy.presentation.view.LoadingView
+            android:id="@+id/vLoading"
+            android:layout_width="match_parent"
+            android:visibility="gone"
+            android:layout_height="match_parent"/>
+
 </FrameLayout>

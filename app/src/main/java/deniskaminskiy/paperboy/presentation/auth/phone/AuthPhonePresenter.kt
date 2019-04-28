@@ -70,6 +70,8 @@ class AuthPhonePresenter(
     fun onNextClick() {
         disposableCode = interactor.requestCode(reignNumber, phoneNumber)
             .compose(composer.observable())
+            .doOnSubscribe { view?.showLoading() }
+            .doFinally { updateView() }
             .subscribe {
                 contextDelegate.getContext()?.getSharedPreferences(SETTINGS_FILE_NAME, Context.MODE_PRIVATE)?.edit()
                     ?.let { prefs ->

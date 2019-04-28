@@ -10,6 +10,8 @@ import deniskaminskiy.paperboy.core.BaseFragment
 import deniskaminskiy.paperboy.presentation.auth.code.AuthCodeFragment
 import deniskaminskiy.paperboy.utils.ContextDelegateFactory
 import deniskaminskiy.paperboy.utils.open
+import deniskaminskiy.paperboy.utils.view.gone
+import deniskaminskiy.paperboy.utils.view.visible
 import kotlinx.android.synthetic.main.fragment_auth_phone.*
 
 class AuthPhoneFragment : BaseFragment<AuthPhonePresenter, AuthPhoneView>(), AuthPhoneView {
@@ -57,9 +59,14 @@ class AuthPhoneFragment : BaseFragment<AuthPhonePresenter, AuthPhoneView>(), Aut
     }
 
     override fun show(model: AuthPhonePresentModel) {
+        vLoading.gone()
         ivRegion.text = model.regionAdditionalNumber
         ivPhone.text = model.phoneNumber
         vNext.isEnabled = model.isNextButtonEnable
+    }
+
+    override fun showLoading() {
+        vLoading.visible()
     }
 
     override fun showAuthCode() {
