@@ -25,10 +25,12 @@ object ApiService {
                 RxJava2CallAdapterFactory
                     .createWithScheduler(Schedulers.newThread())
             )
-            .client(OkHttpClientFactory(
-                contextDelegate,
-                OkHttpBuilderFactory(),
-                HttpLoggingInterceptor.Logger.DEFAULT).create())
+            .client(
+                OkHttpClientFactory(
+                    contextDelegate,
+                    OkHttpBuilderFactory()
+                ).create()
+            )
             .build()
             .create(PaperboyApi::class.java)
     }
