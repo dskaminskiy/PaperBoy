@@ -2,6 +2,7 @@ package deniskaminskiy.paperboy.data.api
 
 import deniskaminskiy.paperboy.utils.ContextDelegate
 import io.reactivex.schedulers.Schedulers
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
@@ -24,7 +25,10 @@ object ApiService {
                 RxJava2CallAdapterFactory
                     .createWithScheduler(Schedulers.newThread())
             )
-            .client(OkHttpClientFactory(contextDelegate, OkHttpBuilderFactory(), PaperboyLogger()).create())
+            .client(OkHttpClientFactory(
+                contextDelegate,
+                OkHttpBuilderFactory(),
+                HttpLoggingInterceptor.Logger.DEFAULT).create())
             .build()
             .create(PaperboyApi::class.java)
     }
