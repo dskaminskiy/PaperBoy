@@ -113,14 +113,6 @@ class AuthCodePresenter(
 
     fun onSendSmsClick() {
         view?.showSmsSended()
-        view?.showError(
-            TopPopupPresentModel(
-                "Присядь, есть новость",
-                "Мы еще не умеем отправлять код по смс :(",
-                icon = IconFactory.create(IconConstant.TRASH.constant),
-                iconColor = colors.marlboroNew
-            )
-        )
     }
 
     private fun updateView() {

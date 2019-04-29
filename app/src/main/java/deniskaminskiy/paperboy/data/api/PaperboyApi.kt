@@ -1,8 +1,6 @@
 package deniskaminskiy.paperboy.data.api
 
-import deniskaminskiy.paperboy.data.api.json.auth.AuthCodeRequest
-import deniskaminskiy.paperboy.data.api.json.auth.AuthCodeResponse
-import deniskaminskiy.paperboy.data.api.json.auth.AuthResponseJson
+import deniskaminskiy.paperboy.data.api.json.auth.*
 import io.reactivex.Single
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -18,6 +16,9 @@ interface PaperboyApi {
     fun auth(@Query("phoneNumber") phoneNumber: String): Single<AuthResponseJson>
 
     @POST("auth/code")
-    fun authCode(@Body codeRequest: AuthCodeRequest): Single<AuthCodeResponse>
+    fun authCode(@Body request: AuthCodeRequest): Single<AuthCodeResponse>
+
+    @POST("auth/password")
+    fun authPassword(@Body request: AuthPasswordRequest): Single<AuthPasswordResponse>
 
 }

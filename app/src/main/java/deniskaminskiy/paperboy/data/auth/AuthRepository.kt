@@ -12,6 +12,8 @@ interface AuthRepository {
 
     fun sendCode(code: Int, token: String): Observable<AuthResponseState>
 
+    fun sendSecurityCode(code: String, token: String): Observable<AuthResponseState>
+
 }
 
 class AuthRepositoryImpl(
@@ -23,6 +25,9 @@ class AuthRepositoryImpl(
 
     override fun sendCode(code: Int, token: String): Observable<AuthResponseState> =
             cloud.sendCode(code, token)
+
+    override fun sendSecurityCode(code: String, token: String): Observable<AuthResponseState> =
+            cloud.sendSecurityCode(code, token)
 
 }
 
