@@ -36,7 +36,10 @@ class AuthPhoneFragment : BaseFragment<AuthPhonePresenter, AuthPhoneView>(), Aut
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        presenter = AuthPhonePresenter(this, ContextDelegateFactory.create(this)).also { presenter ->
+        presenter = AuthPhonePresenter(
+            view = this,
+            contextDelegate = ContextDelegateFactory.create(this)
+        ).also { presenter ->
             ivRegion.onTextChanged = presenter::onReignAdditionalNumberChanged
             ivPhone.onTextChanged = presenter::onPhoneNumberChanged
             vNext.setOnClickListener { presenter.onNextClick() }

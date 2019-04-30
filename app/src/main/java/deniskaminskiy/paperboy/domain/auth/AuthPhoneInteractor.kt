@@ -42,7 +42,6 @@ class AuthPhoneInteractorImpl(
 
     private val updateSubject = BehaviorSubject.createDefault(AuthPhone.EMPTY)
 
-
     private var authPhone = AuthPhone.EMPTY
 
     private var reignNumber: Int

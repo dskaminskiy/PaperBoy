@@ -1,6 +1,5 @@
 package deniskaminskiy.paperboy.presentation.auth.phone
 
-import android.content.Context
 import deniskaminskiy.paperboy.core.BasePresenterImpl
 import deniskaminskiy.paperboy.core.Mapper
 import deniskaminskiy.paperboy.domain.auth.AuthPhoneInteractor
@@ -60,7 +59,6 @@ class AuthPhonePresenter(
     fun onReignAdditionalNumberChanged(newNumber: String) {
         interactor.onReignAdditionalNumberChanged(newNumber)
     }
-
 
     fun onPhoneNumberChanged(newNumber: String) {
         interactor.onPhoneNumberChanged(newNumber)
