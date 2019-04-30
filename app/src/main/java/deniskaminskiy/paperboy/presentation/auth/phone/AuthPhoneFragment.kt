@@ -59,7 +59,7 @@ class AuthPhoneFragment : BaseFragment<AuthPhonePresenter, AuthPhoneView>(), Aut
     }
 
     override fun show(model: AuthPhonePresentModel) {
-        vLoading.gone()
+        hideLoading()
         ivRegion.text = model.regionAdditionalNumber
         ivPhone.text = model.phoneNumber
         vNext.isEnabled = model.isNextButtonEnable
@@ -67,6 +67,10 @@ class AuthPhoneFragment : BaseFragment<AuthPhonePresenter, AuthPhoneView>(), Aut
 
     override fun showLoading() {
         vLoading.visible()
+    }
+
+    override fun hideLoading() {
+        vLoading.gone()
     }
 
     override fun showAuthCode() {

@@ -26,7 +26,7 @@ class AuthCodePresenter(
     companion object {
         private const val CODE_LENGTH = 5
 
-        private const val SETTINGS_FILE_NAME = "authSettings"
+        private const val SETTINGS_FILE_NAME = "deniskaminskiy.paperboy.data.settings.App"
         private const val USER_TOKEN = "USER_TOKEN"
     }
 
@@ -53,23 +53,9 @@ class AuthCodePresenter(
         super.onViewDetached()
     }
 
-    /**
-     * @param newNumber     - should be integer; if empty string, then it is removing
-     */
-    fun onPassCodeChanged(newNumber: String) {
-        if (!isInputsUpdating) {
-            if (newNumber.isNotEmpty()) {
-                code += newNumber
-                if (code.length >= CODE_LENGTH) {
-                    sendCode()
-                }
-            } else {
-                if (code.isNotEmpty()) {
-                    code = code.dropLast(1)
-                }
-            }
-            updateView()
-        }
+    private fun updateView() {
+        isInputsUpdating = true
+        view?.show(AuthCodePresentModel(code))
     }
 
     private fun sendCode() {
@@ -106,6 +92,25 @@ class AuthCodePresenter(
         }
     }
 
+    /**
+     * @param newNumber     - should be integer; if empty string, then it is removing
+     */
+    fun onPassCodeChanged(newNumber: String) {
+        if (!isInputsUpdating) {
+            if (newNumber.isNotEmpty()) {
+                code += newNumber
+                if (code.length >= CODE_LENGTH) {
+                    sendCode()
+                }
+            } else {
+                if (code.isNotEmpty()) {
+                    code = code.dropLast(1)
+                }
+            }
+            updateView()
+        }
+    }
+
     private fun clearInputs() {
         code = ""
         updateView()
@@ -113,11 +118,6 @@ class AuthCodePresenter(
 
     fun onSendSmsClick() {
         view?.showSmsSended()
-    }
-
-    private fun updateView() {
-        isInputsUpdating = true
-        view?.show(AuthCodePresentModel(code))
     }
 
     fun onInputsUpdateFinish() {

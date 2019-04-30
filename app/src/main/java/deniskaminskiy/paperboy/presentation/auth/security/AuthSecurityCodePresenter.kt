@@ -24,7 +24,7 @@ class AuthSecurityCodePresenter(
 ) : BasePresenterImpl<AuthSecurityCodeView>(view) {
 
     companion object {
-        private const val SETTINGS_FILE_NAME = "authSettings"
+        private const val SETTINGS_FILE_NAME = "deniskaminskiy.paperboy.data.settings.App"
         private const val USER_TOKEN = "USER_TOKEN"
     }
 

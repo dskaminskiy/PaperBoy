@@ -85,7 +85,7 @@ class ChooseChannelsFragment : BaseFragment<ChooseChannelsPresenter, ChooseChann
     }
 
     override fun onBackPressed() {
-        super.onBackPressed()
+        //super.onBackPressed()
     }
 
 }

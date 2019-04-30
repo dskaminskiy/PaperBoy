@@ -8,6 +8,8 @@ interface AuthPhoneView : View {
 
     fun showLoading()
 
+    fun hideLoading()
+
     fun showAuthCode()
 
 }
