@@ -39,16 +39,19 @@ class AuthCodeFragment : BaseFragment<AuthCodePresenter, AuthCodeView>(), AuthCo
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        presenter = AuthCodePresenter(this, ColorsFactory.create(this), ContextDelegateFactory.create(this))
-            .also { presenter ->
-                listOf(ivFirst, ivSecond, ivThird, ivFourth, ivFifth).apply {
-                    forEach { it.onTextChanged = presenter::onPassCodeChanged }
-                    forEach { it.onBackspacePressedWithEmptyText = presenter::onBackspacePressedWithEmptyText }
-                }
-
-                vBack.setOnClickListener { presenter.onBackClick() }
-                vSendSms.setOnClickListener { presenter.onSendSmsClick() }
+        presenter = AuthCodePresenter(
+            view = this,
+            colors = ColorsFactory.create(this),
+            contextDelegate = ContextDelegateFactory.create(this)
+        ).also { presenter ->
+            listOf(ivFirst, ivSecond, ivThird, ivFourth, ivFifth).apply {
+                forEach { it.onTextChanged = presenter::onPassCodeChanged }
+                forEach { it.onBackspacePressedWithEmptyText = presenter::onBackspacePressedWithEmptyText }
             }
+
+            vBack.setOnClickListener { presenter.onBackClick() }
+            vSendSms.setOnClickListener { presenter.onSendSmsClick() }
+        }
 
         activity?.supportFragmentManager?.addOnBackStackChangedListener(onBackStackChangedListener)
     }

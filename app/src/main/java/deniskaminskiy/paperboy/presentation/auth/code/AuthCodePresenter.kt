@@ -99,15 +99,16 @@ class AuthCodePresenter(
         if (!isInputsUpdating) {
             if (newNumber.isNotEmpty()) {
                 code += newNumber
-                if (code.length >= CODE_LENGTH) {
-                    sendCode()
-                }
             } else {
                 if (code.isNotEmpty()) {
                     code = code.dropLast(1)
                 }
             }
             updateView()
+
+            if (code.length >= CODE_LENGTH) {
+                sendCode()
+            }
         }
     }
 
