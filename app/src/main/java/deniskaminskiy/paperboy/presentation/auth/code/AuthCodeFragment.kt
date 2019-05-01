@@ -10,7 +10,6 @@ import deniskaminskiy.paperboy.R
 import deniskaminskiy.paperboy.core.BaseFragment
 import deniskaminskiy.paperboy.presentation.auth.security.AuthSecurityCodeFragment
 import deniskaminskiy.paperboy.presentation.intro.choose.ChooseChannelsFragment
-import deniskaminskiy.paperboy.utils.ContextDelegateFactory
 import deniskaminskiy.paperboy.utils.hideKeyboard
 import deniskaminskiy.paperboy.utils.managers.AndroidResourcesManager
 import deniskaminskiy.paperboy.utils.open
@@ -43,8 +42,7 @@ class AuthCodeFragment : BaseFragment<AuthCodePresenter, AuthCodeView>(), AuthCo
 
         presenter = AuthCodePresenter(
             view = this,
-            resources = AndroidResourcesManager.create(this),
-            contextDelegate = ContextDelegateFactory.create(this)
+            resources = AndroidResourcesManager.create(this)
         ).also { presenter ->
             listOf(ivFirst, ivSecond, ivThird, ivFourth, ivFifth).apply {
                 forEach { it.onTextChanged = presenter::onPassCodeChanged }

@@ -8,7 +8,6 @@ import deniskaminskiy.paperboy.data.api.ifWaitingForPassword
 import deniskaminskiy.paperboy.domain.auth.AuthCodeInteractor
 import deniskaminskiy.paperboy.domain.auth.AuthCodeInteractorImpl
 import deniskaminskiy.paperboy.presentation.view.TopPopupPresentModel
-import deniskaminskiy.paperboy.utils.ContextDelegate
 import deniskaminskiy.paperboy.utils.disposeIfNotNull
 import deniskaminskiy.paperboy.utils.icon.IconConstant
 import deniskaminskiy.paperboy.utils.icon.IconFactory
@@ -20,7 +19,6 @@ import io.reactivex.disposables.Disposable
 class AuthCodePresenter(
     view: AuthCodeView,
     private val resources: ResourcesManager,
-    private val contextDelegate: ContextDelegate,
     private val composer: Composer = SchedulerComposerFactory.android(),
     private val codeLength: Int = CODE_LENGTH,
     private val mapper: Mapper<String, AuthCodePresentModel> = CodeStringToAuthCodePresentModelMapper(),
