@@ -7,7 +7,8 @@ object IconFactory {
         IconConstant.ADD to DrawableConstantIcon(DrawableIconConstant.ADD),
         IconConstant.ARROW_BACK to DrawableConstantIcon(DrawableIconConstant.ARROW_BACK),
         IconConstant.TRASH to DrawableConstantIcon(DrawableIconConstant.TRASH),
-        IconConstant.ARROW_FORWARD to DrawableConstantIcon(DrawableIconConstant.ARROW_FORWARD)
+        IconConstant.ARROW_FORWARD to DrawableConstantIcon(DrawableIconConstant.ARROW_FORWARD),
+        IconConstant.WARNING to DrawableConstantIcon(DrawableIconConstant.WARNING)
     )
 
     /**
@@ -33,5 +34,6 @@ enum class IconConstant(
     ADD(0, "iconAdd"),
     ARROW_BACK(1, "iconArrowBack"),
     TRASH(2, "iconTrash"),
-    ARROW_FORWARD(3, "iconArrowForward")
+    ARROW_FORWARD(3, "iconArrowForward"),
+    WARNING(4, "iconWarning")
 }

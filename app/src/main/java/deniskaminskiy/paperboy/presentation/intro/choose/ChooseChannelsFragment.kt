@@ -9,8 +9,9 @@ import deniskaminskiy.paperboy.R
 import deniskaminskiy.paperboy.core.BaseFragment
 import deniskaminskiy.paperboy.data.channel.ChannelImport
 import deniskaminskiy.paperboy.presentation.intro.remove.RemoveTelegramChannelsFragment
-import deniskaminskiy.paperboy.utils.*
+import deniskaminskiy.paperboy.utils.args
 import deniskaminskiy.paperboy.utils.managers.AndroidResourcesManager
+import deniskaminskiy.paperboy.utils.open
 import deniskaminskiy.paperboy.utils.view.isGone
 import deniskaminskiy.paperboy.utils.view.isVisible
 import kotlinx.android.synthetic.main.fragment_choose_channels.*
@@ -47,8 +48,7 @@ class ChooseChannelsFragment : BaseFragment<ChooseChannelsPresenter, ChooseChann
         presenter = ChooseChannelsPresenter(
             view = this,
             isChannelsFetched = isChannelsFetched,
-            resources = AndroidResourcesManager.create(this),
-            colors = AndroidColors(ContextDelegateFactory.create(this))
+            resources = AndroidResourcesManager.create(this)
         ).apply {
             tvSkip.setOnClickListener { onSkipClick() }
             vFab.setOnClickListener { onFabClick() }
@@ -73,10 +73,6 @@ class ChooseChannelsFragment : BaseFragment<ChooseChannelsPresenter, ChooseChann
         } else if (!model.isFabVisible && vFab.isVisible) {
             vFab.hide()
         }
-    }
-
-    override fun showUnknownError() {
-        toast(getString(R.string.oops_something_happened))
     }
 
     override fun showRemoveTelegramChannels() {

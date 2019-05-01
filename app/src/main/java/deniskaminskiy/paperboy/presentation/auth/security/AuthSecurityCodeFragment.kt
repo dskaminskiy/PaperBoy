@@ -7,9 +7,10 @@ import android.view.ViewGroup
 import deniskaminskiy.paperboy.R
 import deniskaminskiy.paperboy.core.BaseFragment
 import deniskaminskiy.paperboy.presentation.intro.choose.ChooseChannelsFragment
-import deniskaminskiy.paperboy.presentation.view.TopPopupPresentModel
-import deniskaminskiy.paperboy.presentation.view.TopPopupView
-import deniskaminskiy.paperboy.utils.*
+import deniskaminskiy.paperboy.utils.ContextDelegateFactory
+import deniskaminskiy.paperboy.utils.hideKeyboard
+import deniskaminskiy.paperboy.utils.managers.AndroidResourcesManager
+import deniskaminskiy.paperboy.utils.replace
 import deniskaminskiy.paperboy.utils.view.gone
 import deniskaminskiy.paperboy.utils.view.visible
 import kotlinx.android.synthetic.main.fragment_auth_security_code.*
@@ -29,13 +30,16 @@ class AuthSecurityCodeFragment : BaseFragment<AuthSecurityCodePresenter, AuthSec
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        presenter = AuthSecurityCodePresenter(this, ContextDelegateFactory.create(this), ColorsFactory.create(this))
-            .apply {
-                vBack.setOnClickListener { onBackClick() }
-                vNext.setOnClickListener { onNextClick() }
+        presenter = AuthSecurityCodePresenter(
+            view = this,
+            contextDelegate = ContextDelegateFactory.create(this),
+            resources = AndroidResourcesManager.create(this)
+        ).apply {
+            vBack.setOnClickListener { onBackClick() }
+            vNext.setOnClickListener { onNextClick() }
 
-                ivPasscode.onTextChanged = ::onSecurityCodeTextChanged
-            }
+            ivPasscode.onTextChanged = ::onSecurityCodeTextChanged
+        }
 
         ivPasscode.post {
             ivPasscode.requestFocus()
@@ -53,19 +57,6 @@ class AuthSecurityCodeFragment : BaseFragment<AuthSecurityCodePresenter, AuthSec
 
     override fun close() {
         onBackPressed()
-    }
-
-    override fun showError(model: TopPopupPresentModel) {
-        vTopPopup.showWithAnimation(model,
-            object : TopPopupView.OnPopupAnimationListener {
-                override fun onAnimationStart() {
-                    presenter?.onAnimationStart()
-                }
-
-                override fun onAnimationEnd() {
-                    presenter?.onAnimationEnd()
-                }
-            })
     }
 
     override fun showImportChannels() {

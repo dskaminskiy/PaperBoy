@@ -7,13 +7,13 @@ import android.view.View
 import android.widget.LinearLayout
 import androidx.annotation.ColorInt
 import deniskaminskiy.paperboy.R
-import deniskaminskiy.paperboy.utils.Colors
-import deniskaminskiy.paperboy.utils.ColorsFactory
 import deniskaminskiy.paperboy.utils.dp
 import deniskaminskiy.paperboy.utils.icon.Icon
 import deniskaminskiy.paperboy.utils.icon.IconFactory
 import deniskaminskiy.paperboy.utils.icon.IconRendererFactory
 import deniskaminskiy.paperboy.utils.icon.PaintedIcon
+import deniskaminskiy.paperboy.utils.managers.AndroidResourcesManager
+import deniskaminskiy.paperboy.utils.managers.ResourcesManager
 import kotlinx.android.synthetic.main.view_button.view.*
 
 class ButtonView @JvmOverloads constructor(
@@ -26,7 +26,7 @@ class ButtonView @JvmOverloads constructor(
         const val CORNER_RADIUS = 12
     }
 
-    private val palette: Colors by lazy { ColorsFactory.create(context) }
+    private val palette: ResourcesManager.Colors by lazy { AndroidResourcesManager.create(context).colors }
     private val dpCornerRadius = CORNER_RADIUS.dp(context).toFloat()
 
     private val defaultBackground by lazy {

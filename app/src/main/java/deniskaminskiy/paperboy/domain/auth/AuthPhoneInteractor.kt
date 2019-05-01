@@ -1,24 +1,21 @@
 package deniskaminskiy.paperboy.domain.auth
 
 import deniskaminskiy.paperboy.core.Interactor
-import deniskaminskiy.paperboy.data.auth.Auth
+import deniskaminskiy.paperboy.data.api.AuthResponseState
 import deniskaminskiy.paperboy.data.auth.AuthRepository
 import deniskaminskiy.paperboy.data.auth.AuthRepositoryFactory
 import deniskaminskiy.paperboy.data.settings.ApplicationSettings
 import deniskaminskiy.paperboy.data.settings.ApplicationSettingsImpl
 import deniskaminskiy.paperboy.presentation.auth.phone.AuthPhone
 import deniskaminskiy.paperboy.utils.ContextDelegate
-import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject
-import io.reactivex.subjects.PublishSubject
-import io.reactivex.subjects.Subject
 
 interface AuthPhoneInteractor : Interactor {
 
     fun onUiUpdateRequest(): Observable<AuthPhone>
 
-    fun requestCode(): Completable
+    fun requestCode(): Observable<AuthResponseState>
 
     /**
      * @param newNumber     - номер региона с приставкой "+" (пример: "+7")
@@ -69,13 +66,10 @@ class AuthPhoneInteractorImpl(
 
     override fun onUiUpdateRequest(): Observable<AuthPhone> = updateSubject
 
-    override fun requestCode(): Completable = repository
+    override fun requestCode(): Observable<AuthResponseState> = repository
         .requestCode("+$reignNumber$phoneNumber")
-        .flatMapCompletable {
-            Completable.fromAction {
-                settings.userToken = it.token
-            }
-        }
+        .doOnNext { settings.userToken = it.token }
+        .map { it.state }
 
     override fun onReignAdditionalNumberChanged(newNumber: String) {
         if (newNumber.isNotEmpty() && newNumber != "+") {

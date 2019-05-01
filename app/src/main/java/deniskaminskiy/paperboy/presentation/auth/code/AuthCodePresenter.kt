@@ -2,22 +2,24 @@ package deniskaminskiy.paperboy.presentation.auth.code
 
 import android.content.Context
 import deniskaminskiy.paperboy.core.BasePresenterImpl
-import deniskaminskiy.paperboy.data.api.AuthResponseState
+import deniskaminskiy.paperboy.data.api.ifAuthorized
+import deniskaminskiy.paperboy.data.api.ifError
+import deniskaminskiy.paperboy.data.api.ifWaitingForPassword
 import deniskaminskiy.paperboy.data.auth.AuthRepository
 import deniskaminskiy.paperboy.data.auth.AuthRepositoryFactory
 import deniskaminskiy.paperboy.presentation.view.TopPopupPresentModel
-import deniskaminskiy.paperboy.utils.Colors
 import deniskaminskiy.paperboy.utils.ContextDelegate
 import deniskaminskiy.paperboy.utils.disposeIfNotNull
 import deniskaminskiy.paperboy.utils.icon.IconConstant
 import deniskaminskiy.paperboy.utils.icon.IconFactory
+import deniskaminskiy.paperboy.utils.managers.ResourcesManager
 import deniskaminskiy.paperboy.utils.rx.Composer
 import deniskaminskiy.paperboy.utils.rx.SchedulerComposerFactory
 import io.reactivex.disposables.Disposable
 
 class AuthCodePresenter(
     view: AuthCodeView,
-    private val colors: Colors,
+    private val resources: ResourcesManager,
     private val contextDelegate: ContextDelegate,
     private val repository: AuthRepository = AuthRepositoryFactory.create(),
     private val composer: Composer = SchedulerComposerFactory.android()
@@ -30,10 +32,18 @@ class AuthCodePresenter(
         private const val USER_TOKEN = "USER_TOKEN"
     }
 
+    private val unknownError: TopPopupPresentModel by lazy {
+        TopPopupPresentModel(
+            title = resources.strings.sometimesShitHappens,
+            subtitle = resources.strings.sometimesShitHappens,
+            icon = IconFactory.create(IconConstant.WARNING.constant),
+            iconColor = resources.colors.marlboroNew
+        )
+    }
+
     private var code = ""
 
     private var isInputsUpdating = false
-    private var isAnimationRunning = false
 
     private var disposableSendCode: Disposable? = null
 
@@ -65,31 +75,22 @@ class AuthCodePresenter(
                 .doOnSubscribe { view?.showLoading() }
                 .doFinally { clearInputs() }
                 .subscribe({
-                    if (it == AuthResponseState.AUTHORIZED) {
-                        view?.showImportChannels()
-                    } else {
-                        view?.showAuthSecurityCode()
+                    with(it) {
+                        ifAuthorized { view?.showImportChannels() }
+                        ifError { showError() }
+                        ifWaitingForPassword { view?.showAuthSecurityCode() }
                     }
                 }, {
-                    view?.showError(
-                        TopPopupPresentModel(
-                            "Что-то случилось",
-                            "Щас доем бутер и гляну :(",
-                            icon = IconFactory.create(IconConstant.TRASH.constant),
-                            iconColor = colors.marlboroNew
-                        )
-                    )
+                    showError()
                 })
         } catch (e: NumberFormatException) {
-            view?.showError(
-                TopPopupPresentModel(
-                    "Ах, да, чувак",
-                    "Забыл сказать, что код состоит только из цифр :(",
-                    icon = IconFactory.create(IconConstant.TRASH.constant),
-                    iconColor = colors.marlboroNew
-                )
-            )
+            showError()
         }
+    }
+
+    private fun showError() {
+        view?.hideLoading()
+        view?.showTopPopup(unknownError)
     }
 
     /**
@@ -127,14 +128,6 @@ class AuthCodePresenter(
 
     fun onBackClick() {
         view?.close()
-    }
-
-    fun onAnimationStart() {
-        isAnimationRunning = true
-    }
-
-    fun onAnimationEnd() {
-        isAnimationRunning = false
     }
 
     fun onBackspacePressedWithEmptyText() {

@@ -1,9 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
+             xmlns:app="http://schemas.android.com/apk/res-auto"
              android:id="@+id/vgOverContent"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
              android:fitsSystemWindows="true">
+
+    <deniskaminskiy.paperboy.presentation.view.TopPopupView
+            android:id="@+id/vTopPopup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            tools:visibility="visible"
+            android:layout_margin="16dp"
+            app:title="@string/oops_something_happened"
+            app:iconConstant="ICON_WARNING"
+            app:subtitle="@string/it_was_shit_sometimes_shit_happens"/>
 
     <FrameLayout
             android:id="@+id/vgContent"

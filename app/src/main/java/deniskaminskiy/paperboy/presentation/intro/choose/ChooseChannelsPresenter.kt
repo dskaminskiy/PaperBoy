@@ -5,7 +5,9 @@ import deniskaminskiy.paperboy.core.BasePresenterImpl
 import deniskaminskiy.paperboy.core.Mapper
 import deniskaminskiy.paperboy.data.channel.ChannelImport
 import deniskaminskiy.paperboy.presentation.view.CheckItemPresentModel
-import deniskaminskiy.paperboy.utils.Colors
+import deniskaminskiy.paperboy.presentation.view.TopPopupPresentModel
+import deniskaminskiy.paperboy.utils.icon.IconConstant
+import deniskaminskiy.paperboy.utils.icon.IconFactory
 import deniskaminskiy.paperboy.utils.managers.ResourcesManager
 import deniskaminskiy.paperboy.utils.paintWord
 import deniskaminskiy.paperboy.utils.rx.Composer
@@ -16,7 +18,6 @@ class ChooseChannelsPresenter(
     view: ChooseChannelsView,
     isChannelsFetched: Boolean,
     private val resources: ResourcesManager,
-    private val colors: Colors,
     private val interactor: ChooseChannelsInteractor =
         ChooseChannelsInteractorImpl(isChannelsFetched),
     private val composer: Composer = SchedulerComposerFactory.android(),
@@ -26,12 +27,21 @@ class ChooseChannelsPresenter(
 ) : BasePresenterImpl<ChooseChannelsView>(view) {
 
     private val title: SpannableStringBuilder by lazy {
-        resources.chooseChannelsYouWantImportSentence
-            .paintWord(resources.chooseChannelsYouWantImportAccentWord ,colors.marlboroNew)
+        resources.strings.chooseChannelsYouWantImportSentence
+            .paintWord(resources.strings.chooseChannelsYouWantImportAccentWord, resources.colors.marlboroNew)
     }
 
     private val subtitle: String
-        get() = resources.youHaveChannels(interactor.channelsCount())
+        get() = resources.strings.youHaveChannels(interactor.channelsCount())
+
+    private val unknownError: TopPopupPresentModel by lazy {
+        TopPopupPresentModel(
+            title = resources.strings.sometimesShitHappens,
+            subtitle = resources.strings.sometimesShitHappens,
+            icon = IconFactory.create(IconConstant.WARNING.constant),
+            iconColor = resources.colors.marlboroNew
+        )
+    }
 
     override fun onStart(viewCreated: Boolean) {
         super.onStart(viewCreated)
@@ -39,7 +49,7 @@ class ChooseChannelsPresenter(
             interactor.channelsImport()
                 .compose(composer.observable())
                 .subscribe(::onChannelsImportUpdate) {
-                    view?.showUnknownError()
+                    view?.showTopPopup(unknownError)
                 }
         )
 

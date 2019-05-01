@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentManager
 import deniskaminskiy.paperboy.R
 import deniskaminskiy.paperboy.core.BaseFragment
 import deniskaminskiy.paperboy.presentation.auth.code.AuthCodeFragment
+import deniskaminskiy.paperboy.presentation.intro.choose.ChooseChannelsFragment
 import deniskaminskiy.paperboy.utils.ContextDelegateFactory
 import deniskaminskiy.paperboy.utils.open
 import deniskaminskiy.paperboy.utils.view.gone
@@ -79,6 +80,11 @@ class AuthPhoneFragment : BaseFragment<AuthPhonePresenter, AuthPhoneView>(), Aut
     override fun showAuthCode() {
         AuthCodeFragment.newInstance()
             .open(activity, R.id.vgContent, AuthCodeFragment.TAG)
+    }
+
+    override fun showImportChannels() {
+        ChooseChannelsFragment.newInstance()
+            .open(activity, R.id.vgContent, ChooseChannelsFragment.TAG)
     }
 
 }

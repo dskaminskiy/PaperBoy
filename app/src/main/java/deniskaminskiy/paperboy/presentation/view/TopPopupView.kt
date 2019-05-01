@@ -11,17 +11,17 @@ import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.LinearLayout
 import androidx.annotation.ColorInt
 import deniskaminskiy.paperboy.R
-import deniskaminskiy.paperboy.utils.Colors
-import deniskaminskiy.paperboy.utils.ColorsFactory
+import deniskaminskiy.paperboy.core.OnAnimationLifecycleListener
 import deniskaminskiy.paperboy.utils.SimpleAnimatorListener
 import deniskaminskiy.paperboy.utils.dp
 import deniskaminskiy.paperboy.utils.icon.Icon
 import deniskaminskiy.paperboy.utils.icon.IconFactory
 import deniskaminskiy.paperboy.utils.icon.IconRendererFactory
 import deniskaminskiy.paperboy.utils.icon.PaintedIcon
+import deniskaminskiy.paperboy.utils.managers.AndroidResourcesManager
+import deniskaminskiy.paperboy.utils.managers.ResourcesManager
 import deniskaminskiy.paperboy.utils.view.gone
 import deniskaminskiy.paperboy.utils.view.visible
-import kotlinx.android.synthetic.main.fragment_auth_code.*
 import kotlinx.android.synthetic.main.view_top_popup.view.*
 
 class TopPopupView @JvmOverloads constructor(
@@ -46,7 +46,7 @@ class TopPopupView @JvmOverloads constructor(
         private const val ALPHA_GONE = 0f
     }
 
-    private val palette: Colors by lazy { ColorsFactory.create(context) }
+    private val palette: ResourcesManager.Colors by lazy { AndroidResourcesManager.create(context).colors }
 
     private val dpCornerRadius = CORNER_RADIUS.dp(context).toFloat()
 
@@ -147,7 +147,7 @@ class TopPopupView @JvmOverloads constructor(
         setBackgroundColor(model.backgroundColor)
     }
 
-    fun showWithAnimation(model: TopPopupPresentModel, listener: OnPopupAnimationListener? = null) {
+    fun showWithAnimation(model: TopPopupPresentModel, listener: OnAnimationLifecycleListener? = null) {
         show(model)
 
         if (animSet.isRunning || animSet.isStarted) {
@@ -200,14 +200,6 @@ class TopPopupView @JvmOverloads constructor(
                 setColor(color)
             }
         }
-    }
-
-    interface OnPopupAnimationListener {
-
-        fun onAnimationStart()
-
-        fun onAnimationEnd()
-
     }
 
 }

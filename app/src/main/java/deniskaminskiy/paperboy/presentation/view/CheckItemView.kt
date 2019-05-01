@@ -5,11 +5,10 @@ import android.graphics.drawable.GradientDrawable
 import android.util.AttributeSet
 import android.view.View
 import android.widget.FrameLayout
-import android.widget.LinearLayout
 import deniskaminskiy.paperboy.R
-import deniskaminskiy.paperboy.utils.Colors
-import deniskaminskiy.paperboy.utils.ColorsFactory
 import deniskaminskiy.paperboy.utils.dp
+import deniskaminskiy.paperboy.utils.managers.AndroidResourcesManager
+import deniskaminskiy.paperboy.utils.managers.ResourcesManager
 import deniskaminskiy.paperboy.utils.view.goneIf
 import deniskaminskiy.paperboy.utils.view.isVisible
 import kotlinx.android.synthetic.main.view_check_item.view.*
@@ -25,7 +24,7 @@ class CheckItemView @JvmOverloads constructor(
         private const val EXTRA_TITLE_STROKE_WIDTH = 1
     }
 
-    private val palette: Colors by lazy { ColorsFactory.create(context) }
+    private val palette: ResourcesManager.Colors by lazy { AndroidResourcesManager.create(context).colors }
 
     private val dpStrokeWidth = EXTRA_TITLE_STROKE_WIDTH.dp(context)
     private val dpCornerRadius = EXTRA_TITLE_CORNER_RADIUS.dp(context).toFloat()

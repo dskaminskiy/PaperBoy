@@ -11,9 +11,9 @@ import android.view.View
 import android.view.View.OnFocusChangeListener
 import android.widget.LinearLayout
 import deniskaminskiy.paperboy.R
-import deniskaminskiy.paperboy.utils.Colors
-import deniskaminskiy.paperboy.utils.ColorsFactory
 import deniskaminskiy.paperboy.utils.dp
+import deniskaminskiy.paperboy.utils.managers.AndroidResourcesManager
+import deniskaminskiy.paperboy.utils.managers.ResourcesManager
 import deniskaminskiy.paperboy.utils.view.addOnTextChangedListener
 import kotlinx.android.synthetic.main.view_number_input.view.*
 
@@ -41,7 +41,7 @@ class NumberInputView @JvmOverloads constructor(
     var onBackspacePressedWithEmptyText: OnBackspacePressedWithEmptyText = {}
     var onFocusChanged: OnFocusChanged = {}
 
-    private val palette: Colors by lazy { ColorsFactory.create(context) }
+    private val palette: ResourcesManager.Colors by lazy { AndroidResourcesManager.create(context).colors }
 
     var text: String
         set(value) {

@@ -13,15 +13,12 @@ interface ContextDelegate {
 
 object ContextDelegateFactory {
 
-    @JvmStatic
     fun create(fragment: Fragment): ContextDelegate =
         FragmentContextDelegate(fragment)
 
-    @JvmStatic
     fun create(context: Context): ContextDelegate =
         ContextContextDelegate(context)
 
-    @JvmStatic
     fun create(activity: AppCompatActivity): ContextDelegate =
         ActivityContextDelegate(activity)
 

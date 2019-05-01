@@ -33,4 +33,7 @@ interface Presenter<V : View> {
      * any resource used by the presenter (cancel HTTP requests, close database connection...)
      */
     fun onFinish()
+
+    fun onAnimationStart()
+    fun onAnimationEnd()
 }

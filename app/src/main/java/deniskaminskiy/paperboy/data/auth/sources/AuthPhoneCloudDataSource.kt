@@ -8,7 +8,7 @@ import deniskaminskiy.paperboy.data.api.json.auth.*
 import deniskaminskiy.paperboy.data.auth.Auth
 import deniskaminskiy.paperboy.data.auth.sources.mappers.AuthCodeResponseToAuthResponseStateMapper
 import deniskaminskiy.paperboy.data.auth.sources.mappers.AuthPasswordResponseToAuthResponseStateMapper
-import deniskaminskiy.paperboy.data.auth.sources.mappers.AuthResponseJsonToAuthCodeMapper
+import deniskaminskiy.paperboy.data.auth.sources.mappers.AuthResponseJsonToAuthMapper
 import io.reactivex.Observable
 
 interface AuthCloudDataSource {
@@ -23,7 +23,7 @@ interface AuthCloudDataSource {
 
 class AuthCloudDataSourceImpl(
     private val api: PaperboyApi = ApiService.paperboyApi,
-    private val authMapper: Mapper<AuthResponseJson, Auth> = AuthResponseJsonToAuthCodeMapper(),
+    private val authMapper: Mapper<AuthResponseJson, Auth> = AuthResponseJsonToAuthMapper(),
     private val authCodeMapper: Mapper<AuthCodeResponse, AuthResponseState> =
         AuthCodeResponseToAuthResponseStateMapper(),
     private val authPasswordMapper: Mapper<AuthPasswordResponse, AuthResponseState> =

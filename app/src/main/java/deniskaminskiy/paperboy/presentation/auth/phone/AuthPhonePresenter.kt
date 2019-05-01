@@ -2,10 +2,18 @@ package deniskaminskiy.paperboy.presentation.auth.phone
 
 import deniskaminskiy.paperboy.core.BasePresenterImpl
 import deniskaminskiy.paperboy.core.Mapper
+import deniskaminskiy.paperboy.data.api.ifAuthorized
+import deniskaminskiy.paperboy.data.api.ifError
+import deniskaminskiy.paperboy.data.api.ifWaitingForCode
 import deniskaminskiy.paperboy.domain.auth.AuthPhoneInteractor
 import deniskaminskiy.paperboy.domain.auth.AuthPhoneInteractorImpl
+import deniskaminskiy.paperboy.presentation.view.TopPopupPresentModel
 import deniskaminskiy.paperboy.utils.ContextDelegate
 import deniskaminskiy.paperboy.utils.disposeIfNotNull
+import deniskaminskiy.paperboy.utils.icon.IconConstant
+import deniskaminskiy.paperboy.utils.icon.IconFactory
+import deniskaminskiy.paperboy.utils.managers.AndroidResourcesManager
+import deniskaminskiy.paperboy.utils.managers.ResourcesManager
 import deniskaminskiy.paperboy.utils.rx.Composer
 import deniskaminskiy.paperboy.utils.rx.SchedulerComposerFactory
 import io.reactivex.disposables.Disposable
@@ -13,6 +21,7 @@ import io.reactivex.disposables.Disposable
 class AuthPhonePresenter(
     view: AuthPhoneView,
     private val contextDelegate: ContextDelegate,
+    private val resources: ResourcesManager = AndroidResourcesManager.create(contextDelegate),
     private val maxLengthReign: Int = MAX_LENGTH_REIGN,
     private val maxLengthPhone: Int = MAX_LENGTH_PHONE,
     private val interactor: AuthPhoneInteractor =
@@ -29,6 +38,15 @@ class AuthPhonePresenter(
 
     private var disposableCode: Disposable? = null
     private var disposableUpdateUi: Disposable? = null
+
+    private val unknownError: TopPopupPresentModel by lazy {
+        TopPopupPresentModel(
+            title = resources.strings.sometimesShitHappens,
+            subtitle = resources.strings.sometimesShitHappens,
+            icon = IconFactory.create(IconConstant.WARNING.constant),
+            iconColor = resources.colors.marlboroNew
+        )
+    }
 
     override fun onStart(viewCreated: Boolean) {
         super.onStart(viewCreated)
@@ -48,12 +66,18 @@ class AuthPhonePresenter(
 
     fun onNextClick() {
         disposableCode = interactor.requestCode()
-            .compose(composer.completable())
+            .compose(composer.observable())
             .doOnSubscribe { view?.showLoading() }
             .doOnComplete { view?.hideLoading() }
-            .subscribe {
-                view?.showAuthCode()
-            }
+            .subscribe ({
+               with(it) {
+                   ifAuthorized { view?.showImportChannels() }
+                   ifError { view?.showTopPopup(unknownError) }
+                   ifWaitingForCode { view?.showAuthCode() }
+               }
+            }, {
+                view?.showTopPopup(unknownError)
+            })
     }
 
     fun onReignAdditionalNumberChanged(newNumber: String) {

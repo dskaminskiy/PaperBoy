@@ -22,18 +22,21 @@
         <enum name="ICON_ARROW_BACK" value="1"/>
         <enum name="ICON_TRASH" value="2"/>
         <enum name="ICON_ARROW_FORWARD" value="3"/>
+        <enum name="ICON_WARNING" value="4"/>
     </attr>
     <attr name="leftIconConstant" format="enum">
         <enum name="ICON_ADD" value="0"/>
         <enum name="ICON_ARROW_BACK" value="1"/>
         <enum name="ICON_TRASH" value="2"/>
         <enum name="ICON_ARROW_FORWARD" value="3"/>
+        <enum name="ICON_WARNING" value="4"/>
     </attr>
     <attr name="rightIconConstant">
         <enum name="ICON_ADD" value="0"/>
         <enum name="ICON_ARROW_BACK" value="1"/>
         <enum name="ICON_TRASH" value="2"/>
         <enum name="ICON_ARROW_FORWARD" value="3"/>
+        <enum name="ICON_WARNING" value="4"/>
     </attr>
 
 

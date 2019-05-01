@@ -76,8 +76,6 @@ abstract class BaseActivity<P : Presenter<V>, V : View> : AppCompatActivity(), V
             .let(supportFragmentManager::findFragmentByTag)
     }
 
-
-
     override fun onBackPressed() {
         val currentFragment = getActiveFragment() ?: existingFragment
 

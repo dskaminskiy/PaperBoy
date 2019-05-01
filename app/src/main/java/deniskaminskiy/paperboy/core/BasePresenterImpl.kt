@@ -2,8 +2,6 @@ package deniskaminskiy.paperboy.core
 
 import java.lang.ref.WeakReference
 
-//TODO: Позаимствовать хорошие практики из core DOC+
-//TODO: Артем -> избавиться от detach
 abstract class BasePresenterImpl<V : View>(
     view: V
 ) : Presenter<V> {
@@ -12,6 +10,8 @@ abstract class BasePresenterImpl<V : View>(
 
     protected val view: V?
         get() = viewRef.get()
+
+    protected var isAnimationRunning: Boolean = false
 
     override fun onViewAttached(view: V) {
         viewRef = WeakReference(view)
@@ -31,6 +31,14 @@ abstract class BasePresenterImpl<V : View>(
 
     override fun onFinish() {
         //..
+    }
+
+    override fun onAnimationStart() {
+        isAnimationRunning = true
+    }
+
+    override fun onAnimationEnd() {
+        isAnimationRunning = false
     }
 
 }
