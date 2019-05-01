@@ -1,5 +1,7 @@
 package deniskaminskiy.paperboy.core
 
+import deniskaminskiy.paperboy.utils.disposeIfNotNull
+import io.reactivex.disposables.Disposable
 import java.lang.ref.WeakReference
 
 abstract class BasePresenterImpl<V : View>(
@@ -12,6 +14,11 @@ abstract class BasePresenterImpl<V : View>(
         get() = viewRef.get()
 
     protected var isAnimationRunning: Boolean = false
+
+    /**
+     * For interactor updateUi subscribe
+     */
+    protected var disposableUpdateUi: Disposable? = null
 
     override fun onViewAttached(view: V) {
         viewRef = WeakReference(view)
@@ -26,6 +33,7 @@ abstract class BasePresenterImpl<V : View>(
     }
 
     override fun onViewDetached() {
+        disposableUpdateUi.disposeIfNotNull()
         viewRef = WeakReference(null)
     }
 

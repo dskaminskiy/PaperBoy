@@ -4,7 +4,10 @@ import deniskaminskiy.paperboy.core.Mapper
 import deniskaminskiy.paperboy.data.api.ApiService
 import deniskaminskiy.paperboy.data.api.AuthResponseState
 import deniskaminskiy.paperboy.data.api.PaperboyApi
-import deniskaminskiy.paperboy.data.api.json.auth.*
+import deniskaminskiy.paperboy.data.api.json.auth.AuthCodeResponse
+import deniskaminskiy.paperboy.data.api.json.auth.AuthPasswordRequest
+import deniskaminskiy.paperboy.data.api.json.auth.AuthPasswordResponse
+import deniskaminskiy.paperboy.data.api.json.auth.AuthResponseJson
 import deniskaminskiy.paperboy.data.auth.Auth
 import deniskaminskiy.paperboy.data.auth.sources.mappers.AuthCodeResponseToAuthResponseStateMapper
 import deniskaminskiy.paperboy.data.auth.sources.mappers.AuthPasswordResponseToAuthResponseStateMapper
@@ -15,7 +18,7 @@ interface AuthCloudDataSource {
 
     fun requestCode(phoneNumber: String): Observable<Auth>
 
-    fun sendCode(code: Int, token: String): Observable<AuthResponseState>
+    fun sendCode(code: Int): Observable<AuthResponseState>
 
     fun sendSecurityCode(code: String, token: String): Observable<AuthResponseState>
 
@@ -35,8 +38,8 @@ class AuthCloudDataSourceImpl(
             .map(authMapper::map)
             .toObservable()
 
-    override fun sendCode(code: Int, token: String): Observable<AuthResponseState> =
-        api.authCode(AuthCodeRequest(token, code))
+    override fun sendCode(code: Int): Observable<AuthResponseState> =
+        api.authCode(code)
             .map(authCodeMapper::map)
             .toObservable()
 

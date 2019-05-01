@@ -1,12 +1,12 @@
 package deniskaminskiy.paperboy.presentation.auth.code
 
-import android.content.Context
 import deniskaminskiy.paperboy.core.BasePresenterImpl
+import deniskaminskiy.paperboy.core.Mapper
 import deniskaminskiy.paperboy.data.api.ifAuthorized
 import deniskaminskiy.paperboy.data.api.ifError
 import deniskaminskiy.paperboy.data.api.ifWaitingForPassword
-import deniskaminskiy.paperboy.data.auth.AuthRepository
-import deniskaminskiy.paperboy.data.auth.AuthRepositoryFactory
+import deniskaminskiy.paperboy.domain.auth.AuthCodeInteractor
+import deniskaminskiy.paperboy.domain.auth.AuthCodeInteractorImpl
 import deniskaminskiy.paperboy.presentation.view.TopPopupPresentModel
 import deniskaminskiy.paperboy.utils.ContextDelegate
 import deniskaminskiy.paperboy.utils.disposeIfNotNull
@@ -21,15 +21,14 @@ class AuthCodePresenter(
     view: AuthCodeView,
     private val resources: ResourcesManager,
     private val contextDelegate: ContextDelegate,
-    private val repository: AuthRepository = AuthRepositoryFactory.create(),
-    private val composer: Composer = SchedulerComposerFactory.android()
+    private val composer: Composer = SchedulerComposerFactory.android(),
+    private val codeLength: Int = CODE_LENGTH,
+    private val mapper: Mapper<String, AuthCodePresentModel> = CodeStringToAuthCodePresentModelMapper(),
+    private val interactor: AuthCodeInteractor = AuthCodeInteractorImpl(codeLength)
 ) : BasePresenterImpl<AuthCodeView>(view) {
 
     companion object {
         private const val CODE_LENGTH = 5
-
-        private const val SETTINGS_FILE_NAME = "deniskaminskiy.paperboy.data.settings.App"
-        private const val USER_TOKEN = "USER_TOKEN"
     }
 
     private val unknownError: TopPopupPresentModel by lazy {
@@ -41,21 +40,18 @@ class AuthCodePresenter(
         )
     }
 
-    private var code = ""
-
     private var isInputsUpdating = false
-
     private var disposableSendCode: Disposable? = null
-
-    private val userToken: String
-        get() = contextDelegate.getContext()?.getSharedPreferences(SETTINGS_FILE_NAME, Context.MODE_PRIVATE)
-            ?.getString(USER_TOKEN, "")
-            ?: ""
-
 
     override fun onStart(viewCreated: Boolean) {
         super.onStart(viewCreated)
-        updateView()
+        disposableUpdateUi = interactor.onUiUpdateRequest()
+            .map(mapper::map)
+            .compose(composer.observable())
+            .subscribe {
+                isInputsUpdating = true
+                view?.show(it)
+            }
     }
 
     override fun onViewDetached() {
@@ -63,29 +59,20 @@ class AuthCodePresenter(
         super.onViewDetached()
     }
 
-    private fun updateView() {
-        isInputsUpdating = true
-        view?.show(AuthCodePresentModel(code))
-    }
-
     private fun sendCode() {
-        try {
-            disposableSendCode = repository.sendCode(code.toInt(), userToken)
-                .compose(composer.observable())
-                .doOnSubscribe { view?.showLoading() }
-                .doFinally { clearInputs() }
-                .subscribe({
-                    with(it) {
-                        ifAuthorized { view?.showImportChannels() }
-                        ifError { showError() }
-                        ifWaitingForPassword { view?.showAuthSecurityCode() }
-                    }
-                }, {
-                    showError()
-                })
-        } catch (e: NumberFormatException) {
-            showError()
-        }
+        disposableSendCode = interactor.sendCode()
+            .compose(composer.observable())
+            .doOnSubscribe { view?.showLoading() }
+            .doFinally { interactor.clearCode() }
+            .subscribe({
+                with(it) {
+                    ifAuthorized { view?.showImportChannels() }
+                    ifError { showError() }
+                    ifWaitingForPassword { view?.showAuthSecurityCode() }
+                }
+            }, {
+                showError()
+            })
     }
 
     private fun showError() {
@@ -98,24 +85,8 @@ class AuthCodePresenter(
      */
     fun onPassCodeChanged(newNumber: String) {
         if (!isInputsUpdating) {
-            if (newNumber.isNotEmpty()) {
-                code += newNumber
-            } else {
-                if (code.isNotEmpty()) {
-                    code = code.dropLast(1)
-                }
-            }
-            updateView()
-
-            if (code.length >= CODE_LENGTH) {
-                sendCode()
-            }
+            interactor.onPassCodeChanged(newNumber)
         }
-    }
-
-    private fun clearInputs() {
-        code = ""
-        updateView()
     }
 
     fun onSendSmsClick() {
@@ -131,10 +102,12 @@ class AuthCodePresenter(
     }
 
     fun onBackspacePressedWithEmptyText() {
-        if (code.isNotEmpty()) {
-            code = code.dropLast(1)
-            updateView()
-        }
+        interactor.removeLastCodeSymbol()
     }
 
+}
+
+class CodeStringToAuthCodePresentModelMapper : Mapper<String, AuthCodePresentModel> {
+    override fun map(from: String): AuthCodePresentModel =
+        AuthCodePresentModel(from)
 }

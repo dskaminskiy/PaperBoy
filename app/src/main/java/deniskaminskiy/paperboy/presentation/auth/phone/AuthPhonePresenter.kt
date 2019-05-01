@@ -37,7 +37,6 @@ class AuthPhonePresenter(
     }
 
     private var disposableCode: Disposable? = null
-    private var disposableUpdateUi: Disposable? = null
 
     private val unknownError: TopPopupPresentModel by lazy {
         TopPopupPresentModel(
@@ -60,7 +59,6 @@ class AuthPhonePresenter(
 
     override fun onViewDetached() {
         disposableCode.disposeIfNotNull()
-        disposableUpdateUi.disposeIfNotNull()
         super.onViewDetached()
     }
 
@@ -88,4 +86,19 @@ class AuthPhonePresenter(
         interactor.onPhoneNumberChanged(newNumber)
     }
 
+}
+
+class AuthPhoneToPresentModelMapper(
+    private val maxLengthPhone: Int
+) : Mapper<AuthPhone, AuthPhonePresentModel> {
+    override fun map(from: AuthPhone): AuthPhonePresentModel =
+        AuthPhonePresentModel(
+            regionAdditionalNumber = from.region.takeIf { it != -1 }?.toReignFormat() ?: "+",
+            phoneNumber = from.phone.takeIf { it != -1L }?.toFormatNumber() ?: "",
+            isNextButtonEnable = from.phone.toString().length == maxLengthPhone
+                    && from.region.toString().isNotEmpty() && from.region != -1
+        )
+
+    private fun Long.toFormatNumber(): String = this.toString()
+    private fun Int.toReignFormat(): String = "+$this"
 }
