@@ -47,12 +47,16 @@ class AuthSecurityCodeFragment : BaseFragment<AuthSecurityCodePresenter, AuthSec
     }
 
     override fun show(isNextButtonEnable: Boolean) {
-        vLoading.gone()
+        hideLoading()
         vNext.isEnabled = isNextButtonEnable
     }
 
     override fun showLoading() {
         vLoading.visible()
+    }
+
+    override fun hideLoading() {
+        vLoading.gone()
     }
 
     override fun close() {

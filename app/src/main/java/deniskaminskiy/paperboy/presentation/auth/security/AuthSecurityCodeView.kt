@@ -8,6 +8,8 @@ interface AuthSecurityCodeView : View {
 
     fun showLoading()
 
+    fun hideLoading()
+
     fun close()
 
     fun showImportChannels()
