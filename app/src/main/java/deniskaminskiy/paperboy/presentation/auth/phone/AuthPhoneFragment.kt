@@ -87,4 +87,9 @@ class AuthPhoneFragment : BaseFragment<AuthPhonePresenter, AuthPhoneView>(), Aut
             .open(activity, R.id.vgContent, ChooseChannelsFragment.TAG)
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        super.onBackPressed()
+    }
+
 }

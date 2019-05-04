@@ -2,9 +2,6 @@ package deniskaminskiy.paperboy.presentation.auth.phone
 
 import deniskaminskiy.paperboy.core.BasePresenterImpl
 import deniskaminskiy.paperboy.core.Mapper
-import deniskaminskiy.paperboy.data.api.ifAuthorized
-import deniskaminskiy.paperboy.data.api.ifError
-import deniskaminskiy.paperboy.data.api.ifWaitingForCode
 import deniskaminskiy.paperboy.domain.auth.AuthPhoneInteractor
 import deniskaminskiy.paperboy.domain.auth.AuthPhoneInteractorImpl
 import deniskaminskiy.paperboy.presentation.view.TopPopupPresentModel
@@ -63,19 +60,20 @@ class AuthPhonePresenter(
     }
 
     fun onNextClick() {
-        disposableCode = interactor.requestCode()
-            .compose(composer.observable())
-            .doOnSubscribe { view?.showLoading() }
-            .doOnComplete { view?.hideLoading() }
-            .subscribe ({
-               with(it) {
-                   ifAuthorized { view?.showImportChannels() }
-                   ifError { view?.showTopPopup(unknownError) }
-                   ifWaitingForCode { view?.showAuthCode() }
-               }
-            }, {
-                view?.showTopPopup(unknownError)
-            })
+        view?.showAuthCode()
+//        disposableCode = interactor.requestCode()
+//            .compose(composer.observable())
+//            .doOnSubscribe { view?.showLoading() }
+//            .doOnComplete { view?.hideLoading() }
+//            .subscribe ({
+//               with(it) {
+//                   ifAuthorized { view?.showImportChannels() }
+//                   ifError { view?.showTopPopup(unknownError) }
+//                   ifWaitingForCode { view?.showAuthCode() }
+//               }
+//            }, {
+//                view?.showTopPopup(unknownError)
+//            })
     }
 
     fun onReignAdditionalNumberChanged(newNumber: String) {

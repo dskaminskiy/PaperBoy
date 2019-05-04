@@ -9,6 +9,8 @@ import io.reactivex.subjects.BehaviorSubject
 
 interface AuthCodeInteractor : Interactor {
 
+    var onFullCodeEntered: () -> Unit
+
     fun onUiUpdateRequest(): Observable<String>
 
     fun sendCode(): Observable<AuthResponseState>
@@ -30,7 +32,10 @@ class AuthCodeInteractorImpl(
 ) : AuthCodeInteractor {
 
     private var code = ""
+
     private val updateSubject = BehaviorSubject.createDefault(code)
+
+    override var onFullCodeEntered: () -> Unit = {}
 
     override fun onUiUpdateRequest(): Observable<String> = updateSubject
 
@@ -48,7 +53,7 @@ class AuthCodeInteractorImpl(
         updateUi()
 
         if (code.length >= codeLength) {
-            sendCode()
+            onFullCodeEntered.invoke()
         }
     }
 

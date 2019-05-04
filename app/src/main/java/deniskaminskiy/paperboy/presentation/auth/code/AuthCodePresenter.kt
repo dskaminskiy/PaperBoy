@@ -43,6 +43,7 @@ class AuthCodePresenter(
 
     override fun onStart(viewCreated: Boolean) {
         super.onStart(viewCreated)
+
         disposableUpdateUi = interactor.onUiUpdateRequest()
             .map(mapper::map)
             .compose(composer.observable())
@@ -50,6 +51,8 @@ class AuthCodePresenter(
                 isInputsUpdating = true
                 view?.show(it)
             }
+
+        interactor.onFullCodeEntered = { sendCode() }
     }
 
     override fun onViewDetached() {
