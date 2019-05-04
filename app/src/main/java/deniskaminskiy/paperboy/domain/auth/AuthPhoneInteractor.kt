@@ -13,7 +13,7 @@ import io.reactivex.subjects.BehaviorSubject
 
 interface AuthPhoneInteractor : Interactor {
 
-    fun onUiUpdateRequest(): Observable<AuthPhone>
+    fun onModelUpdate(): Observable<AuthPhone>
 
     fun requestCode(): Observable<AuthResponseState>
 
@@ -37,37 +37,33 @@ class AuthPhoneInteractorImpl(
     private val settings: ApplicationSettings = ApplicationSettingsImpl(contextDelegate)
 ) : AuthPhoneInteractor {
 
-    private val updateSubject = BehaviorSubject.createDefault(AuthPhone.EMPTY)
+    private val subjectModel = BehaviorSubject.createDefault(AuthPhone.EMPTY)
 
-    private var authPhone = AuthPhone.EMPTY
-
-    private var reignNumber: Int
+    private var region: Int
         set(value) {
-            authPhone = authPhone.copy(region = value)
-            updateUi()
+            subjectModel.value
+                ?.copy(region = value)
+                ?.let(subjectModel::onNext)
         }
-        get() = authPhone.region
+        get() = subjectModel.value?.region ?: -1
 
-    private var phoneNumber: Long
+    private var phone: Long
         set(value) {
-            authPhone = authPhone.copy(phone = value)
-            updateUi()
+            subjectModel.value
+                ?.copy(phone = value)
+                ?.let(subjectModel::onNext)
         }
-        get() = authPhone.phone
+        get() = subjectModel.value?.phone ?: -1
 
 
     init {
-        reignNumber = 7
+        region = 7
     }
 
-    private fun updateUi() {
-        updateSubject.onNext(authPhone)
-    }
-
-    override fun onUiUpdateRequest(): Observable<AuthPhone> = updateSubject
+    override fun onModelUpdate(): Observable<AuthPhone> = subjectModel
 
     override fun requestCode(): Observable<AuthResponseState> = repository
-        .requestCode("+$reignNumber$phoneNumber")
+        .requestCode("+$region$phone")
         .doOnNext { settings.userToken = it.token }
         .map { it.state }
 
@@ -78,13 +74,13 @@ class AuthPhoneInteractorImpl(
                 ?: newNumber
 
             try {
-                reignNumber = clearNumber.toInt()
+                region = clearNumber.toInt()
                 if (clearNumber.length > maxLengthReign) throw java.lang.NumberFormatException()
             } catch (e: NumberFormatException) {
                 onReignAdditionalNumberChanged(newNumber.dropLast(1))
             }
         } else {
-            reignNumber = -1
+            region = -1
         }
     }
 
@@ -93,13 +89,13 @@ class AuthPhoneInteractorImpl(
             val clearNumber = newNumber.trim()
 
             try {
-                phoneNumber = clearNumber.toLong()
+                phone = clearNumber.toLong()
                 if (clearNumber.length > maxLengthPhone) throw java.lang.NumberFormatException()
             } catch (e: NumberFormatException) {
                 onPhoneNumberChanged(newNumber.dropLast(1))
             }
         } else {
-            phoneNumber = -1
+            phone = -1
         }
     }
 

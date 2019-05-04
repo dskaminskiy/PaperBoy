@@ -11,7 +11,7 @@ interface AuthCodeInteractor : Interactor {
 
     var onFullCodeEntered: () -> Unit
 
-    fun onUiUpdateRequest(): Observable<String>
+    fun onModelUpdate(): Observable<String>
 
     fun sendCode(): Observable<AuthResponseState>
 
@@ -31,13 +31,17 @@ class AuthCodeInteractorImpl(
     private val repository: AuthRepository = AuthRepositoryFactory.create()
 ) : AuthCodeInteractor {
 
-    private var code = ""
+    private val subjectModel = BehaviorSubject.createDefault("")
 
-    private val updateSubject = BehaviorSubject.createDefault(code)
+    private var code: String
+        get() = subjectModel.value ?: ""
+        set(value) {
+            subjectModel.onNext(value)
+        }
 
     override var onFullCodeEntered: () -> Unit = {}
 
-    override fun onUiUpdateRequest(): Observable<String> = updateSubject
+    override fun onModelUpdate(): Observable<String> = subjectModel
 
     override fun sendCode(): Observable<AuthResponseState> = repository.sendCode(code.toInt())
 
@@ -50,8 +54,6 @@ class AuthCodeInteractorImpl(
             }
         }
 
-        updateUi()
-
         if (code.length >= codeLength) {
             onFullCodeEntered.invoke()
         }
@@ -59,18 +61,12 @@ class AuthCodeInteractorImpl(
 
     override fun clearCode() {
         code = ""
-        updateUi()
     }
 
     override fun removeLastCodeSymbol() {
         if (code.isNotEmpty()) {
             code = code.dropLast(1)
-            updateUi()
         }
-    }
-
-    private fun updateUi() {
-        updateSubject.onNext(code)
     }
 
 }

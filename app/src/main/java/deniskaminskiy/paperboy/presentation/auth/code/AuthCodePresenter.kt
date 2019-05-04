@@ -44,7 +44,7 @@ class AuthCodePresenter(
     override fun onStart(viewCreated: Boolean) {
         super.onStart(viewCreated)
 
-        disposableUpdateUi = interactor.onUiUpdateRequest()
+        disposableUpdateUi = interactor.onModelUpdate()
             .map(mapper::map)
             .compose(composer.observable())
             .subscribe {

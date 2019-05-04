@@ -46,7 +46,8 @@ class AuthPhonePresenter(
 
     override fun onStart(viewCreated: Boolean) {
         super.onStart(viewCreated)
-        disposableUpdateUi = interactor.onUiUpdateRequest()
+
+        disposableUpdateUi = interactor.onModelUpdate()
             .map(mapper::map)
             .compose(composer.observable())
             .subscribe {
@@ -91,12 +92,12 @@ class AuthPhoneToPresentModelMapper(
 ) : Mapper<AuthPhone, AuthPhonePresentModel> {
     override fun map(from: AuthPhone): AuthPhonePresentModel =
         AuthPhonePresentModel(
-            regionAdditionalNumber = from.region.takeIf { it != -1 }?.toReignFormat() ?: "+",
+            regionAdditionalNumber = from.region.takeIf { it != -1 }?.toRegionFormat() ?: "+",
             phoneNumber = from.phone.takeIf { it != -1L }?.toFormatNumber() ?: "",
             isNextButtonEnable = from.phone.toString().length == maxLengthPhone
                     && from.region.toString().isNotEmpty() && from.region != -1
         )
 
     private fun Long.toFormatNumber(): String = this.toString()
-    private fun Int.toReignFormat(): String = "+$this"
+    private fun Int.toRegionFormat(): String = "+$this"
 }
