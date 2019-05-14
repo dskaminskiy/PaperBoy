@@ -53,18 +53,19 @@ class AuthSecurityCodePresenter(
     }
 
     fun onNextClick() {
-        disposableSecurityCode = interactor.sendSecurityCode()
-            .compose(composer.observable())
-            .doOnSubscribe { view?.showLoading() }
-            .doFinally { view?.hideLoading() }
-            .subscribe({
-                with(it) {
-                    ifAuthorized { view?.showImportChannels() }
-                    ifError { view?.showTopPopup(unknownError) }
-                }
-            }, {
-                view?.showTopPopup(unknownError)
-            })
+        view?.showImportChannels()
+//        disposableSecurityCode = interactor.sendSecurityCode()
+//            .compose(composer.observable())
+//            .doOnSubscribe { view?.showLoading() }
+//            .doFinally { view?.hideLoading() }
+//            .subscribe({
+//                with(it) {
+//                    ifAuthorized { view?.showImportChannels() }
+//                    ifError { view?.showTopPopup(unknownError) }
+//                }
+//            }, {
+//                view?.showTopPopup(unknownError)
+//            })
     }
 
     fun onSecurityCodeTextChanged(newCode: String) {

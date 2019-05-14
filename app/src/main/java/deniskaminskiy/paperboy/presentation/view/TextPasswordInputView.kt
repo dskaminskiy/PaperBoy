@@ -112,4 +112,12 @@ class TextPasswordInputView @JvmOverloads constructor(
         etText.post { etText.setSelection(etText.length(), etText.length()) }
     }
 
+    fun showError() {
+        isStroke = true
+        background = defaultBackground.apply {
+            setStroke(dpStrokeWidth, palette.marlboroNew)
+        }
+        requestLayout()
+    }
+
 }
