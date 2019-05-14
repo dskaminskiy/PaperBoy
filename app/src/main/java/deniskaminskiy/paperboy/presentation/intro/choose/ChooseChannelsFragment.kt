@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-import deniskaminskiy.paperboy.R
 import deniskaminskiy.paperboy.core.BaseFragment
 import deniskaminskiy.paperboy.data.channel.ChannelImport
 import deniskaminskiy.paperboy.presentation.intro.remove.RemoveTelegramChannelsFragment
@@ -15,6 +14,10 @@ import deniskaminskiy.paperboy.utils.open
 import deniskaminskiy.paperboy.utils.view.isGone
 import deniskaminskiy.paperboy.utils.view.isVisible
 import kotlinx.android.synthetic.main.fragment_choose_channels.*
+import android.content.Intent
+import deniskaminskiy.paperboy.R
+import deniskaminskiy.paperboy.utils.hideApp
+
 
 class ChooseChannelsFragment : BaseFragment<ChooseChannelsPresenter, ChooseChannelsView>(), ChooseChannelsView {
 
@@ -81,7 +84,7 @@ class ChooseChannelsFragment : BaseFragment<ChooseChannelsPresenter, ChooseChann
     }
 
     override fun onBackPressed() {
-        //super.onBackPressed()
+        hideApp()
     }
 
 }

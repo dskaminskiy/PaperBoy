@@ -63,6 +63,11 @@ class AuthSecurityCodeFragment : BaseFragment<AuthSecurityCodePresenter, AuthSec
         onBackPressed()
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        activity?.supportFragmentManager?.popBackStack()
+    }
+
     override fun showImportChannels() {
         hideKeyboard()
         ChooseChannelsFragment.newInstance(true)
