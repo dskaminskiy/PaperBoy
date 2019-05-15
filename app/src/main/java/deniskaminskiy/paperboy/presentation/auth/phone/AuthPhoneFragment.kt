@@ -10,6 +10,7 @@ import deniskaminskiy.paperboy.core.BaseFragment
 import deniskaminskiy.paperboy.presentation.auth.code.AuthCodeFragment
 import deniskaminskiy.paperboy.presentation.intro.choose.ChooseChannelsFragment
 import deniskaminskiy.paperboy.utils.ContextDelegateFactory
+import deniskaminskiy.paperboy.utils.hideKeyboard
 import deniskaminskiy.paperboy.utils.open
 import deniskaminskiy.paperboy.utils.view.gone
 import deniskaminskiy.paperboy.utils.view.visible
@@ -83,6 +84,7 @@ class AuthPhoneFragment : BaseFragment<AuthPhonePresenter, AuthPhoneView>(), Aut
     }
 
     override fun showImportChannels() {
+        hideKeyboard()
         ChooseChannelsFragment.newInstance()
             .open(activity, R.id.vgContent, ChooseChannelsFragment.TAG)
     }

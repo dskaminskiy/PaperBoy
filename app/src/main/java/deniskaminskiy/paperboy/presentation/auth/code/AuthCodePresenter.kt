@@ -61,24 +61,24 @@ class AuthCodePresenter(
     }
 
     private fun sendCode() {
-        view?.showAuthSecurityCode()
-//        disposableSendCode = interactor.sendCode()
-//            .compose(composer.observable())
-//            .doOnSubscribe { view?.showLoading() }
-//            .doFinally { interactor.clearCode() }
-//            .subscribe({
-//                with(it) {
-//                    ifAuthorized { view?.showImportChannels() }
-//                    ifError { showError() }
-//                    ifWaitingForPassword { view?.showAuthSecurityCode() }
-//                }
-//            }, {
-//                showError()
-//            })
+        disposableSendCode = interactor.sendCode()
+            .compose(composer.observable())
+            .doOnSubscribe { view?.showLoading() }
+            .doFinally { interactor.clearCode() }
+            .subscribe({
+                with(it) {
+                    ifAuthorized { view?.showImportChannels() }
+                    ifError { showError() }
+                    ifWaitingForPassword { view?.showAuthSecurityCode() }
+                }
+            }, {
+                showError()
+            })
     }
 
     private fun showError() {
         view?.hideLoading()
+        interactor.clearCode()
         view?.showTopPopup(unknownError)
     }
 
