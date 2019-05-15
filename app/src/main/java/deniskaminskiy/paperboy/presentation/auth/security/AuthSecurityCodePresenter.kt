@@ -43,9 +43,9 @@ class AuthSecurityCodePresenter(
             .subscribe { view?.show(it) }
     }
 
-    override fun onViewDetached() {
+    override fun onDestroy() {
         disposableSecurityCode.disposeIfNotNull()
-        super.onViewDetached()
+        super.onDestroy()
     }
 
     fun onBackClick() {

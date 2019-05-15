@@ -55,9 +55,9 @@ class AuthCodePresenter(
         interactor.onFullCodeEntered = { sendCode() }
     }
 
-    override fun onViewDetached() {
+    override fun onDestroy() {
         disposableSendCode.disposeIfNotNull()
-        super.onViewDetached()
+        super.onDestroy()
     }
 
     private fun sendCode() {

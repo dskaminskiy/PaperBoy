@@ -70,9 +70,9 @@ class ChooseChannelsPresenter(
         interactor.changeCheckStatus(model.element)
     }
 
-    override fun onViewDetached() {
+    override fun onDestroy() {
         disposableComposite.dispose()
-        super.onViewDetached()
+        super.onDestroy()
     }
 
     fun onSkipClick() {

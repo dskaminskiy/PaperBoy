@@ -37,7 +37,7 @@ abstract class BasePresenterImpl<V : View>(
         viewRef = WeakReference(null)
     }
 
-    override fun onFinish() {
+    override fun onDestroy() {
         //..
     }
 

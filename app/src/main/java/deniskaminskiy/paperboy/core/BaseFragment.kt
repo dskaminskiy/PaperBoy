@@ -56,6 +56,11 @@ abstract class BaseFragment<P : Presenter<V>, V : View> : Fragment(), View,
         super.onStop()
     }
 
+    override fun onDestroyView() {
+        presenter?.onDestroy()
+        super.onDestroyView()
+    }
+
     override fun onBackPressed() {
         activity?.let {
             if (it is BaseActivity<*,*>) {
