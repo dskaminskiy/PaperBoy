@@ -8,6 +8,8 @@ import deniskaminskiy.paperboy.data.api.ifWaitingForPassword
 import deniskaminskiy.paperboy.domain.auth.AuthCodeInteractor
 import deniskaminskiy.paperboy.domain.auth.AuthCodeInteractorImpl
 import deniskaminskiy.paperboy.presentation.view.TopPopupPresentModel
+import deniskaminskiy.paperboy.utils.api.fold
+import deniskaminskiy.paperboy.utils.api.responseOrError
 import deniskaminskiy.paperboy.utils.disposeIfNotNull
 import deniskaminskiy.paperboy.utils.icon.IconConstant
 import deniskaminskiy.paperboy.utils.icon.IconFactory
@@ -31,7 +33,7 @@ class AuthCodePresenter(
 
     private val unknownError: TopPopupPresentModel by lazy {
         TopPopupPresentModel(
-            title = resources.strings.sometimesShitHappens,
+            title = resources.strings.somethingHappened,
             subtitle = resources.strings.sometimesShitHappens,
             icon = IconFactory.create(IconConstant.WARNING.constant),
             iconColor = resources.colors.marlboroNew
@@ -64,22 +66,24 @@ class AuthCodePresenter(
         disposableSendCode = interactor.sendCode()
             .compose(composer.observable())
             .doOnSubscribe { view?.showLoading() }
-            .doFinally { interactor.clearCode() }
+            .doFinally {
+                interactor.clearCode()
+                view?.hideLoading()
+            }
             .subscribe({
                 with(it) {
                     ifAuthorized { view?.showImportChannels() }
-                    ifError { showError() }
+                    ifError { view?.showTopPopup(unknownError) }
                     ifWaitingForPassword { view?.showAuthSecurityCode() }
                 }
-            }, {
-                showError()
+            }, { t ->
+                t.responseOrError()
+                    .fold({
+                        view?.showTopPopup(unknownError.copy(subtitle = it.message))
+                    }, {
+                        view?.showTopPopup(unknownError)
+                    })
             })
-    }
-
-    private fun showError() {
-        view?.hideLoading()
-        interactor.clearCode()
-        view?.showTopPopup(unknownError)
     }
 
     /**

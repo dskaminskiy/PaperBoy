@@ -7,6 +7,8 @@ import deniskaminskiy.paperboy.domain.auth.AuthPhoneInteractor
 import deniskaminskiy.paperboy.domain.auth.AuthPhoneInteractorImpl
 import deniskaminskiy.paperboy.presentation.view.TopPopupPresentModel
 import deniskaminskiy.paperboy.utils.ContextDelegate
+import deniskaminskiy.paperboy.utils.api.fold
+import deniskaminskiy.paperboy.utils.api.responseOrError
 import deniskaminskiy.paperboy.utils.disposeIfNotNull
 import deniskaminskiy.paperboy.utils.icon.IconConstant
 import deniskaminskiy.paperboy.utils.icon.IconFactory
@@ -38,7 +40,7 @@ class AuthPhonePresenter(
 
     private val unknownError: TopPopupPresentModel by lazy {
         TopPopupPresentModel(
-            title = resources.strings.sometimesShitHappens,
+            title = resources.strings.somethingHappened,
             subtitle = resources.strings.sometimesShitHappens,
             icon = IconFactory.create(IconConstant.WARNING.constant),
             iconColor = resources.colors.marlboroNew
@@ -66,14 +68,19 @@ class AuthPhonePresenter(
             .compose(composer.observable())
             .doOnSubscribe { view?.showLoading() }
             .doOnComplete { view?.hideLoading() }
-            .subscribe ({
-               with(it) {
-                   ifAuthorized { view?.showImportChannels() }
-                   ifError { view?.showTopPopup(unknownError) }
-                   ifWaitingForCode { view?.showAuthCode() }
-               }
-            }, {
-                view?.showTopPopup(unknownError)
+            .subscribe({
+                with(it) {
+                    ifAuthorized { view?.showImportChannels() }
+                    ifError { view?.showTopPopup(unknownError) }
+                    ifWaitingForCode { view?.showAuthCode() }
+                }
+            }, { t ->
+                t.responseOrError()
+                    .fold({
+                        view?.showTopPopup(unknownError.copy(subtitle = it.message))
+                    }, {
+                        view?.showTopPopup(unknownError)
+                    })
             })
     }
 

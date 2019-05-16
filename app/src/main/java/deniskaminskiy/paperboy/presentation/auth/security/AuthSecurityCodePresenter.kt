@@ -7,6 +7,8 @@ import deniskaminskiy.paperboy.domain.auth.AuthSecurityCodeInteractor
 import deniskaminskiy.paperboy.domain.auth.AuthSecurityCodeInteractorImpl
 import deniskaminskiy.paperboy.presentation.view.TopPopupPresentModel
 import deniskaminskiy.paperboy.utils.ContextDelegate
+import deniskaminskiy.paperboy.utils.api.fold
+import deniskaminskiy.paperboy.utils.api.responseOrError
 import deniskaminskiy.paperboy.utils.disposeIfNotNull
 import deniskaminskiy.paperboy.utils.icon.IconConstant
 import deniskaminskiy.paperboy.utils.icon.IconFactory
@@ -53,19 +55,23 @@ class AuthSecurityCodePresenter(
     }
 
     fun onNextClick() {
-        view?.showImportChannels()
-//        disposableSecurityCode = interactor.sendSecurityCode()
-//            .compose(composer.observable())
-//            .doOnSubscribe { view?.showLoading() }
-//            .doFinally { view?.hideLoading() }
-//            .subscribe({
-//                with(it) {
-//                    ifAuthorized { view?.showImportChannels() }
-//                    ifError { view?.showTopPopup(unknownError) }
-//                }
-//            }, {
-//                view?.showTopPopup(unknownError)
-//            })
+        disposableSecurityCode = interactor.sendSecurityCode()
+            .compose(composer.observable())
+            .doOnSubscribe { view?.showLoading() }
+            .doFinally { view?.hideLoading() }
+            .subscribe({
+                with(it) {
+                    ifAuthorized { view?.showImportChannels() }
+                    ifError { view?.showTopPopup(unknownError) }
+                }
+            }, { t ->
+                t.responseOrError()
+                    .fold({
+                        view?.showTopPopup(unknownError.copy(subtitle = it.message))
+                    }, {
+                        view?.showTopPopup(unknownError)
+                    })
+            })
     }
 
     fun onSecurityCodeTextChanged(newCode: String) {

@@ -6,6 +6,8 @@ import deniskaminskiy.paperboy.core.Mapper
 import deniskaminskiy.paperboy.data.channel.ChannelImport
 import deniskaminskiy.paperboy.presentation.view.CheckItemPresentModel
 import deniskaminskiy.paperboy.presentation.view.TopPopupPresentModel
+import deniskaminskiy.paperboy.utils.api.fold
+import deniskaminskiy.paperboy.utils.api.responseOrError
 import deniskaminskiy.paperboy.utils.icon.IconConstant
 import deniskaminskiy.paperboy.utils.icon.IconFactory
 import deniskaminskiy.paperboy.utils.managers.ResourcesManager
@@ -48,8 +50,13 @@ class ChooseChannelsPresenter(
         disposableComposite.add(
             interactor.channelsImport()
                 .compose(composer.observable())
-                .subscribe(::onChannelsImportUpdate) {
-                    view?.showTopPopup(unknownError)
+                .subscribe(::onChannelsImportUpdate) { t ->
+                    t.responseOrError()
+                        .fold({
+                            view?.showTopPopup(unknownError.copy(subtitle = it.message))
+                        }, {
+                            view?.showTopPopup(unknownError)
+                        })
                 }
         )
 
@@ -76,7 +83,6 @@ class ChooseChannelsPresenter(
     }
 
     fun onSkipClick() {
-        // temp
         view?.showRemoveTelegramChannels()
     }
 
