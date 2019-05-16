@@ -62,20 +62,19 @@ class AuthPhonePresenter(
     }
 
     fun onNextClick() {
-        view?.showImportChannels()
-//        disposableCode = interactor.requestCode()
-//            .compose(composer.observable())
-//            .doOnSubscribe { view?.showLoading() }
-//            .doOnComplete { view?.hideLoading() }
-//            .subscribe ({
-//               with(it) {
-//                   ifAuthorized { view?.showImportChannels() }
-//                   ifError { view?.showTopPopup(unknownError) }
-//                   ifWaitingForCode { view?.showAuthCode() }
-//               }
-//            }, {
-//                view?.showTopPopup(unknownError)
-//            })
+        disposableCode = interactor.requestCode()
+            .compose(composer.observable())
+            .doOnSubscribe { view?.showLoading() }
+            .doOnComplete { view?.hideLoading() }
+            .subscribe ({
+               with(it) {
+                   ifAuthorized { view?.showImportChannels() }
+                   ifError { view?.showTopPopup(unknownError) }
+                   ifWaitingForCode { view?.showAuthCode() }
+               }
+            }, {
+                view?.showTopPopup(unknownError)
+            })
     }
 
     fun onReignAdditionalNumberChanged(newNumber: String) {

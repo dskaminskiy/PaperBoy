@@ -16,6 +16,7 @@
         <androidx.appcompat.widget.AppCompatCheckBox
                 android:id="@+id/vCheckBox"
                 android:layout_width="24dp"
+                android:clickable="false"
                 android:layout_height="24dp"
                 android:layout_marginStart="16dp"
                 android:button="@drawable/selector_check_box"

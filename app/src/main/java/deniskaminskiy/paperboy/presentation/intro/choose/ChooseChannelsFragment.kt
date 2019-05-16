@@ -11,8 +11,7 @@ import deniskaminskiy.paperboy.presentation.intro.remove.RemoveTelegramChannelsF
 import deniskaminskiy.paperboy.utils.args
 import deniskaminskiy.paperboy.utils.managers.AndroidResourcesManager
 import deniskaminskiy.paperboy.utils.open
-import deniskaminskiy.paperboy.utils.view.isGone
-import deniskaminskiy.paperboy.utils.view.isVisible
+import deniskaminskiy.paperboy.utils.view.*
 import kotlinx.android.synthetic.main.fragment_choose_channels.*
 import android.content.Intent
 import deniskaminskiy.paperboy.R

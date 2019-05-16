@@ -25,7 +25,6 @@ class CheckItemAdapter<BM> : DataAdapter<CheckItemPresentItemModel<BM>, CheckIte
     ) : RecyclerView.ViewHolder(checkItemView) {
 
         init {
-
             checkItemView.setOnClickListener {
                 data.getOrNull(adapterPosition)
                     ?.let {
