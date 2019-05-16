@@ -28,7 +28,7 @@ class AuthSecurityCodePresenter(
 
     private val unknownError: TopPopupPresentModel by lazy {
         TopPopupPresentModel(
-            title = resources.strings.sometimesShitHappens,
+            title = resources.strings.somethingHappened,
             subtitle = resources.strings.sometimesShitHappens,
             icon = IconFactory.create(IconConstant.WARNING.constant),
             iconColor = resources.colors.marlboroNew
