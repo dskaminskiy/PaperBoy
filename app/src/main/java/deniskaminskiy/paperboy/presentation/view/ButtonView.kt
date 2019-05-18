@@ -14,6 +14,7 @@ import deniskaminskiy.paperboy.utils.icon.IconRendererFactory
 import deniskaminskiy.paperboy.utils.icon.PaintedIcon
 import deniskaminskiy.paperboy.utils.managers.AndroidResourcesManager
 import deniskaminskiy.paperboy.utils.managers.ResourcesManager
+import deniskaminskiy.paperboy.utils.view.goneIf
 import kotlinx.android.synthetic.main.view_button.view.*
 
 class ButtonView @JvmOverloads constructor(
@@ -40,6 +41,7 @@ class ButtonView @JvmOverloads constructor(
     var leftIcon: Icon? = null
         set(value) {
             field = value
+            ivLeft goneIf (value == null)
             value?.let { IconRendererFactory.create(it) }
                 ?.render(ivLeft)
         }
@@ -47,6 +49,7 @@ class ButtonView @JvmOverloads constructor(
     var rightIcon: Icon? = null
         set(value) {
             field = value
+            ivRight goneIf (value == null)
             value?.let { IconRendererFactory.create(it) }
                 ?.render(ivRight)
         }
