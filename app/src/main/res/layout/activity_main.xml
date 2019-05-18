@@ -6,6 +6,12 @@
              android:layout_height="match_parent"
              android:fitsSystemWindows="true">
 
+    <FrameLayout
+            android:id="@+id/vgContent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true" />
+
     <deniskaminskiy.paperboy.presentation.view.TopPopupView
             android:id="@+id/vTopPopup"
             android:layout_width="match_parent"
@@ -16,11 +22,5 @@
             app:title="@string/oops_something_happened"
             app:iconConstant="ICON_WARNING"
             app:subtitle="@string/it_was_shit_sometimes_shit_happens"/>
-
-    <FrameLayout
-            android:id="@+id/vgContent"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fitsSystemWindows="true" />
 
 </FrameLayout>
