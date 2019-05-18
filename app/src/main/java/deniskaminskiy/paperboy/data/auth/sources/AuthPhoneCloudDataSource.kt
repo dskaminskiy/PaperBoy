@@ -4,9 +4,9 @@ import deniskaminskiy.paperboy.core.Mapper
 import deniskaminskiy.paperboy.data.api.ApiService
 import deniskaminskiy.paperboy.data.api.AuthResponseState
 import deniskaminskiy.paperboy.data.api.PaperboyApi
-import deniskaminskiy.paperboy.data.api.json.auth.AuthCodeResponse
-import deniskaminskiy.paperboy.data.api.json.auth.AuthPasswordRequest
-import deniskaminskiy.paperboy.data.api.json.auth.AuthPasswordResponse
+import deniskaminskiy.paperboy.data.api.json.auth.AuthCodeResponseJson
+import deniskaminskiy.paperboy.data.api.json.auth.AuthPasswordRequestJson
+import deniskaminskiy.paperboy.data.api.json.auth.AuthPasswordResponseJson
 import deniskaminskiy.paperboy.data.api.json.auth.AuthResponseJson
 import deniskaminskiy.paperboy.data.auth.Auth
 import deniskaminskiy.paperboy.data.auth.sources.mappers.AuthCodeResponseToAuthResponseStateMapper
@@ -27,9 +27,9 @@ interface AuthCloudDataSource {
 class AuthCloudDataSourceImpl(
     private val api: PaperboyApi = ApiService.paperboyApi,
     private val authMapper: Mapper<AuthResponseJson, Auth> = AuthResponseJsonToAuthMapper(),
-    private val authCodeMapper: Mapper<AuthCodeResponse, AuthResponseState> =
+    private val authCodeMapper: Mapper<AuthCodeResponseJson, AuthResponseState> =
         AuthCodeResponseToAuthResponseStateMapper(),
-    private val authPasswordMapper: Mapper<AuthPasswordResponse, AuthResponseState> =
+    private val authPasswordMapper: Mapper<AuthPasswordResponseJson, AuthResponseState> =
         AuthPasswordResponseToAuthResponseStateMapper()
 ) : AuthCloudDataSource {
 
@@ -44,7 +44,7 @@ class AuthCloudDataSourceImpl(
             .toObservable()
 
     override fun sendSecurityCode(code: String, token: String): Observable<AuthResponseState> =
-        api.authPassword(AuthPasswordRequest(token, code))
+        api.authPassword(AuthPasswordRequestJson(token, code))
             .map(authPasswordMapper::map)
             .toObservable()
 

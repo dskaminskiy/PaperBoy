@@ -1,5 +1,5 @@
 package deniskaminskiy.paperboy.data.api.json.auth
 
-data class AuthCodeResponse(
+data class AuthCodeResponseJson(
     val state: String
 )
