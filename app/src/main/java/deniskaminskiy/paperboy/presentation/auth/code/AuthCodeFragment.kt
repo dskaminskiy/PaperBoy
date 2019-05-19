@@ -13,6 +13,7 @@ import deniskaminskiy.paperboy.presentation.intro.choose.ChooseChannelsFragment
 import deniskaminskiy.paperboy.utils.hideKeyboard
 import deniskaminskiy.paperboy.utils.managers.AndroidResourcesManager
 import deniskaminskiy.paperboy.utils.open
+import deniskaminskiy.paperboy.utils.replace
 import deniskaminskiy.paperboy.utils.toast
 import deniskaminskiy.paperboy.utils.view.gone
 import deniskaminskiy.paperboy.utils.view.visible
@@ -124,7 +125,7 @@ class AuthCodeFragment : BaseFragment<AuthCodePresenter, AuthCodeView>(), AuthCo
     override fun showImportChannels() {
         hideKeyboard()
         ChooseChannelsFragment.newInstance(true)
-            .open(activity, R.id.vgContent, ChooseChannelsFragment.TAG)
+            .replace(activity, R.id.vgContent, ChooseChannelsFragment.TAG)
     }
 
     override fun showSmsSended() {
