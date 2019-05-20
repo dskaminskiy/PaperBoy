@@ -66,7 +66,7 @@ class AuthCodePresenter(
         disposableSendCode = interactor.sendCode()
             .compose(composer.observable())
             .doOnSubscribe { view?.showLoading() }
-            .doFinally {
+            .doOnEach {
                 interactor.clearCode()
                 view?.hideLoading()
             }

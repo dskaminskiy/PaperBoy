@@ -58,7 +58,7 @@ class AuthSecurityCodePresenter(
         disposableSecurityCode = interactor.sendSecurityCode()
             .compose(composer.observable())
             .doOnSubscribe { view?.showLoading() }
-            .doFinally { view?.hideLoading() }
+            .doOnEach { view?.hideLoading() }
             .subscribe({
                 with(it) {
                     ifAuthorized { view?.showImportChannels() }
