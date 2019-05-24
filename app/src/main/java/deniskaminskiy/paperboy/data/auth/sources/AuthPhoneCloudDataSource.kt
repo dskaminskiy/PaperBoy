@@ -32,17 +32,17 @@ class AuthCloudDataSourceImpl(
 
     override fun requestCode(phoneNumber: String): Observable<Auth> =
         api.auth(phoneNumber)
-            .map(authMapper::map)
+            .map{ it.soleData?.let(authMapper::map) ?: Auth.EMPTY }
             .toObservable()
 
     override fun sendCode(code: Int): Observable<AuthResponseState> =
         api.authCode(AuthCodeRequestJson(code))
-            .map(authCodeMapper::map)
+            .map{ it.soleData?.let(authCodeMapper::map) ?: AuthResponseState.ERROR }
             .toObservable()
 
     override fun sendSecurityCode(code: String, token: String): Observable<AuthResponseState> =
         api.authPassword(AuthPasswordRequestJson(token, code))
-            .map(authPasswordMapper::map)
+            .map{ it.soleData?.let(authPasswordMapper::map) ?: AuthResponseState.ERROR }
             .toObservable()
 
 }

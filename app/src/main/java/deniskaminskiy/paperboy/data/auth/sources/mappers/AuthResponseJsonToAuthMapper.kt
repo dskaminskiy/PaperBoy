@@ -10,5 +10,5 @@ class AuthResponseJsonToAuthMapper(
     private val stateMapper: Mapper<String?, AuthResponseState> = ConstantToAuthResponseStateMapper()
 ) : Mapper<AuthResponseJson, Auth> {
     override fun map(from: AuthResponseJson): Auth =
-        Auth(from.token ?: "", stateMapper.map(from.state), "")
+        Auth(from.token ?: "", stateMapper.map(from.state))
 }
