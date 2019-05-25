@@ -49,6 +49,11 @@ dependencies {
     implementation multiDEXLib
     implementation kotlinImpl
 
+    // Android Architecture Components
+    implementation room.values()
+    kapt roomCompiler
+    testImplementation roomTesting
+
     // Network
     implementation retrofit.values()
     implementation okHttp.values()

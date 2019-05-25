@@ -2,19 +2,19 @@ package deniskaminskiy.paperboy.presentation.intro.choose
 
 import android.text.SpannableStringBuilder
 import deniskaminskiy.paperboy.core.View
-import deniskaminskiy.paperboy.data.channel.ChannelImport
+import deniskaminskiy.paperboy.data.importchannels.ImportChannel
 
-interface ChooseChannelsView : View {
+interface ChooseImportChannelsView : View {
 
-    fun show(model: ChooseChannelsPresentModel)
+    fun show(model: ChooseImportChannelsPresentModel)
 
     fun showRemoveTelegramChannels()
 
 }
 
-data class ChooseChannelsPresentModel(
+data class ChooseImportChannelsPresentModel(
     val title: SpannableStringBuilder,
     val subtitle: String,
-    val channels: List<CheckItemPresentItemModel<ChannelImport>>,
+    val channels: List<CheckItemPresentItemModel<ImportChannel>>,
     val isFabVisible: Boolean
 )

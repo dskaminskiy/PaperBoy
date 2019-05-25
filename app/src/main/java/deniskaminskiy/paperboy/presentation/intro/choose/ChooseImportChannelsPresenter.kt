@@ -3,7 +3,7 @@ package deniskaminskiy.paperboy.presentation.intro.choose
 import android.text.SpannableStringBuilder
 import deniskaminskiy.paperboy.core.BasePresenterImpl
 import deniskaminskiy.paperboy.core.Mapper
-import deniskaminskiy.paperboy.data.channel.ChannelImport
+import deniskaminskiy.paperboy.data.importchannels.ImportChannel
 import deniskaminskiy.paperboy.presentation.view.CheckItemPresentModel
 import deniskaminskiy.paperboy.presentation.view.TopPopupPresentModel
 import deniskaminskiy.paperboy.utils.api.fold
@@ -16,17 +16,17 @@ import deniskaminskiy.paperboy.utils.rx.Composer
 import deniskaminskiy.paperboy.utils.rx.SchedulerComposerFactory
 import io.reactivex.disposables.CompositeDisposable
 
-class ChooseChannelsPresenter(
-    view: ChooseChannelsView,
+class ChooseImportChannelsPresenter(
+    view: ChooseImportChannelsView,
     isChannelsFetched: Boolean,
     private val resources: ResourcesManager,
-    private val interactor: ChooseChannelsInteractor =
-        ChooseChannelsInteractorImpl(isChannelsFetched),
+    private val interactor: ChooseImportChannelsInteractor =
+        ChooseImportChannelsInteractorImpl(isChannelsFetched),
     private val composer: Composer = SchedulerComposerFactory.android(),
     private val disposableComposite: CompositeDisposable = CompositeDisposable(),
-    private val mapperToPresentModel: Mapper<List<ChannelImport>, List<CheckItemPresentItemModel<ChannelImport>>> =
+    private val mapperToPresentModel: Mapper<List<ImportChannel>, List<CheckItemPresentItemModel<ImportChannel>>> =
         ChannelImportToPresentModelListMapper()
-) : BasePresenterImpl<ChooseChannelsView>(view) {
+) : BasePresenterImpl<ChooseImportChannelsView>(view) {
 
     private val title: SpannableStringBuilder by lazy {
         resources.strings.chooseChannelsYouWantImportSentence
@@ -48,7 +48,7 @@ class ChooseChannelsPresenter(
     override fun onStart(viewCreated: Boolean) {
         super.onStart(viewCreated)
         disposableComposite.add(
-            interactor.channelsImport()
+            interactor.channels()
                 .compose(composer.observable())
                 .subscribe(::onChannelsImportUpdate) { t ->
                     t.responseOrError()
@@ -62,9 +62,9 @@ class ChooseChannelsPresenter(
 
     }
 
-    private fun onChannelsImportUpdate(channels: List<ChannelImport>) {
+    private fun onChannelsImportUpdate(channels: List<ImportChannel>) {
         view?.show(
-            ChooseChannelsPresentModel(
+            ChooseImportChannelsPresentModel(
                 title = title,
                 subtitle = subtitle,
                 channels = mapperToPresentModel.map(channels),
@@ -73,7 +73,7 @@ class ChooseChannelsPresenter(
         )
     }
 
-    fun onItemClick(model: CheckItemPresentItemModel<ChannelImport>) {
+    fun onItemClick(model: CheckItemPresentItemModel<ImportChannel>) {
         interactor.changeCheckStatus(model.element)
     }
 
@@ -93,8 +93,8 @@ class ChooseChannelsPresenter(
 }
 
 class ChannelImportToPresentModelListMapper :
-    Mapper<List<ChannelImport>, List<CheckItemPresentItemModel<ChannelImport>>> {
-    override fun map(from: List<ChannelImport>): List<CheckItemPresentItemModel<ChannelImport>> =
+    Mapper<List<ImportChannel>, List<CheckItemPresentItemModel<ImportChannel>>> {
+    override fun map(from: List<ImportChannel>): List<CheckItemPresentItemModel<ImportChannel>> =
         from.map {
             CheckItemPresentItemModel(
                 element = it,

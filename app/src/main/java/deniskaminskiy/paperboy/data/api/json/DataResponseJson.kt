@@ -10,6 +10,7 @@ data class DataResponseJson<T>(
      * Нужно для запросов, требующих лишь одного конкретного экземпляра информации, который будет
      * приходить первым и единственным элементом списка.
      */
-    val soleData: T? = data.firstOrNull()
+    val soleData: T?
+        get() = data.firstOrNull()
 
 }

@@ -2,6 +2,7 @@ package deniskaminskiy.paperboy.data.api
 
 import deniskaminskiy.paperboy.data.api.json.DataResponseJson
 import deniskaminskiy.paperboy.data.api.json.auth.*
+import deniskaminskiy.paperboy.data.api.json.importchannels.ImportChannelResponseJson
 import io.reactivex.Single
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -21,5 +22,8 @@ interface PaperboyApi {
 
     @POST("auth/password")
     fun authPassword(@Body request: AuthPasswordRequestJson): Single<DataResponseJson<AuthPasswordResponseJson>>
+
+    @GET("me/channels")
+    fun importChannels(): Single<DataResponseJson<ImportChannelResponseJson>>
 
 }
