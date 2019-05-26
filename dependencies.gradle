@@ -35,7 +35,7 @@ ext {
     rxAndroidVersion = '2.0.2'
     rxFirebaseVersion = '1.5.6'
 
-    daggerVersion = '2.14.1'
+    dagger2Version = '2.11'
 
     retrofitVersion = '2.3.0'
     okHttpVersion = '3.9.1'
@@ -138,6 +138,16 @@ ext {
     ]
     roomCompiler = "androidx.room:room-compiler:$roomVersion"
     roomTesting = "androidx.room:room-testing:$roomVersion"
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    // DEPENDENCY INJECTION
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    dagger = [
+            dagger          : "com.google.dagger:dagger:$dagger2Version",
+            daggerSupport   : "com.google.dagger:dagger-android-support:$dagger2Version"
+    ]
+    daggerCompiler = "com.google.dagger:dagger-compiler:$dagger2Version"
+    daggerAndroidProcessor = "com.google.dagger:dagger-android-processor:$dagger2Version"
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     // GOOGLE PLAY SERVICES
