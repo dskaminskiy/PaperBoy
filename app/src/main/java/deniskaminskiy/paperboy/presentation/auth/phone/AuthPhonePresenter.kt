@@ -2,10 +2,15 @@ package deniskaminskiy.paperboy.presentation.auth.phone
 
 import deniskaminskiy.paperboy.core.BasePresenterImpl
 import deniskaminskiy.paperboy.core.Mapper
+import deniskaminskiy.paperboy.data.api.ifAuthorized
+import deniskaminskiy.paperboy.data.api.ifError
+import deniskaminskiy.paperboy.data.api.ifWaitingForCode
 import deniskaminskiy.paperboy.domain.auth.AuthPhoneInteractor
 import deniskaminskiy.paperboy.domain.auth.AuthPhoneInteractorImpl
 import deniskaminskiy.paperboy.presentation.view.TopPopupPresentModel
 import deniskaminskiy.paperboy.utils.ContextDelegate
+import deniskaminskiy.paperboy.utils.api.fold
+import deniskaminskiy.paperboy.utils.api.responseOrError
 import deniskaminskiy.paperboy.utils.disposeIfNotNull
 import deniskaminskiy.paperboy.utils.icon.IconConstant
 import deniskaminskiy.paperboy.utils.icon.IconFactory
@@ -61,31 +66,28 @@ class AuthPhonePresenter(
     }
 
     fun onNextClick() {
-        view?.showInputError()
-        view?.showTopPopup(unknownError)
-
-//        disposableCode = interactor.requestCode()
-//            .compose(composer.observable())
-//            .doOnSubscribe { view?.showLoading() }
-//            .doOnEach { view?.hideLoading() }
-//            .subscribe({
-//                with(it) {
-//                    ifAuthorized { view?.showImportChannels() }
-//                    ifError {
-//                        view?.showInputError()
-//                        view?.showTopPopup(unknownError)
-//                    }
-//                    ifWaitingForCode { view?.showAuthCode() }
-//                }
-//            }, { t ->
-//                t.responseOrError()
-//                    .fold({
-//                        view?.showInputError()
-//                        view?.showTopPopup(unknownError.copy(subtitle = it.message))
-//                    }, {
-//                        view?.showTopPopup(unknownError)
-//                    })
-//            })
+        disposableCode = interactor.requestCode()
+            .compose(composer.observable())
+            .doOnSubscribe { view?.showLoading() }
+            .doOnEach { view?.hideLoading() }
+            .subscribe({
+                with(it) {
+                    ifAuthorized { view?.showImportChannels() }
+                    ifError {
+                        view?.showInputError()
+                        view?.showTopPopup(unknownError)
+                    }
+                    ifWaitingForCode { view?.showAuthCode() }
+                }
+            }, { t ->
+                t.responseOrError()
+                    .fold({
+                        view?.showInputError()
+                        view?.showTopPopup(unknownError.copy(subtitle = it.message))
+                    }, {
+                        view?.showTopPopup(unknownError)
+                    })
+            })
     }
 
     fun onReignAdditionalNumberChanged(newNumber: String) {
