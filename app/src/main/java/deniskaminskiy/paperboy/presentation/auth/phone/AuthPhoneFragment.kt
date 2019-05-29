@@ -89,6 +89,10 @@ class AuthPhoneFragment : BaseFragment<AuthPhonePresenter, AuthPhoneView>(), Aut
             .replace(activity, R.id.vgContent, ChooseImportChannelsFragment.TAG)
     }
 
+    override fun showInputError() {
+        ivPhone.showError()
+    }
+
     override fun onBackPressed() {
         super.onBackPressed()
         super.onBackPressed()

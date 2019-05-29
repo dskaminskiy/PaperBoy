@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.util.AttributeSet
+import android.view.HapticFeedbackConstants
 import android.view.KeyEvent
 import android.view.View
 import android.view.View.OnFocusChangeListener
@@ -42,6 +43,10 @@ class TextPasswordInputView @JvmOverloads constructor(
             if (etText.text.toString() != value) {
                 etText.setText(value)
             }
+            if (wasMistake) {
+                wasMistake = false
+                isStroke = true
+            }
         }
         get() = etText.text.toString()
 
@@ -70,6 +75,8 @@ class TextPasswordInputView @JvmOverloads constructor(
 
     private val dpStrokeWidth = STROKE_WIDTH.dp(context)
     private val dpCornerRadius = CORNER_RADIUS.dp(context).toFloat()
+
+    var wasMistake = false
 
     init {
         View.inflate(context, R.layout.view_text_password_input, this)
@@ -113,11 +120,9 @@ class TextPasswordInputView @JvmOverloads constructor(
     }
 
     fun showError() {
+        wasMistake = true
         isStroke = true
-        background = defaultBackground.apply {
-            setStroke(dpStrokeWidth, palette.marlboroNew)
-        }
-        requestLayout()
+        performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
     }
 
 }

@@ -6,6 +6,7 @@ import android.graphics.Rect
 import android.graphics.drawable.GradientDrawable
 import android.text.method.TransformationMethod
 import android.util.AttributeSet
+import android.view.HapticFeedbackConstants
 import android.view.KeyEvent
 import android.view.View
 import android.view.View.OnFocusChangeListener
@@ -41,6 +42,8 @@ class NumberInputView @JvmOverloads constructor(
     var onBackspacePressedWithEmptyText: OnBackspacePressedWithEmptyText = {}
     var onFocusChanged: OnFocusChanged = {}
 
+    var wasMistake = false
+
     private val palette: ResourcesManager.Colors by lazy { AndroidResourcesManager.create(context).colors }
 
     var text: String
@@ -49,6 +52,11 @@ class NumberInputView @JvmOverloads constructor(
                 etText.setText(value)
                 setSelectionToEnd()
             }
+
+            if (wasMistake) {
+                wasMistake = false
+                isStroke = true
+            }
         }
         get() = etText.text.toString()
 
@@ -56,7 +64,11 @@ class NumberInputView @JvmOverloads constructor(
         set(value) {
             field = value
             background = defaultBackground.apply {
-                setStroke(dpStrokeWidth, if (value) palette.admiral else Color.TRANSPARENT)
+                setStroke(dpStrokeWidth, when {
+                    wasMistake -> palette.marlboroNew
+                    value -> palette.admiral
+                    else -> Color.TRANSPARENT
+                })
             }
             requestLayout()
         }
@@ -132,6 +144,12 @@ class NumberInputView @JvmOverloads constructor(
 
     fun setSelectionToEnd() {
         etText.post { etText.setSelection(etText.length(), etText.length()) }
+    }
+
+    fun showError() {
+        wasMistake = true
+        isStroke = true
+        performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
     }
 
 }

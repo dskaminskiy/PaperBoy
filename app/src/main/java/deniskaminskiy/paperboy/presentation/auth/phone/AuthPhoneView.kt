@@ -14,6 +14,8 @@ interface AuthPhoneView : View {
 
     fun showImportChannels()
 
+    fun showInputError()
+
 }
 
 data class AuthPhonePresentModel(

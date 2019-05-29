@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true">
+
+    <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/vAppBar"
+            android:layout_width="match_parent"
+            android:layout_height="72dp"
+            android:background="@color/paper"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            android:fitsSystemWindows="true">
+
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+                android:id="@+id/vCollapsingToolbar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed"
+                app:contentScrim="@color/print100"
+                app:expandedTitleMarginStart="16dp"
+                app:expandedTitleMarginEnd="16dp"
+                app:expandedTitleMarginTop="16dp"
+                android:layout_marginTop="12dp"
+                app:title="Some Shit"
+                android:fitsSystemWindows="true">
+
+            <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/vToolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                    app:layout_collapseMode="pin"/>
+
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+            android:id="@+id/vNestedScroll"
+            android:layout_width="match_parent"
+            android:layout_marginTop="20dp"
+            android:layout_height="600dp"
+            app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"/>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
