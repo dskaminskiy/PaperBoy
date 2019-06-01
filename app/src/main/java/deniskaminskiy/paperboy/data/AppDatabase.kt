@@ -10,7 +10,10 @@ import deniskaminskiy.paperboy.utils.DATABASE_NAME
 
 @Database(entities = arrayOf(ImportChannel::class), version = 1)
 abstract class AppDatabase : RoomDatabase() {
+
     abstract fun importChannelsDao(): ImportChannelDao
+
+    //TODO: сделай init(context) + lateinit
 
     companion object {
 
