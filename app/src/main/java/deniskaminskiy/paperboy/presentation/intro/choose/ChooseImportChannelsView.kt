@@ -8,6 +8,8 @@ interface ChooseImportChannelsView : View {
 
     fun show(model: ChooseImportChannelsPresentModel)
 
+    fun showLoading()
+
     fun showRemoveTelegramChannels()
 
 }

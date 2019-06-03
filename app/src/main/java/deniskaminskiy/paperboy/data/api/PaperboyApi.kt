@@ -3,6 +3,7 @@ package deniskaminskiy.paperboy.data.api
 import deniskaminskiy.paperboy.data.api.json.DataResponseJson
 import deniskaminskiy.paperboy.data.api.json.auth.*
 import deniskaminskiy.paperboy.data.api.json.importchannels.ImportChannelResponseJson
+import io.reactivex.Completable
 import io.reactivex.Single
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -25,5 +26,8 @@ interface PaperboyApi {
 
     @GET("me/channels")
     fun importChannels(): Single<DataResponseJson<ImportChannelResponseJson>>
+
+    @POST("me/channels/subscriptions")
+    fun subscribeChannels(channelsIds: List<Long>): Completable
 
 }

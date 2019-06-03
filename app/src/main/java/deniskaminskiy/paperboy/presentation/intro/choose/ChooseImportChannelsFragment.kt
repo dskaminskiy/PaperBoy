@@ -13,8 +13,10 @@ import deniskaminskiy.paperboy.utils.args
 import deniskaminskiy.paperboy.utils.hideApp
 import deniskaminskiy.paperboy.utils.managers.AndroidResourcesManager
 import deniskaminskiy.paperboy.utils.open
+import deniskaminskiy.paperboy.utils.view.gone
 import deniskaminskiy.paperboy.utils.view.isGone
 import deniskaminskiy.paperboy.utils.view.isVisible
+import deniskaminskiy.paperboy.utils.view.visible
 import kotlinx.android.synthetic.main.fragment_choose_channels.*
 
 
@@ -62,6 +64,12 @@ class ChooseImportChannelsFragment : BaseFragment<ChooseImportChannelsPresenter,
     }
 
     override fun show(model: ChooseImportChannelsPresentModel) {
+        if (vFab.imageAlpha == 0) {
+            vFab.imageAlpha = 255
+            vBlind.gone()
+            vLoading.gone()
+        }
+
         tvTitle.text = model.title
 
         if (tvSubtitle.text.toString() != model.subtitle) {
@@ -75,6 +83,12 @@ class ChooseImportChannelsFragment : BaseFragment<ChooseImportChannelsPresenter,
         } else if (!model.isFabVisible && vFab.isVisible) {
             vFab.hide()
         }
+    }
+
+    override fun showLoading() {
+        vBlind.visible()
+        vLoading.visible()
+        vFab.imageAlpha = 0
     }
 
     override fun showRemoveTelegramChannels() {

@@ -16,6 +16,10 @@ import deniskaminskiy.paperboy.utils.rx.Composer
 import deniskaminskiy.paperboy.utils.rx.SchedulerComposerFactory
 import io.reactivex.disposables.CompositeDisposable
 
+/**
+ * TODO: Если так и не понадобится флаг [isChannelsFetched] (лишающий экран
+ * TODO: состояния загрузки), то убрать его.
+ */
 class ChooseImportChannelsPresenter(
     view: ChooseImportChannelsView,
     isChannelsFetched: Boolean,
@@ -88,6 +92,7 @@ class ChooseImportChannelsPresenter(
     }
 
     fun onFabClick() {
+        //TODO: show loading and subscribeChannels()
         view?.showRemoveTelegramChannels()
     }
 

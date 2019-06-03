@@ -75,6 +75,18 @@
 
     </LinearLayout>
 
+    <FrameLayout
+            android:id="@+id/vBlind"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clickable="true"
+            android:visibility="gone"
+            android:focusable="true"
+            android:background="@color/paper"
+            android:alpha="0.4">
+
+    </FrameLayout>
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/vFab"
             android:layout_width="wrap_content"
@@ -86,7 +98,21 @@
             android:tint="@color/paper"
             app:backgroundTint="@color/print100"
             app:rippleColor="@color/paper"
+            android:translationZ="2dp"
             app:layout_anchorGravity="bottom|end"
             android:layout_margin="16dp"/>
+
+    <androidx.core.widget.ContentLoadingProgressBar
+            android:id="@+id/vLoading"
+            android:layout_width="24dp"
+            android:visibility="gone"
+            tools:visibility="visible"
+            android:elevation="6dp"
+            android:translationZ="4dp"
+            style="?android:attr/progressBarStyle"
+            android:layout_gravity="end|bottom"
+            android:layout_margin="32dp"
+            android:indeterminateTint="@color/paper"
+            android:layout_height="24dp"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
