@@ -8,28 +8,22 @@ import deniskaminskiy.paperboy.data.importchannels.ImportChannel
 import deniskaminskiy.paperboy.data.importchannels.sources.ImportChannelDao
 import deniskaminskiy.paperboy.utils.DATABASE_NAME
 
-@Database(entities = arrayOf(ImportChannel::class), version = 1)
+@Database(entities = [ImportChannel::class], version = 1)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun importChannelsDao(): ImportChannelDao
 
-    //TODO: сделай init(context) + lateinit
-
     companion object {
 
         @Volatile
-        private var instance: AppDatabase? = null
+        private lateinit var instance: AppDatabase
 
-        fun getInstance(context: Context): AppDatabase {
-            return instance ?: synchronized(this) {
-                instance ?: buildDatabase(context).also { instance = it }
-            }
-        }
-
-        private fun buildDatabase(context: Context): AppDatabase {
-            return Room.databaseBuilder(context, AppDatabase::class.java, DATABASE_NAME)
+        fun init(context: Context) {
+            instance = Room.databaseBuilder(context, AppDatabase::class.java, DATABASE_NAME)
                 .build()
         }
+
+        fun getInstance(): AppDatabase = instance
 
     }
 

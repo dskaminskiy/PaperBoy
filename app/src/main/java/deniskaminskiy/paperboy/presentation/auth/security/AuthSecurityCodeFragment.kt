@@ -68,9 +68,9 @@ class AuthSecurityCodeFragment : BaseFragment<AuthSecurityCodePresenter, AuthSec
         activity?.supportFragmentManager?.popBackStack()
     }
 
-    override fun showImportChannels() {
+    override fun showImportChannels(isChannelsFetched: Boolean) {
         hideKeyboard()
-        ChooseImportChannelsFragment.newInstance(true)
+        ChooseImportChannelsFragment.newInstance(isChannelsFetched)
             .replace(activity, R.id.vgContent, ChooseImportChannelsFragment.TAG)
     }
 

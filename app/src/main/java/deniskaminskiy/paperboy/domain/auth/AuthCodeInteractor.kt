@@ -4,10 +4,15 @@ import deniskaminskiy.paperboy.core.Interactor
 import deniskaminskiy.paperboy.data.api.AuthResponseState
 import deniskaminskiy.paperboy.data.auth.AuthRepository
 import deniskaminskiy.paperboy.data.auth.AuthRepositoryFactory
+import deniskaminskiy.paperboy.presentation.intro.choose.LoadImportChannelsInteractor
+import deniskaminskiy.paperboy.presentation.intro.choose.LoadImportChannelsInteractorImpl
+import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject
 
 interface AuthCodeInteractor : Interactor {
+
+    var isChannelsFetched: Boolean
 
     var onFullCodeEntered: () -> Unit
 
@@ -24,11 +29,14 @@ interface AuthCodeInteractor : Interactor {
 
     fun removeLastCodeSymbol()
 
+    fun loadAndCacheImportChannels(): Completable
+
 }
 
 class AuthCodeInteractorImpl(
     private val codeLength: Int,
-    private val repository: AuthRepository = AuthRepositoryFactory.create()
+    private val repository: AuthRepository = AuthRepositoryFactory.create(),
+    private val loadImportChannelsInteractor: LoadImportChannelsInteractor = LoadImportChannelsInteractorImpl()
 ) : AuthCodeInteractor {
 
     private val subjectModel = BehaviorSubject.createDefault("")
@@ -38,6 +46,8 @@ class AuthCodeInteractorImpl(
         set(value) {
             subjectModel.onNext(value)
         }
+
+    override var isChannelsFetched: Boolean = false
 
     override var onFullCodeEntered: () -> Unit = {}
 
@@ -68,5 +78,8 @@ class AuthCodeInteractorImpl(
             code = code.dropLast(1)
         }
     }
+
+    override fun loadAndCacheImportChannels(): Completable = loadImportChannelsInteractor.loadAndCache()
+        .doOnComplete { isChannelsFetched = true }
 
 }

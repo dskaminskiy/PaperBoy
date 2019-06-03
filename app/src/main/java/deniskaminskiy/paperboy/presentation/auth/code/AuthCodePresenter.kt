@@ -41,7 +41,9 @@ class AuthCodePresenter(
     }
 
     private var isInputsUpdating = false
+
     private var disposableSendCode: Disposable? = null
+    private var disposableLoadImportChannels: Disposable? = null
 
     override fun onStart(viewCreated: Boolean) {
         super.onStart(viewCreated)
@@ -59,6 +61,7 @@ class AuthCodePresenter(
 
     override fun onDestroy() {
         disposableSendCode.disposeIfNotNull()
+        disposableLoadImportChannels.disposeIfNotNull()
         super.onDestroy()
     }
 
@@ -66,15 +69,20 @@ class AuthCodePresenter(
         disposableSendCode = interactor.sendCode()
             .compose(composer.observable())
             .doOnSubscribe { view?.showLoading() }
-            .doOnEach {
-                interactor.clearCode()
-                view?.hideLoading()
-            }
+            .doOnError { clearView() }
             .subscribe({
                 with(it) {
-                    ifAuthorized { view?.showImportChannels() }
-                    ifError { view?.showTopPopup(unknownError) }
-                    ifWaitingForPassword { view?.showAuthSecurityCode() }
+                    ifAuthorized {
+                        fetchImportChannels()
+                    }
+                    ifError {
+                        clearView()
+                        view?.showTopPopup(unknownError)
+                    }
+                    ifWaitingForPassword {
+                        clearView()
+                        view?.showAuthSecurityCode()
+                    }
                 }
             }, { t ->
                 t.responseOrError()
@@ -84,6 +92,28 @@ class AuthCodePresenter(
                         view?.showTopPopup(unknownError)
                     })
             })
+    }
+
+    private fun fetchImportChannels() {
+        disposableLoadImportChannels = interactor.loadAndCacheImportChannels()
+            .compose(composer.completable())
+            .subscribe({
+                clearView()
+                view?.showImportChannels(interactor.isChannelsFetched)
+            }, { t ->
+                clearView()
+                t.responseOrError()
+                    .fold({
+                        view?.showTopPopup(unknownError.copy(subtitle = it.message))
+                    }, {
+                        view?.showTopPopup(unknownError)
+                    })
+            })
+    }
+
+    private fun clearView() {
+        interactor.clearCode()
+        view?.hideLoading()
     }
 
     /**

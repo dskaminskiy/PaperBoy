@@ -122,9 +122,9 @@ class AuthCodeFragment : BaseFragment<AuthCodePresenter, AuthCodeView>(), AuthCo
             .open(activity, R.id.vgContent, AuthSecurityCodeFragment.TAG)
     }
 
-    override fun showImportChannels() {
+    override fun showImportChannels(isChannelsFetched: Boolean) {
         hideKeyboard()
-        ChooseImportChannelsFragment.newInstance(true)
+        ChooseImportChannelsFragment.newInstance(isChannelsFetched)
             .replace(activity, R.id.vgContent, ChooseImportChannelsFragment.TAG)
     }
 

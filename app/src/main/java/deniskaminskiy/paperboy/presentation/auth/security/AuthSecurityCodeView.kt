@@ -12,6 +12,6 @@ interface AuthSecurityCodeView : View {
 
     fun close()
 
-    fun showImportChannels()
+    fun showImportChannels(isChannelsFetched: Boolean)
 
 }

@@ -7,7 +7,7 @@ import io.reactivex.Completable
 
 interface LoadImportChannelsInteractor : Interactor {
 
-    fun load(): Completable
+    fun loadAndCache(): Completable
 
 }
 
@@ -15,6 +15,9 @@ class LoadImportChannelsInteractorImpl(
     private val repository: ImportChannelsRepository = ImportChannelsRepositoryFactory.create()
 ) : LoadImportChannelsInteractor {
 
-    override fun load(): Completable = Completable.complete()
+    override fun loadAndCache(): Completable = repository.getFromCloud()
+        .flatMapCompletable{
+            Completable.complete()
+        }
 
 }

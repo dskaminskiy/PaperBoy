@@ -31,26 +31,20 @@ class UserTokenInterceptor(
 
     override fun intercept(chain: Interceptor.Chain): Response {
         val originalRequest = chain.request()
+
         val builder = originalRequest.newBuilder()
+            .header(PROPERTY_TOKEN, userToken)
 
-        if (userToken.isNotBlank()) {
-            if (originalRequest.method().equals(GET, true)) {
-                builder.url(
-                    originalRequest.url().newBuilder()
-                        .setQueryParameter(PROPERTY_TOKEN, userToken)
-                        .build()
-                )
-            } else {
-                val bodyString = InterceptorsUtils.bodyToString(originalRequest.body())
-                val jsonBody = if (bodyString.isBlank()) JSONObject() else JSONObject(bodyString)
+        if (userToken.isNotBlank() && !originalRequest.method().equals(GET, true)) {
+            val bodyString = InterceptorsUtils.bodyToString(originalRequest.body())
+            val jsonBody = if (bodyString.isBlank()) JSONObject() else JSONObject(bodyString)
 
-                jsonBody.put(PROPERTY_TOKEN, userToken)
+            jsonBody.put(PROPERTY_TOKEN, userToken)
 
-                if (originalRequest.method().equals(POST, true)) {
-                    builder.post(RequestBody.create(mediaType, jsonBody.toString()))
-                } else if (originalRequest.method().equals(DELETE, true)) {
-                    builder.delete(RequestBody.create(mediaType, jsonBody.toString()))
-                }
+            if (originalRequest.method().equals(POST, true)) {
+                builder.post(RequestBody.create(mediaType, jsonBody.toString()))
+            } else if (originalRequest.method().equals(DELETE, true)) {
+                builder.delete(RequestBody.create(mediaType, jsonBody.toString()))
             }
         }
 

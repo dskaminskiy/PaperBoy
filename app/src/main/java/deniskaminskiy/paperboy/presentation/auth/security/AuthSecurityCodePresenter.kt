@@ -36,6 +36,7 @@ class AuthSecurityCodePresenter(
     }
 
     private var disposableSecurityCode: Disposable? = null
+    private var disposableLoadImportChannels: Disposable? = null
 
     override fun onStart(viewCreated: Boolean) {
         super.onStart(viewCreated)
@@ -58,12 +59,34 @@ class AuthSecurityCodePresenter(
         disposableSecurityCode = interactor.sendSecurityCode()
             .compose(composer.observable())
             .doOnSubscribe { view?.showLoading() }
-            .doOnEach { view?.hideLoading() }
             .subscribe({
                 with(it) {
-                    ifAuthorized { view?.showImportChannels() }
-                    ifError { view?.showTopPopup(unknownError) }
+                    ifAuthorized {
+                        fetchImportChannels()
+                    }
+                    ifError {
+                        view?.hideLoading()
+                        view?.showTopPopup(unknownError)
+                    }
                 }
+            }, { t ->
+                view?.hideLoading()
+                t.responseOrError()
+                    .fold({
+                        view?.showTopPopup(unknownError.copy(subtitle = it.message))
+                    }, {
+                        view?.showTopPopup(unknownError)
+                    })
+            })
+    }
+
+    private fun fetchImportChannels() {
+        disposableLoadImportChannels = interactor.loadAndCacheImportChannels()
+            .compose(composer.completable())
+            .doOnError { view?.hideLoading() }
+            .subscribe({
+                view?.hideLoading()
+                view?.showImportChannels(interactor.isChannelsFetched)
             }, { t ->
                 t.responseOrError()
                     .fold({
