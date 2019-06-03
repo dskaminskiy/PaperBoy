@@ -15,3 +15,18 @@ class PaperBoyApplication : MultiDexApplication() {
     }
 
 }
+
+
+/**
+ * Cross to arrow animation
+
+ private boolean isCrossShowing = true;
+
+private void toggleAnimation(){
+    AnimatedVectorDrawableCompat animDrawable = AnimatedVectorDrawableCompat.create(this, isCrossShowing ? R.drawable.avd_cross_to_back_arrow : R.drawable.avd_back_arrow_to_cross);
+    imageView.setImageDrawable(animDrawable);
+    currentDrawable.start();
+    isCrossShowing = !isCrossShowing;
+}
+
+ */
