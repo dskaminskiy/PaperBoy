@@ -14,7 +14,6 @@ import deniskaminskiy.paperboy.utils.managers.ResourcesManager
 import deniskaminskiy.paperboy.utils.paintWord
 import deniskaminskiy.paperboy.utils.rx.Composer
 import deniskaminskiy.paperboy.utils.rx.SchedulerComposerFactory
-import io.reactivex.disposables.CompositeDisposable
 
 /**
  * TODO: Если так и не понадобится флаг [isChannelsFetched] (лишающий экран
@@ -27,7 +26,6 @@ class ChooseImportChannelsPresenter(
     private val interactor: ChooseImportChannelsInteractor =
         ChooseImportChannelsInteractorImpl(isChannelsFetched),
     private val composer: Composer = SchedulerComposerFactory.android(),
-    private val disposableComposite: CompositeDisposable = CompositeDisposable(),
     private val mapperToPresentModel: Mapper<List<ImportChannel>, List<CheckItemPresentItemModel<ImportChannel>>> =
         ChannelImportToPresentModelListMapper()
 ) : BasePresenterImpl<ChooseImportChannelsView>(view) {
@@ -51,20 +49,17 @@ class ChooseImportChannelsPresenter(
 
     override fun onStart(viewCreated: Boolean) {
         super.onStart(viewCreated)
-        disposableComposite.add(
-            interactor.channels()
-                // тут могло бы быть .doOnSubscribe{ view?.showLoading() }, но loading-state тут не будет
-                .compose(composer.observable())
-                .subscribe(::onChannelsImportUpdate) { t ->
-                    t.responseOrError()
-                        .fold({
-                            view?.showTopPopup(unknownError.copy(subtitle = it.message))
-                        }, {
-                            view?.showTopPopup(unknownError)
-                        })
-                }
-        )
-
+        disposableUpdateUi = interactor.channels()
+            // тут могло бы быть .doOnSubscribe{ view?.showLoading() }, но loading-state тут не будет
+            .compose(composer.observable())
+            .subscribe(::onChannelsImportUpdate) { t ->
+                t.responseOrError()
+                    .fold({
+                        view?.showTopPopup(unknownError.copy(subtitle = it.message))
+                    }, {
+                        view?.showTopPopup(unknownError)
+                    })
+            }
     }
 
     private fun onChannelsImportUpdate(channels: List<ImportChannel>) {
@@ -80,11 +75,6 @@ class ChooseImportChannelsPresenter(
 
     fun onItemClick(model: CheckItemPresentItemModel<ImportChannel>) {
         interactor.changeCheckStatus(model.element)
-    }
-
-    override fun onDestroy() {
-        disposableComposite.dispose()
-        super.onDestroy()
     }
 
     fun onSkipClick() {
