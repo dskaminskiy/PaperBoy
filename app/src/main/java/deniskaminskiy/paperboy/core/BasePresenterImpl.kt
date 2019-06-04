@@ -1,6 +1,12 @@
 package deniskaminskiy.paperboy.core
 
-import deniskaminskiy.paperboy.utils.disposeIfNotNull
+import androidx.annotation.ColorInt
+import deniskaminskiy.paperboy.presentation.view.TopPopupPresentModel
+import deniskaminskiy.paperboy.utils.ErrorFactory
+import deniskaminskiy.paperboy.utils.api.fold
+import deniskaminskiy.paperboy.utils.api.responseOrError
+import deniskaminskiy.paperboy.utils.icon.Icon
+import deniskaminskiy.paperboy.utils.rx.disposeIfNotNull
 import io.reactivex.disposables.Disposable
 import java.lang.ref.WeakReference
 
@@ -16,7 +22,7 @@ abstract class BasePresenterImpl<V : View>(
     protected var isAnimationRunning: Boolean = false
 
     /**
-     * For interactor updateUi subscribe
+     * For interactor updateUi subscribe method
      */
     protected var disposableUpdateUi: Disposable? = null
 
@@ -24,6 +30,9 @@ abstract class BasePresenterImpl<V : View>(
         viewRef = WeakReference(view)
     }
 
+    /**
+     * @param viewCreated   - true if it's first calling presenter onStart()
+     */
     override fun onStart(viewCreated: Boolean) {
         //..
     }
@@ -47,6 +56,37 @@ abstract class BasePresenterImpl<V : View>(
 
     override fun onAnimationEnd() {
         isAnimationRunning = false
+    }
+
+    protected fun onError(t: Throwable) {
+        t.responseOrError()
+            .fold({
+                showCustomTopPopupError(subtitle = it.message)
+            }, {
+                showUnknownTopPopupError()
+            })
+    }
+
+    protected fun showUnknownTopPopupError() {
+        view?.showTopPopup(ErrorFactory.unknownError)
+    }
+
+    private fun showCustomTopPopupError(
+        title: String = "",
+        subtitle: String = "",
+        icon: Icon? = null,
+        @ColorInt iconColor: Int = -1
+    ) {
+        view?.showTopPopup(
+            ErrorFactory.unknownError.let { default ->
+                TopPopupPresentModel(
+                    title = if (title.isNotBlank()) title else default.title,
+                    subtitle = if (subtitle.isNotBlank()) subtitle else default.subtitle,
+                    icon = icon ?: default.icon,
+                    iconColor = if (iconColor != -1) iconColor else default.iconColor
+                )
+            }
+        )
     }
 
 }

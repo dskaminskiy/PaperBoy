@@ -7,23 +7,15 @@ import deniskaminskiy.paperboy.data.api.ifError
 import deniskaminskiy.paperboy.data.api.ifWaitingForCode
 import deniskaminskiy.paperboy.domain.auth.AuthPhoneInteractor
 import deniskaminskiy.paperboy.domain.auth.AuthPhoneInteractorImpl
-import deniskaminskiy.paperboy.presentation.view.TopPopupPresentModel
 import deniskaminskiy.paperboy.utils.ContextDelegate
-import deniskaminskiy.paperboy.utils.api.fold
-import deniskaminskiy.paperboy.utils.api.responseOrError
-import deniskaminskiy.paperboy.utils.disposeIfNotNull
-import deniskaminskiy.paperboy.utils.icon.IconConstant
-import deniskaminskiy.paperboy.utils.icon.IconFactory
-import deniskaminskiy.paperboy.utils.managers.AndroidResourcesManager
-import deniskaminskiy.paperboy.utils.managers.ResourcesManager
 import deniskaminskiy.paperboy.utils.rx.Composer
 import deniskaminskiy.paperboy.utils.rx.SchedulerComposerFactory
+import deniskaminskiy.paperboy.utils.rx.disposeIfNotNull
 import io.reactivex.disposables.Disposable
 
 class AuthPhonePresenter(
     view: AuthPhoneView,
     private val contextDelegate: ContextDelegate,
-    private val resources: ResourcesManager = AndroidResourcesManager.create(contextDelegate),
     private val maxLengthReign: Int = MAX_LENGTH_REIGN,
     private val maxLengthPhone: Int = MAX_LENGTH_PHONE,
     private val interactor: AuthPhoneInteractor =
@@ -40,15 +32,6 @@ class AuthPhonePresenter(
 
     private var disposableCode: Disposable? = null
 
-    private val unknownError: TopPopupPresentModel by lazy {
-        TopPopupPresentModel(
-            title = resources.strings.somethingHappened,
-            subtitle = resources.strings.sometimesShitHappens,
-            icon = IconFactory.create(IconConstant.WARNING.constant),
-            iconColor = resources.colors.marlboroNew
-        )
-    }
-
     override fun onStart(viewCreated: Boolean) {
         super.onStart(viewCreated)
 
@@ -60,9 +43,9 @@ class AuthPhonePresenter(
             }
     }
 
-    override fun onDestroy() {
+    override fun onViewDetached() {
         disposableCode.disposeIfNotNull()
-        super.onDestroy()
+        super.onViewDetached()
     }
 
     fun onNextClick() {
@@ -75,19 +58,11 @@ class AuthPhonePresenter(
                     ifAuthorized { view?.showImportChannels() }
                     ifError {
                         view?.showInputError()
-                        view?.showTopPopup(unknownError)
+                        showUnknownTopPopupError()
                     }
                     ifWaitingForCode { view?.showAuthCode() }
                 }
-            }, { t ->
-                t.responseOrError()
-                    .fold({
-                        view?.showInputError()
-                        view?.showTopPopup(unknownError.copy(subtitle = it.message))
-                    }, {
-                        view?.showTopPopup(unknownError)
-                    })
-            })
+            }, ::onError)
     }
 
     fun onReignAdditionalNumberChanged(newNumber: String) {

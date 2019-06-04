@@ -7,20 +7,13 @@ import deniskaminskiy.paperboy.data.api.ifError
 import deniskaminskiy.paperboy.data.api.ifWaitingForPassword
 import deniskaminskiy.paperboy.domain.auth.AuthCodeInteractor
 import deniskaminskiy.paperboy.domain.auth.AuthCodeInteractorImpl
-import deniskaminskiy.paperboy.presentation.view.TopPopupPresentModel
-import deniskaminskiy.paperboy.utils.api.fold
-import deniskaminskiy.paperboy.utils.api.responseOrError
-import deniskaminskiy.paperboy.utils.disposeIfNotNull
-import deniskaminskiy.paperboy.utils.icon.IconConstant
-import deniskaminskiy.paperboy.utils.icon.IconFactory
-import deniskaminskiy.paperboy.utils.managers.ResourcesManager
 import deniskaminskiy.paperboy.utils.rx.Composer
 import deniskaminskiy.paperboy.utils.rx.SchedulerComposerFactory
+import deniskaminskiy.paperboy.utils.rx.disposeIfNotNull
 import io.reactivex.disposables.Disposable
 
 class AuthCodePresenter(
     view: AuthCodeView,
-    private val resources: ResourcesManager,
     private val composer: Composer = SchedulerComposerFactory.android(),
     private val codeLength: Int = CODE_LENGTH,
     private val mapper: Mapper<String, AuthCodePresentModel> = CodeStringToAuthCodePresentModelMapper(),
@@ -29,15 +22,6 @@ class AuthCodePresenter(
 
     companion object {
         private const val CODE_LENGTH = 5
-    }
-
-    private val unknownError: TopPopupPresentModel by lazy {
-        TopPopupPresentModel(
-            title = resources.strings.somethingHappened,
-            subtitle = resources.strings.sometimesShitHappens,
-            icon = IconFactory.create(IconConstant.WARNING.constant),
-            iconColor = resources.colors.marlboroNew
-        )
     }
 
     private var isInputsUpdating = false
@@ -59,10 +43,10 @@ class AuthCodePresenter(
         interactor.onFullCodeEntered = { sendCode() }
     }
 
-    override fun onDestroy() {
+    override fun onViewDetached() {
         disposableSendCode.disposeIfNotNull()
         disposableLoadImportChannels.disposeIfNotNull()
-        super.onDestroy()
+        super.onViewDetached()
     }
 
     private fun sendCode() {
@@ -77,21 +61,14 @@ class AuthCodePresenter(
                     }
                     ifError {
                         clearView()
-                        view?.showTopPopup(unknownError)
+                        showUnknownTopPopupError()
                     }
                     ifWaitingForPassword {
                         clearView()
                         view?.showAuthSecurityCode()
                     }
                 }
-            }, { t ->
-                t.responseOrError()
-                    .fold({
-                        view?.showTopPopup(unknownError.copy(subtitle = it.message))
-                    }, {
-                        view?.showTopPopup(unknownError)
-                    })
-            })
+            }, ::onError)
     }
 
     private fun fetchImportChannels() {
@@ -102,12 +79,7 @@ class AuthCodePresenter(
                 view?.showImportChannels()
             }, { t ->
                 clearView()
-                t.responseOrError()
-                    .fold({
-                        view?.showTopPopup(unknownError.copy(subtitle = it.message))
-                    }, {
-                        view?.showTopPopup(unknownError)
-                    })
+                onError(t)
             })
     }
 

@@ -4,6 +4,7 @@ import deniskaminskiy.paperboy.core.Interactor
 import deniskaminskiy.paperboy.data.importchannels.ImportChannel
 import deniskaminskiy.paperboy.data.importchannels.ImportChannelsRepository
 import deniskaminskiy.paperboy.data.importchannels.ImportChannelsRepositoryFactory
+import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject
 
@@ -14,6 +15,8 @@ interface ChooseImportChannelsInteractor : Interactor {
     fun channelsCount(): Int
 
     fun changeCheckStatus(model: ImportChannel)
+
+    fun subscribeChannels(): Completable
 
 }
 
@@ -44,6 +47,10 @@ class ChooseImportChannelsInteractorImpl(
                     }
                 } ?: emptyList()
         )
+    }
+
+    override fun subscribeChannels(): Completable {
+        return Completable.complete()
     }
 
 }

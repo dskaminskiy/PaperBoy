@@ -5,35 +5,19 @@ import deniskaminskiy.paperboy.data.api.ifAuthorized
 import deniskaminskiy.paperboy.data.api.ifError
 import deniskaminskiy.paperboy.domain.auth.AuthSecurityCodeInteractor
 import deniskaminskiy.paperboy.domain.auth.AuthSecurityCodeInteractorImpl
-import deniskaminskiy.paperboy.presentation.view.TopPopupPresentModel
 import deniskaminskiy.paperboy.utils.ContextDelegate
-import deniskaminskiy.paperboy.utils.api.fold
-import deniskaminskiy.paperboy.utils.api.responseOrError
-import deniskaminskiy.paperboy.utils.disposeIfNotNull
-import deniskaminskiy.paperboy.utils.icon.IconConstant
-import deniskaminskiy.paperboy.utils.icon.IconFactory
-import deniskaminskiy.paperboy.utils.managers.ResourcesManager
 import deniskaminskiy.paperboy.utils.rx.Composer
 import deniskaminskiy.paperboy.utils.rx.SchedulerComposerFactory
+import deniskaminskiy.paperboy.utils.rx.disposeIfNotNull
 import io.reactivex.disposables.Disposable
 
 class AuthSecurityCodePresenter(
     view: AuthSecurityCodeView,
     private val contextDelegate: ContextDelegate,
-    private val resources: ResourcesManager,
     private val composer: Composer = SchedulerComposerFactory.android(),
     private val interactor: AuthSecurityCodeInteractor =
         AuthSecurityCodeInteractorImpl(contextDelegate)
 ) : BasePresenterImpl<AuthSecurityCodeView>(view) {
-
-    private val unknownError: TopPopupPresentModel by lazy {
-        TopPopupPresentModel(
-            title = resources.strings.somethingHappened,
-            subtitle = resources.strings.sometimesShitHappens,
-            icon = IconFactory.create(IconConstant.WARNING.constant),
-            iconColor = resources.colors.marlboroNew
-        )
-    }
 
     private var disposableSecurityCode: Disposable? = null
     private var disposableLoadImportChannels: Disposable? = null
@@ -46,9 +30,9 @@ class AuthSecurityCodePresenter(
             .subscribe { view?.show(it) }
     }
 
-    override fun onDestroy() {
+    override fun onViewDetached() {
         disposableSecurityCode.disposeIfNotNull()
-        super.onDestroy()
+        super.onViewDetached()
     }
 
     fun onBackClick() {
@@ -66,17 +50,12 @@ class AuthSecurityCodePresenter(
                     }
                     ifError {
                         view?.hideLoading()
-                        view?.showTopPopup(unknownError)
+                        showUnknownTopPopupError()
                     }
                 }
             }, { t ->
                 view?.hideLoading()
-                t.responseOrError()
-                    .fold({
-                        view?.showTopPopup(unknownError.copy(subtitle = it.message))
-                    }, {
-                        view?.showTopPopup(unknownError)
-                    })
+                onError(t)
             })
     }
 
@@ -87,14 +66,7 @@ class AuthSecurityCodePresenter(
             .subscribe({
                 view?.hideLoading()
                 view?.showImportChannels()
-            }, { t ->
-                t.responseOrError()
-                    .fold({
-                        view?.showTopPopup(unknownError.copy(subtitle = it.message))
-                    }, {
-                        view?.showTopPopup(unknownError)
-                    })
-            })
+            }, ::onError)
     }
 
     fun onSecurityCodeTextChanged(newCode: String) {

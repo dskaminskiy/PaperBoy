@@ -9,7 +9,6 @@ import deniskaminskiy.paperboy.core.BaseFragment
 import deniskaminskiy.paperboy.presentation.intro.choose.ChooseImportChannelsFragment
 import deniskaminskiy.paperboy.utils.ContextDelegateFactory
 import deniskaminskiy.paperboy.utils.hideKeyboard
-import deniskaminskiy.paperboy.utils.managers.AndroidResourcesManager
 import deniskaminskiy.paperboy.utils.replace
 import deniskaminskiy.paperboy.utils.view.gone
 import deniskaminskiy.paperboy.utils.view.visible
@@ -32,8 +31,7 @@ class AuthSecurityCodeFragment : BaseFragment<AuthSecurityCodePresenter, AuthSec
 
         presenter = AuthSecurityCodePresenter(
             view = this,
-            contextDelegate = ContextDelegateFactory.create(this),
-            resources = AndroidResourcesManager.create(this)
+            contextDelegate = ContextDelegateFactory.create(this)
         ).apply {
             vBack.setOnClickListener { onBackClick() }
             vNext.setOnClickListener { onNextClick() }

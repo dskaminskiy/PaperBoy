@@ -52,12 +52,6 @@ class ChooseImportChannelsFragment : BaseFragment<ChooseImportChannelsPresenter,
     }
 
     override fun show(model: ChooseImportChannelsPresentModel) {
-        if (vFab.imageAlpha == Constants.ALPHA_INVISIBLE) {
-            vFab.imageAlpha = Constants.ALPHA_VISIBLE
-            vBlind.gone()
-            vLoading.gone()
-        }
-
         tvTitle.text = model.title
 
         if (tvSubtitle.text.toString() != model.subtitle) {
@@ -77,6 +71,12 @@ class ChooseImportChannelsFragment : BaseFragment<ChooseImportChannelsPresenter,
         vBlind.visible()
         vLoading.visible()
         vFab.imageAlpha = Constants.ALPHA_INVISIBLE
+    }
+
+    override fun hideLoading() {
+        vFab.imageAlpha = Constants.ALPHA_VISIBLE
+        vBlind.gone()
+        vLoading.gone()
     }
 
     override fun showRemoveTelegramChannels() {

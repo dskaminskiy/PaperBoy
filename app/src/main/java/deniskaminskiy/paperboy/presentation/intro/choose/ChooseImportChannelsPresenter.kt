@@ -5,15 +5,12 @@ import deniskaminskiy.paperboy.core.BasePresenterImpl
 import deniskaminskiy.paperboy.core.Mapper
 import deniskaminskiy.paperboy.data.importchannels.ImportChannel
 import deniskaminskiy.paperboy.presentation.view.CheckItemPresentModel
-import deniskaminskiy.paperboy.presentation.view.TopPopupPresentModel
-import deniskaminskiy.paperboy.utils.api.fold
-import deniskaminskiy.paperboy.utils.api.responseOrError
-import deniskaminskiy.paperboy.utils.icon.IconConstant
-import deniskaminskiy.paperboy.utils.icon.IconFactory
 import deniskaminskiy.paperboy.utils.managers.ResourcesManager
 import deniskaminskiy.paperboy.utils.paintWord
 import deniskaminskiy.paperboy.utils.rx.Composer
 import deniskaminskiy.paperboy.utils.rx.SchedulerComposerFactory
+import deniskaminskiy.paperboy.utils.rx.disposeIfNotNull
+import io.reactivex.disposables.Disposable
 
 class ChooseImportChannelsPresenter(
     view: ChooseImportChannelsView,
@@ -33,28 +30,19 @@ class ChooseImportChannelsPresenter(
     private val subtitle: String
         get() = resources.strings.youHaveChannels(interactor.channelsCount())
 
-    private val unknownError: TopPopupPresentModel by lazy {
-        TopPopupPresentModel(
-            title = resources.strings.somethingHappened,
-            subtitle = resources.strings.sometimesShitHappens,
-            icon = IconFactory.create(IconConstant.WARNING.constant),
-            iconColor = resources.colors.marlboroNew
-        )
-    }
+    private var disposableSubscribeChannels: Disposable? = null
 
     override fun onStart(viewCreated: Boolean) {
         super.onStart(viewCreated)
         disposableUpdateUi = interactor.channels()
             // тут могло бы быть .doOnSubscribe{ view?.showLoading() }, но loading-state тут не будет
             .compose(composer.observable())
-            .subscribe(::onChannelsImportUpdate) { t ->
-                t.responseOrError()
-                    .fold({
-                        view?.showTopPopup(unknownError.copy(subtitle = it.message))
-                    }, {
-                        view?.showTopPopup(unknownError)
-                    })
-            }
+            .subscribe(::onChannelsImportUpdate, ::onError)
+    }
+
+    override fun onViewDetached() {
+        disposableSubscribeChannels.disposeIfNotNull()
+        super.onViewDetached()
     }
 
     private fun onChannelsImportUpdate(channels: List<ImportChannel>) {
@@ -68,6 +56,16 @@ class ChooseImportChannelsPresenter(
         )
     }
 
+    private fun subscribeChannels() {
+        disposableSubscribeChannels = interactor.subscribeChannels()
+            .doOnSubscribe { view?.showLoading() }
+            .doOnEvent { view?.hideLoading() }
+            .compose(composer.completable())
+            .subscribe({
+                view?.showRemoveTelegramChannels()
+            }, ::onError)
+    }
+
     fun onItemClick(model: CheckItemPresentItemModel<ImportChannel>) {
         interactor.changeCheckStatus(model.element)
     }
@@ -77,8 +75,7 @@ class ChooseImportChannelsPresenter(
     }
 
     fun onFabClick() {
-        //TODO: show loading and subscribeChannels()
-        view?.showRemoveTelegramChannels()
+        subscribeChannels()
     }
 
 }
