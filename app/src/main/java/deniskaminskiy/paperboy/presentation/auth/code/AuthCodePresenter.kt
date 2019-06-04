@@ -99,7 +99,7 @@ class AuthCodePresenter(
             .compose(composer.completable())
             .subscribe({
                 clearView()
-                view?.showImportChannels(interactor.isChannelsFetched)
+                view?.showImportChannels()
             }, { t ->
                 clearView()
                 t.responseOrError()

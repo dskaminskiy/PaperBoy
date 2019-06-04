@@ -15,8 +15,6 @@ import io.reactivex.subjects.BehaviorSubject
 
 interface AuthSecurityCodeInteractor : Interactor {
 
-    var isChannelsFetched: Boolean
-
     fun onSecurityCodeTextChanged(newCode: String)
 
     fun onUiUpdateRequest(): Observable<Boolean>
@@ -38,8 +36,6 @@ class AuthSecurityCodeInteractorImpl(
 
     private val updateSubject = BehaviorSubject.createDefault(securityCode.isNotBlank())
 
-    override var isChannelsFetched: Boolean = false
-
     override fun onSecurityCodeTextChanged(newCode: String) {
         securityCode = newCode
         updateSubject.onNext(newCode.isNotBlank())
@@ -51,6 +47,5 @@ class AuthSecurityCodeInteractorImpl(
         repository.sendSecurityCode(securityCode, settings.userToken)
 
     override fun loadAndCacheImportChannels(): Completable = loadImportChannelsInteractor.loadAndCache()
-        .doOnComplete { isChannelsFetched = true }
 
 }

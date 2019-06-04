@@ -12,8 +12,6 @@ import io.reactivex.subjects.BehaviorSubject
 
 interface AuthCodeInteractor : Interactor {
 
-    var isChannelsFetched: Boolean
-
     var onFullCodeEntered: () -> Unit
 
     fun onModelUpdate(): Observable<String>
@@ -47,8 +45,6 @@ class AuthCodeInteractorImpl(
             subjectModel.onNext(value)
         }
 
-    override var isChannelsFetched: Boolean = false
-
     override var onFullCodeEntered: () -> Unit = {}
 
     override fun onModelUpdate(): Observable<String> = subjectModel
@@ -80,6 +76,5 @@ class AuthCodeInteractorImpl(
     }
 
     override fun loadAndCacheImportChannels(): Completable = loadImportChannelsInteractor.loadAndCache()
-        .doOnComplete { isChannelsFetched = true }
 
 }

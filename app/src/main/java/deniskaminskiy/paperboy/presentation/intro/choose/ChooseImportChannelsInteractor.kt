@@ -18,7 +18,6 @@ interface ChooseImportChannelsInteractor : Interactor {
 }
 
 class ChooseImportChannelsInteractorImpl(
-    private val isChannelsFetched: Boolean,
     private val repository: ImportChannelsRepository = ImportChannelsRepositoryFactory.create()
 ) : ChooseImportChannelsInteractor {
 

@@ -15,16 +15,11 @@ import deniskaminskiy.paperboy.utils.paintWord
 import deniskaminskiy.paperboy.utils.rx.Composer
 import deniskaminskiy.paperboy.utils.rx.SchedulerComposerFactory
 
-/**
- * TODO: Если так и не понадобится флаг [isChannelsFetched] (лишающий экран
- * TODO: состояния загрузки), то убрать его.
- */
 class ChooseImportChannelsPresenter(
     view: ChooseImportChannelsView,
-    isChannelsFetched: Boolean,
     private val resources: ResourcesManager,
     private val interactor: ChooseImportChannelsInteractor =
-        ChooseImportChannelsInteractorImpl(isChannelsFetched),
+        ChooseImportChannelsInteractorImpl(),
     private val composer: Composer = SchedulerComposerFactory.android(),
     private val mapperToPresentModel: Mapper<List<ImportChannel>, List<CheckItemPresentItemModel<ImportChannel>>> =
         ChannelImportToPresentModelListMapper()

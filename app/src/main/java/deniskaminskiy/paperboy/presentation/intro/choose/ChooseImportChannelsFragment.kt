@@ -9,7 +9,6 @@ import deniskaminskiy.paperboy.R
 import deniskaminskiy.paperboy.core.BaseFragment
 import deniskaminskiy.paperboy.data.importchannels.ImportChannel
 import deniskaminskiy.paperboy.presentation.intro.remove.RemoveTelegramChannelsFragment
-import deniskaminskiy.paperboy.utils.args
 import deniskaminskiy.paperboy.utils.hideApp
 import deniskaminskiy.paperboy.utils.managers.AndroidResourcesManager
 import deniskaminskiy.paperboy.utils.open
@@ -26,20 +25,9 @@ class ChooseImportChannelsFragment : BaseFragment<ChooseImportChannelsPresenter,
 
         const val TAG = "ChooseImportChannelsFragment"
 
-        const val ARG_CHANNELS_IS_FETCHED = "ARG_CHANNELS_IS_FETCHED"
+        fun newInstance() = ChooseImportChannelsFragment()
 
-        /**
-         * @param isChannelsFetched         - флаг, указывающий на то, загрузились ли данные о каналах пользователя
-         *                                  на предыдущем экране (закешированы)
-         */
-        fun newInstance(isChannelsFetched: Boolean = false) = ChooseImportChannelsFragment()
-            .args {
-                putBoolean(ARG_CHANNELS_IS_FETCHED, isChannelsFetched)
-            }
     }
-
-    private val isChannelsFetched: Boolean
-        get() = arguments?.getBoolean(ARG_CHANNELS_IS_FETCHED, false) ?: false
 
     private val adapter = CheckItemAdapter<ImportChannel>()
 
@@ -51,7 +39,6 @@ class ChooseImportChannelsFragment : BaseFragment<ChooseImportChannelsPresenter,
 
         presenter = ChooseImportChannelsPresenter(
             view = this,
-            isChannelsFetched = isChannelsFetched,
             resources = AndroidResourcesManager.create(this)
         ).apply {
             tvSkip.setOnClickListener { onSkipClick() }

@@ -86,7 +86,7 @@ class AuthSecurityCodePresenter(
             .doOnError { view?.hideLoading() }
             .subscribe({
                 view?.hideLoading()
-                view?.showImportChannels(interactor.isChannelsFetched)
+                view?.showImportChannels()
             }, { t ->
                 t.responseOrError()
                     .fold({

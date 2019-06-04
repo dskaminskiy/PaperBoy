@@ -14,7 +14,7 @@ interface AuthCodeView : View {
 
     fun showAuthSecurityCode()
 
-    fun showImportChannels(isChannelsFetched: Boolean)
+    fun showImportChannels()
 
     fun showSmsSended()
 
