@@ -9,6 +9,7 @@ import deniskaminskiy.paperboy.R
 import deniskaminskiy.paperboy.core.BaseFragment
 import deniskaminskiy.paperboy.data.importchannels.ImportChannel
 import deniskaminskiy.paperboy.presentation.intro.remove.RemoveTelegramChannelsFragment
+import deniskaminskiy.paperboy.utils.Constants
 import deniskaminskiy.paperboy.utils.hideApp
 import deniskaminskiy.paperboy.utils.managers.AndroidResourcesManager
 import deniskaminskiy.paperboy.utils.open
@@ -51,8 +52,8 @@ class ChooseImportChannelsFragment : BaseFragment<ChooseImportChannelsPresenter,
     }
 
     override fun show(model: ChooseImportChannelsPresentModel) {
-        if (vFab.imageAlpha == 0) {
-            vFab.imageAlpha = 255
+        if (vFab.imageAlpha == Constants.ALPHA_INVISIBLE) {
+            vFab.imageAlpha = Constants.ALPHA_VISIBLE
             vBlind.gone()
             vLoading.gone()
         }
@@ -75,7 +76,7 @@ class ChooseImportChannelsFragment : BaseFragment<ChooseImportChannelsPresenter,
     override fun showLoading() {
         vBlind.visible()
         vLoading.visible()
-        vFab.imageAlpha = 0
+        vFab.imageAlpha = Constants.ALPHA_INVISIBLE
     }
 
     override fun showRemoveTelegramChannels() {

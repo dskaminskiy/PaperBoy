@@ -6,7 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import deniskaminskiy.paperboy.data.importchannels.ImportChannel
 import deniskaminskiy.paperboy.data.importchannels.sources.ImportChannelDao
-import deniskaminskiy.paperboy.utils.DATABASE_NAME
+import deniskaminskiy.paperboy.utils.Constants.DATABASE_NAME
 
 @Database(entities = [ImportChannel::class], version = 1)
 abstract class AppDatabase : RoomDatabase() {

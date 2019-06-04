@@ -1,3 +1,9 @@
 package deniskaminskiy.paperboy.utils
 
-const val DATABASE_NAME = "paperboy-db"
+object Constants {
+
+    const val DATABASE_NAME = "paperboy-db"
+    const val ALPHA_INVISIBLE = 0
+    const val ALPHA_VISIBLE = 255
+
+}
