@@ -32,5 +32,8 @@ interface Presenter<V : View> {
      * Called when the presenter is definitely destroyed, you should use this method only to release
      * any resource used by the presenter (cancel HTTP requests, close database connection...)
      */
-    fun onFinish()
+    fun onDestroy()
+
+    fun onAnimationStart()
+    fun onAnimationEnd()
 }

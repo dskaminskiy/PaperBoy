@@ -8,8 +8,10 @@ import androidx.fragment.app.FragmentManager
 import deniskaminskiy.paperboy.R
 import deniskaminskiy.paperboy.core.BaseFragment
 import deniskaminskiy.paperboy.presentation.auth.code.AuthCodeFragment
+import deniskaminskiy.paperboy.presentation.intro.choose.ChooseImportChannelsFragment
 import deniskaminskiy.paperboy.utils.ContextDelegateFactory
-import deniskaminskiy.paperboy.utils.open
+import deniskaminskiy.paperboy.utils.hideKeyboard
+import deniskaminskiy.paperboy.utils.replace
 import deniskaminskiy.paperboy.utils.view.gone
 import deniskaminskiy.paperboy.utils.view.visible
 import kotlinx.android.synthetic.main.fragment_auth_phone.*
@@ -78,7 +80,22 @@ class AuthPhoneFragment : BaseFragment<AuthPhonePresenter, AuthPhoneView>(), Aut
 
     override fun showAuthCode() {
         AuthCodeFragment.newInstance()
-            .open(activity, R.id.vgContent, AuthCodeFragment.TAG)
+            .replace(activity, R.id.vgContent, AuthCodeFragment.TAG)
+    }
+
+    override fun showImportChannels() {
+        hideKeyboard()
+        ChooseImportChannelsFragment.newInstance()
+            .replace(activity, R.id.vgContent, ChooseImportChannelsFragment.TAG)
+    }
+
+    override fun showInputError() {
+        ivPhone.showError()
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        super.onBackPressed()
     }
 
 }

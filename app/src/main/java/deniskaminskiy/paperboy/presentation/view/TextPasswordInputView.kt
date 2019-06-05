@@ -4,14 +4,15 @@ import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.util.AttributeSet
+import android.view.HapticFeedbackConstants
 import android.view.KeyEvent
 import android.view.View
 import android.view.View.OnFocusChangeListener
 import android.widget.LinearLayout
 import deniskaminskiy.paperboy.R
-import deniskaminskiy.paperboy.utils.Colors
-import deniskaminskiy.paperboy.utils.ColorsFactory
 import deniskaminskiy.paperboy.utils.dp
+import deniskaminskiy.paperboy.utils.managers.AndroidResourcesManager
+import deniskaminskiy.paperboy.utils.managers.ResourcesManager
 import deniskaminskiy.paperboy.utils.view.addOnTextChangedListener
 import kotlinx.android.synthetic.main.view_number_input.view.*
 
@@ -35,12 +36,16 @@ class TextPasswordInputView @JvmOverloads constructor(
     var onBackspacePressedWithEmptyText: OnBackspacePressedWithEmptyText = {}
     var onFocusChanged: OnFocusChanged = {}
 
-    private val palette: Colors by lazy { ColorsFactory.create(context) }
+    private val palette: ResourcesManager.Colors by lazy { AndroidResourcesManager.create(context).colors }
 
     var text: String
         set(value) {
             if (etText.text.toString() != value) {
                 etText.setText(value)
+            }
+            if (wasMistake) {
+                wasMistake = false
+                isStroke = true
             }
         }
         get() = etText.text.toString()
@@ -70,6 +75,8 @@ class TextPasswordInputView @JvmOverloads constructor(
 
     private val dpStrokeWidth = STROKE_WIDTH.dp(context)
     private val dpCornerRadius = CORNER_RADIUS.dp(context).toFloat()
+
+    var wasMistake = false
 
     init {
         View.inflate(context, R.layout.view_text_password_input, this)
@@ -110,6 +117,12 @@ class TextPasswordInputView @JvmOverloads constructor(
 
     fun setSelectionToEnd() {
         etText.post { etText.setSelection(etText.length(), etText.length()) }
+    }
+
+    fun showError() {
+        wasMistake = true
+        isStroke = true
+        performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
     }
 
 }

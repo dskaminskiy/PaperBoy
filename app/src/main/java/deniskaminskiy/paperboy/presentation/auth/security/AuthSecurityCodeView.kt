@@ -1,7 +1,6 @@
 package deniskaminskiy.paperboy.presentation.auth.security
 
 import deniskaminskiy.paperboy.core.View
-import deniskaminskiy.paperboy.presentation.view.TopPopupPresentModel
 
 interface AuthSecurityCodeView : View {
 
@@ -9,10 +8,10 @@ interface AuthSecurityCodeView : View {
 
     fun showLoading()
 
+    fun hideLoading()
+
     fun close()
 
     fun showImportChannels()
-
-    fun showError(model: TopPopupPresentModel)
 
 }

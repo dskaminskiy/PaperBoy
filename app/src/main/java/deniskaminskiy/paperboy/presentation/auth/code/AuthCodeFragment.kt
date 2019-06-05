@@ -9,10 +9,11 @@ import androidx.fragment.app.FragmentManager
 import deniskaminskiy.paperboy.R
 import deniskaminskiy.paperboy.core.BaseFragment
 import deniskaminskiy.paperboy.presentation.auth.security.AuthSecurityCodeFragment
-import deniskaminskiy.paperboy.presentation.intro.choose.ChooseChannelsFragment
-import deniskaminskiy.paperboy.presentation.view.TopPopupPresentModel
-import deniskaminskiy.paperboy.presentation.view.TopPopupView
-import deniskaminskiy.paperboy.utils.*
+import deniskaminskiy.paperboy.presentation.intro.choose.ChooseImportChannelsFragment
+import deniskaminskiy.paperboy.utils.hideKeyboard
+import deniskaminskiy.paperboy.utils.open
+import deniskaminskiy.paperboy.utils.replace
+import deniskaminskiy.paperboy.utils.toast
 import deniskaminskiy.paperboy.utils.view.gone
 import deniskaminskiy.paperboy.utils.view.visible
 import kotlinx.android.synthetic.main.fragment_auth_code.*
@@ -40,9 +41,7 @@ class AuthCodeFragment : BaseFragment<AuthCodePresenter, AuthCodeView>(), AuthCo
         super.onActivityCreated(savedInstanceState)
 
         presenter = AuthCodePresenter(
-            view = this,
-            colors = ColorsFactory.create(this),
-            contextDelegate = ContextDelegateFactory.create(this)
+            view = this
         ).also { presenter ->
             listOf(ivFirst, ivSecond, ivThird, ivFourth, ivFifth).apply {
                 forEach { it.onTextChanged = presenter::onPassCodeChanged }
@@ -98,6 +97,10 @@ class AuthCodeFragment : BaseFragment<AuthCodePresenter, AuthCodeView>(), AuthCo
         vLoading.visible()
     }
 
+    override fun hideLoading() {
+        vLoading.gone()
+    }
+
     private fun updateInputText(
         @IntRange(from = 1, to = 5) inputViewNumber: Int,
         newText: String
@@ -119,25 +122,8 @@ class AuthCodeFragment : BaseFragment<AuthCodePresenter, AuthCodeView>(), AuthCo
 
     override fun showImportChannels() {
         hideKeyboard()
-        ChooseChannelsFragment.newInstance(true)
-            .open(activity, R.id.vgContent, ChooseChannelsFragment.TAG)
-    }
-
-    override fun showError(model: TopPopupPresentModel) {
-        vLoading.gone()
-
-        vTopPopup.showWithAnimation(
-            model,
-            object : TopPopupView.OnPopupAnimationListener {
-                override fun onAnimationStart() {
-                    presenter?.onAnimationStart()
-                }
-
-                override fun onAnimationEnd() {
-                    presenter?.onAnimationEnd()
-                }
-            }
-        )
+        ChooseImportChannelsFragment.newInstance()
+            .replace(activity, R.id.vgContent, ChooseImportChannelsFragment.TAG)
     }
 
     override fun showSmsSended() {

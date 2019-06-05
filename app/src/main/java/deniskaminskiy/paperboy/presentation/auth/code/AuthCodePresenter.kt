@@ -1,95 +1,91 @@
 package deniskaminskiy.paperboy.presentation.auth.code
 
-import android.content.Context
 import deniskaminskiy.paperboy.core.BasePresenterImpl
-import deniskaminskiy.paperboy.data.api.AuthResponseState
-import deniskaminskiy.paperboy.data.auth.AuthRepository
-import deniskaminskiy.paperboy.data.auth.AuthRepositoryFactory
-import deniskaminskiy.paperboy.presentation.view.TopPopupPresentModel
-import deniskaminskiy.paperboy.utils.Colors
-import deniskaminskiy.paperboy.utils.ContextDelegate
-import deniskaminskiy.paperboy.utils.disposeIfNotNull
-import deniskaminskiy.paperboy.utils.icon.IconConstant
-import deniskaminskiy.paperboy.utils.icon.IconFactory
+import deniskaminskiy.paperboy.core.Mapper
+import deniskaminskiy.paperboy.data.api.ifAuthorized
+import deniskaminskiy.paperboy.data.api.ifError
+import deniskaminskiy.paperboy.data.api.ifWaitingForPassword
+import deniskaminskiy.paperboy.domain.auth.AuthCodeInteractor
+import deniskaminskiy.paperboy.domain.auth.AuthCodeInteractorImpl
 import deniskaminskiy.paperboy.utils.rx.Composer
 import deniskaminskiy.paperboy.utils.rx.SchedulerComposerFactory
+import deniskaminskiy.paperboy.utils.rx.disposeIfNotNull
 import io.reactivex.disposables.Disposable
 
 class AuthCodePresenter(
     view: AuthCodeView,
-    private val colors: Colors,
-    private val contextDelegate: ContextDelegate,
-    private val repository: AuthRepository = AuthRepositoryFactory.create(),
-    private val composer: Composer = SchedulerComposerFactory.android()
+    private val composer: Composer = SchedulerComposerFactory.android(),
+    private val codeLength: Int = CODE_LENGTH,
+    private val mapper: Mapper<String, AuthCodePresentModel> = CodeStringToAuthCodePresentModelMapper(),
+    private val interactor: AuthCodeInteractor = AuthCodeInteractorImpl(codeLength)
 ) : BasePresenterImpl<AuthCodeView>(view) {
 
     companion object {
         private const val CODE_LENGTH = 5
-
-        private const val SETTINGS_FILE_NAME = "deniskaminskiy.paperboy.data.settings.App"
-        private const val USER_TOKEN = "USER_TOKEN"
     }
 
-    private var code = ""
-
     private var isInputsUpdating = false
-    private var isAnimationRunning = false
 
     private var disposableSendCode: Disposable? = null
-
-    private val userToken: String
-        get() = contextDelegate.getContext()?.getSharedPreferences(SETTINGS_FILE_NAME, Context.MODE_PRIVATE)
-            ?.getString(USER_TOKEN, "")
-            ?: ""
-
+    private var disposableLoadImportChannels: Disposable? = null
 
     override fun onStart(viewCreated: Boolean) {
         super.onStart(viewCreated)
-        updateView()
+
+        disposableUpdateUi = interactor.onModelUpdate()
+            .map(mapper::map)
+            .compose(composer.observable())
+            .subscribe {
+                isInputsUpdating = true
+                view?.show(it)
+            }
+
+        interactor.onFullCodeEntered = { sendCode() }
     }
 
     override fun onViewDetached() {
         disposableSendCode.disposeIfNotNull()
+        disposableLoadImportChannels.disposeIfNotNull()
         super.onViewDetached()
     }
 
-    private fun updateView() {
-        isInputsUpdating = true
-        view?.show(AuthCodePresentModel(code))
-    }
-
     private fun sendCode() {
-        try {
-            disposableSendCode = repository.sendCode(code.toInt(), userToken)
-                .compose(composer.observable())
-                .doOnSubscribe { view?.showLoading() }
-                .doFinally { clearInputs() }
-                .subscribe({
-                    if (it == AuthResponseState.AUTHORIZED) {
-                        view?.showImportChannels()
-                    } else {
+        disposableSendCode = interactor.sendCode()
+            .compose(composer.observable())
+            .doOnSubscribe { view?.showLoading() }
+            .doOnError { clearView() }
+            .subscribe({
+                with(it) {
+                    ifAuthorized {
+                        fetchImportChannels()
+                    }
+                    ifError {
+                        clearView()
+                        showUnknownTopPopupError()
+                    }
+                    ifWaitingForPassword {
+                        clearView()
                         view?.showAuthSecurityCode()
                     }
-                }, {
-                    view?.showError(
-                        TopPopupPresentModel(
-                            "Что-то случилось",
-                            "Щас доем бутер и гляну :(",
-                            icon = IconFactory.create(IconConstant.TRASH.constant),
-                            iconColor = colors.marlboroNew
-                        )
-                    )
-                })
-        } catch (e: NumberFormatException) {
-            view?.showError(
-                TopPopupPresentModel(
-                    "Ах, да, чувак",
-                    "Забыл сказать, что код состоит только из цифр :(",
-                    icon = IconFactory.create(IconConstant.TRASH.constant),
-                    iconColor = colors.marlboroNew
-                )
-            )
-        }
+                }
+            }, ::onError)
+    }
+
+    private fun fetchImportChannels() {
+        disposableLoadImportChannels = interactor.loadAndCacheImportChannels()
+            .compose(composer.completable())
+            .subscribe({
+                clearView()
+                view?.showImportChannels()
+            }, { t ->
+                clearView()
+                onError(t)
+            })
+    }
+
+    private fun clearView() {
+        interactor.clearCode()
+        view?.hideLoading()
     }
 
     /**
@@ -97,24 +93,8 @@ class AuthCodePresenter(
      */
     fun onPassCodeChanged(newNumber: String) {
         if (!isInputsUpdating) {
-            if (newNumber.isNotEmpty()) {
-                code += newNumber
-            } else {
-                if (code.isNotEmpty()) {
-                    code = code.dropLast(1)
-                }
-            }
-            updateView()
-
-            if (code.length >= CODE_LENGTH) {
-                sendCode()
-            }
+            interactor.onPassCodeChanged(newNumber)
         }
-    }
-
-    private fun clearInputs() {
-        code = ""
-        updateView()
     }
 
     fun onSendSmsClick() {
@@ -129,19 +109,13 @@ class AuthCodePresenter(
         view?.close()
     }
 
-    fun onAnimationStart() {
-        isAnimationRunning = true
-    }
-
-    fun onAnimationEnd() {
-        isAnimationRunning = false
-    }
-
     fun onBackspacePressedWithEmptyText() {
-        if (code.isNotEmpty()) {
-            code = code.dropLast(1)
-            updateView()
-        }
+        interactor.removeLastCodeSymbol()
     }
 
+}
+
+class CodeStringToAuthCodePresentModelMapper : Mapper<String, AuthCodePresentModel> {
+    override fun map(from: String): AuthCodePresentModel =
+        AuthCodePresentModel(from)
 }

@@ -1,6 +1,5 @@
 package deniskaminskiy.paperboy.data.api.json.auth
 
-data class AuthCodeRequest(
-    val token: String,
+data class AuthCodeRequestJson(
     val code: Int
 )

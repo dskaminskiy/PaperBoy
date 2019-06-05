@@ -31,7 +31,8 @@ enum class DrawableIconConstant(
     ADD(R.drawable.ic_add),
     ARROW_BACK(R.drawable.ic_arrow_back),
     TRASH(R.drawable.ic_trash),
-    ARROW_FORWARD(R.drawable.ic_arrow_forward)
+    ARROW_FORWARD(R.drawable.ic_arrow_forward),
+    WARNING(R.drawable.ic_warning)
 }
 
 interface PaintedIcon {

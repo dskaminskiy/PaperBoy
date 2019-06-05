@@ -1,6 +1,6 @@
 package deniskaminskiy.paperboy.data.api.interceptors
 
-import deniskaminskiy.paperboy.data.settings.ApplicationSettingsImpl
+import deniskaminskiy.paperboy.data.settings.PreferenceHelperImpl
 import deniskaminskiy.paperboy.utils.ContextDelegate
 import deniskaminskiy.paperboy.utils.InterceptorsUtils
 import okhttp3.Interceptor
@@ -24,22 +24,18 @@ class UserTokenInterceptor(
     }
 
     private val userToken: String
-        get() = ApplicationSettingsImpl(contextDelegate).userToken
+        get() = PreferenceHelperImpl(contextDelegate).userToken
 
     private val mediaType: MediaType?
         get() = MediaType.parse(MEDIA_TYPE)
 
     override fun intercept(chain: Interceptor.Chain): Response {
         val originalRequest = chain.request()
-        val builder = originalRequest.newBuilder()
 
-        if (originalRequest.method().equals(GET, true)) {
-            builder.url(
-                originalRequest.url().newBuilder()
-                    .setQueryParameter(PROPERTY_TOKEN, userToken)
-                    .build()
-            )
-        } else {
+        val builder = originalRequest.newBuilder()
+            .header(PROPERTY_TOKEN, userToken)
+
+        if (userToken.isNotBlank() && !originalRequest.method().equals(GET, true)) {
             val bodyString = InterceptorsUtils.bodyToString(originalRequest.body())
             val jsonBody = if (bodyString.isBlank()) JSONObject() else JSONObject(bodyString)
 

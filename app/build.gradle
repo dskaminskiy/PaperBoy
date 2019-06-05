@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 apply plugin: 'com.google.gms.google-services'
 
 android {
@@ -49,6 +50,11 @@ dependencies {
     implementation multiDEXLib
     implementation kotlinImpl
 
+    // Android Architecture Components
+    implementation room.values()
+    kapt roomCompiler
+    testImplementation roomTesting
+
     // Network
     implementation retrofit.values()
     implementation okHttp.values()
@@ -62,6 +68,12 @@ dependencies {
     implementation glide.values()
     kapt glideCompiler
     implementation glideTransformation
+
+    // Dependency Injection
+    implementation dagger.values()
+    kapt daggerCompiler
+    kapt daggerAndroidProcessor
+    kaptTest daggerCompiler
 
     // Google Play Services
     implementation playServices.values()

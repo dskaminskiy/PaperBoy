@@ -1,24 +1,21 @@
 package deniskaminskiy.paperboy.domain.auth
 
 import deniskaminskiy.paperboy.core.Interactor
-import deniskaminskiy.paperboy.data.auth.Auth
+import deniskaminskiy.paperboy.data.api.AuthResponseState
 import deniskaminskiy.paperboy.data.auth.AuthRepository
 import deniskaminskiy.paperboy.data.auth.AuthRepositoryFactory
-import deniskaminskiy.paperboy.data.settings.ApplicationSettings
-import deniskaminskiy.paperboy.data.settings.ApplicationSettingsImpl
+import deniskaminskiy.paperboy.data.settings.PreferenceHelper
+import deniskaminskiy.paperboy.data.settings.PreferenceHelperImpl
 import deniskaminskiy.paperboy.presentation.auth.phone.AuthPhone
 import deniskaminskiy.paperboy.utils.ContextDelegate
-import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject
-import io.reactivex.subjects.PublishSubject
-import io.reactivex.subjects.Subject
 
 interface AuthPhoneInteractor : Interactor {
 
-    fun onUiUpdateRequest(): Observable<AuthPhone>
+    fun onModelUpdate(): Observable<AuthPhone>
 
-    fun requestCode(): Completable
+    fun requestCode(): Observable<AuthResponseState>
 
     /**
      * @param newNumber     - номер региона с приставкой "+" (пример: "+7")
@@ -37,45 +34,38 @@ class AuthPhoneInteractorImpl(
     private val maxLengthPhone: Int,
     private val contextDelegate: ContextDelegate,
     private val repository: AuthRepository = AuthRepositoryFactory.create(),
-    private val settings: ApplicationSettings = ApplicationSettingsImpl(contextDelegate)
+    private val settings: PreferenceHelper = PreferenceHelperImpl(contextDelegate)
 ) : AuthPhoneInteractor {
 
-    private val updateSubject = BehaviorSubject.createDefault(AuthPhone.EMPTY)
+    private val subjectModel = BehaviorSubject.createDefault(AuthPhone.EMPTY)
 
-    private var authPhone = AuthPhone.EMPTY
-
-    private var reignNumber: Int
+    private var region: Int
         set(value) {
-            authPhone = authPhone.copy(region = value)
-            updateUi()
+            subjectModel.value
+                ?.copy(region = value)
+                ?.let(subjectModel::onNext)
         }
-        get() = authPhone.region
+        get() = subjectModel.value?.region ?: -1
 
-    private var phoneNumber: Long
+    private var phone: Long
         set(value) {
-            authPhone = authPhone.copy(phone = value)
-            updateUi()
+            subjectModel.value
+                ?.copy(phone = value)
+                ?.let(subjectModel::onNext)
         }
-        get() = authPhone.phone
+        get() = subjectModel.value?.phone ?: -1
 
 
     init {
-        reignNumber = 7
+        region = 7
     }
 
-    private fun updateUi() {
-        updateSubject.onNext(authPhone)
-    }
+    override fun onModelUpdate(): Observable<AuthPhone> = subjectModel
 
-    override fun onUiUpdateRequest(): Observable<AuthPhone> = updateSubject
-
-    override fun requestCode(): Completable = repository
-        .requestCode("+$reignNumber$phoneNumber")
-        .flatMapCompletable {
-            Completable.fromAction {
-                settings.userToken = it.token
-            }
-        }
+    override fun requestCode(): Observable<AuthResponseState> = repository
+        .requestCode("+$region$phone")
+        .doOnNext { settings.userToken = it.token }
+        .map { it.state }
 
     override fun onReignAdditionalNumberChanged(newNumber: String) {
         if (newNumber.isNotEmpty() && newNumber != "+") {
@@ -84,13 +74,13 @@ class AuthPhoneInteractorImpl(
                 ?: newNumber
 
             try {
-                reignNumber = clearNumber.toInt()
+                region = clearNumber.toInt()
                 if (clearNumber.length > maxLengthReign) throw java.lang.NumberFormatException()
             } catch (e: NumberFormatException) {
                 onReignAdditionalNumberChanged(newNumber.dropLast(1))
             }
         } else {
-            reignNumber = -1
+            region = -1
         }
     }
 
@@ -99,13 +89,13 @@ class AuthPhoneInteractorImpl(
             val clearNumber = newNumber.trim()
 
             try {
-                phoneNumber = clearNumber.toLong()
+                phone = clearNumber.toLong()
                 if (clearNumber.length > maxLengthPhone) throw java.lang.NumberFormatException()
             } catch (e: NumberFormatException) {
                 onPhoneNumberChanged(newNumber.dropLast(1))
             }
         } else {
-            phoneNumber = -1
+            phone = -1
         }
     }
 

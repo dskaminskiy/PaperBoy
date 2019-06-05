@@ -1,5 +1,6 @@
 package deniskaminskiy.paperboy.utils
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.annotation.IdRes
 import androidx.fragment.app.Fragment
@@ -40,6 +41,7 @@ fun Fragment.replace(
     fragmentManager?.beginTransaction()
         ?.setTransition(transition)
         ?.replace(containerId, this, tag)
+        ?.addToBackStack(tag)
         ?.commit()
 }
 
@@ -50,6 +52,13 @@ fun Fragment.replace(
     transition: Int = FragmentTransaction.TRANSIT_FRAGMENT_OPEN
 ) {
     replace(activity?.supportFragmentManager, containerId, tag, transition)
+}
+
+fun Fragment.hideApp() {
+    val startMain = Intent(Intent.ACTION_MAIN)
+    startMain.addCategory(Intent.CATEGORY_HOME)
+    startMain.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+    startActivity(startMain)
 }
 
 inline fun <T : Fragment> T.args(builder: Bundle.() -> Unit): T {

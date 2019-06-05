@@ -1,4 +1,4 @@
-package deniskaminskiy.paperboy.utils
+package deniskaminskiy.paperboy.utils.rx
 
 import io.reactivex.disposables.Disposable
 

@@ -12,6 +12,10 @@ interface AuthPhoneView : View {
 
     fun showAuthCode()
 
+    fun showImportChannels()
+
+    fun showInputError()
+
 }
 
 data class AuthPhonePresentModel(

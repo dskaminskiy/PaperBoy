@@ -7,36 +7,31 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import deniskaminskiy.paperboy.R
 import deniskaminskiy.paperboy.core.BaseFragment
-import deniskaminskiy.paperboy.data.channel.ChannelImport
+import deniskaminskiy.paperboy.data.importchannels.ImportChannel
 import deniskaminskiy.paperboy.presentation.intro.remove.RemoveTelegramChannelsFragment
-import deniskaminskiy.paperboy.utils.*
+import deniskaminskiy.paperboy.utils.Constants
+import deniskaminskiy.paperboy.utils.hideApp
 import deniskaminskiy.paperboy.utils.managers.AndroidResourcesManager
+import deniskaminskiy.paperboy.utils.open
+import deniskaminskiy.paperboy.utils.toast
+import deniskaminskiy.paperboy.utils.view.gone
 import deniskaminskiy.paperboy.utils.view.isGone
 import deniskaminskiy.paperboy.utils.view.isVisible
+import deniskaminskiy.paperboy.utils.view.visible
 import kotlinx.android.synthetic.main.fragment_choose_channels.*
 
-class ChooseChannelsFragment : BaseFragment<ChooseChannelsPresenter, ChooseChannelsView>(), ChooseChannelsView {
+
+class ChooseImportChannelsFragment : BaseFragment<ChooseImportChannelsPresenter, ChooseImportChannelsView>(), ChooseImportChannelsView {
 
     companion object {
 
-        const val TAG = "ChooseChannelsFragment"
+        const val TAG = "ChooseImportChannelsFragment"
 
-        const val ARG_CHANNELS_IS_FETCHED = "ARG_CHANNELS_IS_FETCHED"
+        fun newInstance() = ChooseImportChannelsFragment()
 
-        /**
-         * @param isChannelsFetched         - флаг, указывающий на то, загрузились ли данные о каналах пользователя
-         *                                  на предыдущем экране (закешированы)
-         */
-        fun newInstance(isChannelsFetched: Boolean = false) = ChooseChannelsFragment()
-            .args {
-                putBoolean(ARG_CHANNELS_IS_FETCHED, isChannelsFetched)
-            }
     }
 
-    private val isChannelsFetched: Boolean
-        get() = arguments?.getBoolean(ARG_CHANNELS_IS_FETCHED, false) ?: false
-
-    private val adapter = CheckItemAdapter<ChannelImport>()
+    private val adapter = CheckItemAdapter<ImportChannel>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
         inflater.inflate(R.layout.fragment_choose_channels, container, false)
@@ -44,11 +39,9 @@ class ChooseChannelsFragment : BaseFragment<ChooseChannelsPresenter, ChooseChann
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        presenter = ChooseChannelsPresenter(
+        presenter = ChooseImportChannelsPresenter(
             view = this,
-            isChannelsFetched = isChannelsFetched,
-            resources = AndroidResourcesManager.create(this),
-            colors = AndroidColors(ContextDelegateFactory.create(this))
+            resources = AndroidResourcesManager.create(this)
         ).apply {
             tvSkip.setOnClickListener { onSkipClick() }
             vFab.setOnClickListener { onFabClick() }
@@ -59,7 +52,7 @@ class ChooseChannelsFragment : BaseFragment<ChooseChannelsPresenter, ChooseChann
         rvChannels.adapter = adapter
     }
 
-    override fun show(model: ChooseChannelsPresentModel) {
+    override fun show(model: ChooseImportChannelsPresentModel) {
         tvTitle.text = model.title
 
         if (tvSubtitle.text.toString() != model.subtitle) {
@@ -75,17 +68,27 @@ class ChooseChannelsFragment : BaseFragment<ChooseChannelsPresenter, ChooseChann
         }
     }
 
-    override fun showUnknownError() {
-        toast(getString(R.string.oops_something_happened))
+    override fun showLoading() {
+        vBlind.visible()
+        vLoading.visible()
+        vFab.imageAlpha = Constants.ALPHA_INVISIBLE
+    }
+
+    override fun hideLoading() {
+        vFab.imageAlpha = Constants.ALPHA_VISIBLE
+        vBlind.gone()
+        vLoading.gone()
     }
 
     override fun showRemoveTelegramChannels() {
+        //TODO: temp
+        toast("Каналы для импорта успешно отправлены")
         RemoveTelegramChannelsFragment.newInstance()
             .open(activity, R.id.vgContent, RemoveTelegramChannelsFragment.TAG)
     }
 
     override fun onBackPressed() {
-        //super.onBackPressed()
+        hideApp()
     }
 
 }

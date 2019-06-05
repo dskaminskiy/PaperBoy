@@ -8,14 +8,14 @@ import deniskaminskiy.paperboy.data.api.json.auth.*
 import deniskaminskiy.paperboy.data.auth.Auth
 import deniskaminskiy.paperboy.data.auth.sources.mappers.AuthCodeResponseToAuthResponseStateMapper
 import deniskaminskiy.paperboy.data.auth.sources.mappers.AuthPasswordResponseToAuthResponseStateMapper
-import deniskaminskiy.paperboy.data.auth.sources.mappers.AuthResponseJsonToAuthCodeMapper
+import deniskaminskiy.paperboy.data.auth.sources.mappers.AuthResponseJsonToAuthMapper
 import io.reactivex.Observable
 
 interface AuthCloudDataSource {
 
     fun requestCode(phoneNumber: String): Observable<Auth>
 
-    fun sendCode(code: Int, token: String): Observable<AuthResponseState>
+    fun sendCode(code: Int): Observable<AuthResponseState>
 
     fun sendSecurityCode(code: String, token: String): Observable<AuthResponseState>
 
@@ -23,26 +23,26 @@ interface AuthCloudDataSource {
 
 class AuthCloudDataSourceImpl(
     private val api: PaperboyApi = ApiService.paperboyApi,
-    private val authMapper: Mapper<AuthResponseJson, Auth> = AuthResponseJsonToAuthCodeMapper(),
-    private val authCodeMapper: Mapper<AuthCodeResponse, AuthResponseState> =
+    private val authMapper: Mapper<AuthResponseJson, Auth> = AuthResponseJsonToAuthMapper(),
+    private val authCodeMapper: Mapper<AuthCodeResponseJson, AuthResponseState> =
         AuthCodeResponseToAuthResponseStateMapper(),
-    private val authPasswordMapper: Mapper<AuthPasswordResponse, AuthResponseState> =
+    private val authPasswordMapper: Mapper<AuthPasswordResponseJson, AuthResponseState> =
         AuthPasswordResponseToAuthResponseStateMapper()
 ) : AuthCloudDataSource {
 
     override fun requestCode(phoneNumber: String): Observable<Auth> =
         api.auth(phoneNumber)
-            .map(authMapper::map)
+            .map{ it.soleData?.let(authMapper::map) ?: Auth.EMPTY }
             .toObservable()
 
-    override fun sendCode(code: Int, token: String): Observable<AuthResponseState> =
-        api.authCode(AuthCodeRequest(token, code))
-            .map(authCodeMapper::map)
+    override fun sendCode(code: Int): Observable<AuthResponseState> =
+        api.authCode(AuthCodeRequestJson(code))
+            .map{ it.soleData?.let(authCodeMapper::map) ?: AuthResponseState.ERROR }
             .toObservable()
 
     override fun sendSecurityCode(code: String, token: String): Observable<AuthResponseState> =
-        api.authPassword(AuthPasswordRequest(token, code))
-            .map(authPasswordMapper::map)
+        api.authPassword(AuthPasswordRequestJson(token, code))
+            .map{ it.soleData?.let(authPasswordMapper::map) ?: AuthResponseState.ERROR }
             .toObservable()
 
 }

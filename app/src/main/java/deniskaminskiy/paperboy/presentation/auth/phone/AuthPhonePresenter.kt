@@ -2,12 +2,15 @@ package deniskaminskiy.paperboy.presentation.auth.phone
 
 import deniskaminskiy.paperboy.core.BasePresenterImpl
 import deniskaminskiy.paperboy.core.Mapper
+import deniskaminskiy.paperboy.data.api.ifAuthorized
+import deniskaminskiy.paperboy.data.api.ifError
+import deniskaminskiy.paperboy.data.api.ifWaitingForCode
 import deniskaminskiy.paperboy.domain.auth.AuthPhoneInteractor
 import deniskaminskiy.paperboy.domain.auth.AuthPhoneInteractorImpl
 import deniskaminskiy.paperboy.utils.ContextDelegate
-import deniskaminskiy.paperboy.utils.disposeIfNotNull
 import deniskaminskiy.paperboy.utils.rx.Composer
 import deniskaminskiy.paperboy.utils.rx.SchedulerComposerFactory
+import deniskaminskiy.paperboy.utils.rx.disposeIfNotNull
 import io.reactivex.disposables.Disposable
 
 class AuthPhonePresenter(
@@ -28,11 +31,11 @@ class AuthPhonePresenter(
     }
 
     private var disposableCode: Disposable? = null
-    private var disposableUpdateUi: Disposable? = null
 
     override fun onStart(viewCreated: Boolean) {
         super.onStart(viewCreated)
-        disposableUpdateUi = interactor.onUiUpdateRequest()
+
+        disposableUpdateUi = interactor.onModelUpdate()
             .map(mapper::map)
             .compose(composer.observable())
             .subscribe {
@@ -42,18 +45,24 @@ class AuthPhonePresenter(
 
     override fun onViewDetached() {
         disposableCode.disposeIfNotNull()
-        disposableUpdateUi.disposeIfNotNull()
         super.onViewDetached()
     }
 
     fun onNextClick() {
         disposableCode = interactor.requestCode()
-            .compose(composer.completable())
+            .compose(composer.observable())
             .doOnSubscribe { view?.showLoading() }
-            .doOnComplete { view?.hideLoading() }
-            .subscribe {
-                view?.showAuthCode()
-            }
+            .doOnEach { view?.hideLoading() }
+            .subscribe({
+                with(it) {
+                    ifAuthorized { view?.showImportChannels() }
+                    ifError {
+                        view?.showInputError()
+                        showUnknownTopPopupError()
+                    }
+                    ifWaitingForCode { view?.showAuthCode() }
+                }
+            }, ::onError)
     }
 
     fun onReignAdditionalNumberChanged(newNumber: String) {
@@ -64,4 +73,19 @@ class AuthPhonePresenter(
         interactor.onPhoneNumberChanged(newNumber)
     }
 
+}
+
+class AuthPhoneToPresentModelMapper(
+    private val maxLengthPhone: Int
+) : Mapper<AuthPhone, AuthPhonePresentModel> {
+    override fun map(from: AuthPhone): AuthPhonePresentModel =
+        AuthPhonePresentModel(
+            regionAdditionalNumber = from.region.takeIf { it != -1 }?.toRegionFormat() ?: "+",
+            phoneNumber = from.phone.takeIf { it != -1L }?.toFormatNumber() ?: "",
+            isNextButtonEnable = from.phone.toString().length == maxLengthPhone
+                    && from.region.toString().isNotEmpty() && from.region != -1
+        )
+
+    private fun Long.toFormatNumber(): String = this.toString()
+    private fun Int.toRegionFormat(): String = "+$this"
 }
