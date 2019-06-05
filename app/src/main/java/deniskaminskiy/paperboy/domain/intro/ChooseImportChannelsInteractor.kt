@@ -1,4 +1,4 @@
-package deniskaminskiy.paperboy.presentation.intro.choose
+package deniskaminskiy.paperboy.domain.intro
 
 import deniskaminskiy.paperboy.core.Interactor
 import deniskaminskiy.paperboy.data.importchannels.ImportChannel
@@ -27,6 +27,12 @@ class ChooseImportChannelsInteractorImpl(
     private val importChannelsSubject: BehaviorSubject<List<ImportChannel>> =
         BehaviorSubject.createDefault(emptyList())
 
+    private val subscribeChannelsIds: List<Long>
+        get() = importChannelsSubject.value
+            ?.filter { it.isChecked }
+            ?.map { it.id }
+            ?: emptyList()
+
     override fun channels(): Observable<List<ImportChannel>> =
         repository.getFromCache()
             .switchMap {
@@ -49,8 +55,7 @@ class ChooseImportChannelsInteractorImpl(
         )
     }
 
-    override fun subscribeChannels(): Completable {
-        return Completable.complete()
-    }
+    override fun subscribeChannels(): Completable = repository.subscribeChannels(subscribeChannelsIds)
+        .doOnComplete { repository.clearCache() }
 
 }

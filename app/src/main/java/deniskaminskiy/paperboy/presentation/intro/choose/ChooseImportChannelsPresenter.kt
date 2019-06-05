@@ -4,6 +4,8 @@ import android.text.SpannableStringBuilder
 import deniskaminskiy.paperboy.core.BasePresenterImpl
 import deniskaminskiy.paperboy.core.Mapper
 import deniskaminskiy.paperboy.data.importchannels.ImportChannel
+import deniskaminskiy.paperboy.domain.intro.ChooseImportChannelsInteractor
+import deniskaminskiy.paperboy.domain.intro.ChooseImportChannelsInteractorImpl
 import deniskaminskiy.paperboy.presentation.view.CheckItemPresentModel
 import deniskaminskiy.paperboy.utils.managers.ResourcesManager
 import deniskaminskiy.paperboy.utils.paintWord

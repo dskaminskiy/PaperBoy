@@ -1,4 +1,4 @@
-package deniskaminskiy.paperboy.presentation.intro.choose
+package deniskaminskiy.paperboy.domain.intro
 
 import deniskaminskiy.paperboy.core.Interactor
 import deniskaminskiy.paperboy.data.importchannels.ImportChannelsRepository
