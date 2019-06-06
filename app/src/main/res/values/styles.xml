@@ -26,6 +26,13 @@
         <item name="android:letterSpacing">0.04</item>
     </style>
 
+    <style name="TextStyle.Serif.Bold.32" parent="android:Widget.TextView">
+        <item name="android:fontFamily">@font/ibm_plex_serif_bold</item>
+        <item name="android:textSize">32sp</item>
+        <item name="android:textColor">@color/print100</item>
+        <item name="android:letterSpacing">0.04</item>
+    </style>
+
     <style name="TextStyle.Serif.Bold.24" parent="android:Widget.TextView">
         <item name="android:textSize">24sp</item>
         <item name="android:fontFamily">@font/ibm_plex_serif_bold</item>
