@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import deniskaminskiy.paperboy.R
 import deniskaminskiy.paperboy.core.BaseFragment
-import deniskaminskiy.paperboy.data.importchannels.ImportChannel
+import deniskaminskiy.paperboy.presentation.base.SuperAdapter
 import deniskaminskiy.paperboy.presentation.intro.remove.RemoveTelegramChannelsFragment
 import deniskaminskiy.paperboy.utils.Constants
 import deniskaminskiy.paperboy.utils.hideApp
@@ -31,7 +31,7 @@ class ChooseImportChannelsFragment : BaseFragment<ChooseImportChannelsPresenter,
 
     }
 
-    private val adapter = CheckItemAdapter<ImportChannel>()
+    private val adapter = SuperAdapter()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
         inflater.inflate(R.layout.fragment_choose_channels, container, false)

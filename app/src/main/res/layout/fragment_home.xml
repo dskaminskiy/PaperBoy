@@ -5,42 +5,49 @@
         android:background="@color/paper"
         android:layout_height="match_parent">
 
-    <!-- Scrollable view here -->
-
-    <androidx.core.widget.NestedScrollView
-            android:id="@+id/vNestedScroll"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-        <!-- Your scrolling content -->
-
-        <View android:layout_width="match_parent"
-              android:layout_height="1700dp"
-        android:background="@color/admiral"/>
-
-    </androidx.core.widget.NestedScrollView>
-
     <com.google.android.material.appbar.AppBarLayout
+            android:background="@color/paper"
             android:layout_width="match_parent"
             android:layout_height="72dp">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
+                android:id="@+id/vCollapsingToolbar"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:titleEnabled="true"
+                app:contentScrim="@color/paper"
                 app:title="Paperboy"
+                app:collapsedTitleTextAppearance="@style/TextStyle.Serif.Bold.24"
                 app:expandedTitleGravity="top"
                 app:expandedTitleMarginStart="16dp"
                 app:expandedTitleMarginBottom="14dp"
                 app:expandedTitleTextAppearance="@style/TextStyle.Serif.Bold.32"
                 app:expandedTitleMarginTop="16dp"
-                app:layout_scrollFlags="scroll|enterAlwaysCollapsed">
+                app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
             <androidx.appcompat.widget.Toolbar
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
-                    app:layout_collapseMode="pin"/>
+                    app:layout_collapseMode="pin"
+                    app:collapseIcon="@drawable/ic_add"/>
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
+
+    <!-- Scrollable view here -->
+
+    <androidx.core.widget.NestedScrollView
+            android:id="@+id/vNestedScroll"
+            android:layout_width="match_parent"
+            android:layout_height="800dp"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <!-- Your scrolling content -->
+
+        <View android:layout_width="match_parent"
+              android:layout_height="200dp"
+              android:nestedScrollingEnabled="false"
+              android:background="@color/admiral"/>
+
+    </androidx.core.widget.NestedScrollView>
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

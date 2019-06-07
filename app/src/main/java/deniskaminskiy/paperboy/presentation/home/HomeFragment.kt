@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import deniskaminskiy.paperboy.R
 import deniskaminskiy.paperboy.core.BaseFragment
+import deniskaminskiy.paperboy.utils.compatFont
+import kotlinx.android.synthetic.main.fragment_home.*
 
 class HomeFragment : BaseFragment<HomePresenter, HomeView>(), HomeView {
 
@@ -22,7 +24,11 @@ class HomeFragment : BaseFragment<HomePresenter, HomeView>(), HomeView {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-
+        vCollapsingToolbar.apply {
+            val titleTypeface = context.compatFont(R.font.ibm_plex_serif_bold)
+            setCollapsedTitleTypeface(titleTypeface)
+            setExpandedTitleTypeface(titleTypeface)
+        }
     }
 
 }

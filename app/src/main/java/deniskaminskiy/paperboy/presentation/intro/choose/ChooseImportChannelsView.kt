@@ -3,6 +3,7 @@ package deniskaminskiy.paperboy.presentation.intro.choose
 import android.text.SpannableStringBuilder
 import deniskaminskiy.paperboy.core.View
 import deniskaminskiy.paperboy.data.importchannels.ImportChannel
+import deniskaminskiy.paperboy.presentation.base.CheckItemPresentItemModel
 
 interface ChooseImportChannelsView : View {
 

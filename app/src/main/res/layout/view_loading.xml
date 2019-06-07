@@ -4,7 +4,7 @@
              android:layout_height="match_parent"
              android:clickable="true"
              android:focusable="true"
-             android:background="@color/loading_view_shadow_color">
+             android:background="@color/loadingViewShadowColor">
 
     <ProgressBar
             android:id="@+id/vProgress"
