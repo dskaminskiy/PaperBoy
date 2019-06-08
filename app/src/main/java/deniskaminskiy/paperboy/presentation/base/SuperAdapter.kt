@@ -13,14 +13,14 @@ class SuperAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object {
         private const val VIEW_TYPE_CHECK_ITEM = 1
-        private const val VIEW_TYPE_MIDDLE_ITEM = 1
+        private const val VIEW_TYPE_MIDDLE_ITEM = 2
     }
 
-    var onItemClick: OnItemClick<SuperItemPresentItemModel<*>> = {}
+    var onItemClick: OnItemClick<SuperItemPresentItemModel> = {}
 
-    private val data = mutableListOf<SuperItemPresentItemModel<*>>()
+    private val data = mutableListOf<SuperItemPresentItemModel>()
 
-    fun setData(data: List<SuperItemPresentItemModel<*>>) {
+    fun setData(data: List<SuperItemPresentItemModel>) {
         this.data.clear()
         this.data.addAll(data)
         notifyDataSetChanged()
@@ -71,41 +71,25 @@ class SuperAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
 }
 
-//TODO: попробуй дома домыслить
-interface SuperItemChildPresentModel
-
-sealed class SuperItemPresentItemModel{
+sealed class SuperItemPresentItemModel(
+    val element: Any
+){
 
     inline fun <reified T> ifTypeOf(func: (T) -> Unit): SuperItemPresentItemModel {
-
-    }
-
-    private inline fun <reified T> checkOnTypeOrNull(): T? {
-
-    }
-
-    // inline fun retrieveElement(func) {}
-
-   /* inline fun <reified T> ifCheckItem(ifCheckItem: (T) -> Unit): SuperItemPresentModel {
-        checkItemOrNull<T>()?.let(ifCheckItem)
+        (element as? T)?.let(func)
         return this
     }
 
-    inline fun <reified T> checkItemOrNull(): T? {
-        val s = (this as? CheckItemPresentItemModel<*>)
-        return (s?.element as? T)
-    }*/
-
 }
 
-class CheckItemPresentItemModel<out T>(
-    val element: T,
+class CheckItemPresentItemModel<out T : Any>(
+    element: T,
     val model: CheckItemPresentModel
-) : SuperItemPresentItemModel()
+) : SuperItemPresentItemModel(element)
 
 /*data class MiddleItemPresentItemModel<out T>(
     val element: T,
     val model: MiddleItemPresentModel
 )*/
 
-object DividerPresentItemModel : SuperItemPresentItemModel<Unit>(Unit)
+object DividerPresentItemModel : SuperItemPresentItemModel(Unit)

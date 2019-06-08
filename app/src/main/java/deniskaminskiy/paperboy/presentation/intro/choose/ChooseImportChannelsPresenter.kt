@@ -7,6 +7,7 @@ import deniskaminskiy.paperboy.data.importchannels.ImportChannel
 import deniskaminskiy.paperboy.domain.intro.ChooseImportChannelsInteractor
 import deniskaminskiy.paperboy.domain.intro.ChooseImportChannelsInteractorImpl
 import deniskaminskiy.paperboy.presentation.base.CheckItemPresentItemModel
+import deniskaminskiy.paperboy.presentation.base.SuperItemPresentItemModel
 import deniskaminskiy.paperboy.presentation.view.CheckItemPresentModel
 import deniskaminskiy.paperboy.utils.managers.ResourcesManager
 import deniskaminskiy.paperboy.utils.paintWord
@@ -69,8 +70,8 @@ class ChooseImportChannelsPresenter(
             }, ::onError)
     }
 
-    fun onItemClick(item: CheckItemPresentItemModel<ImportChannel>) {
-        item.element
+    fun onItemClick(item: SuperItemPresentItemModel) {
+        item.ifTypeOf(interactor::changeCheckStatus)
     }
 
     fun onSkipClick() {

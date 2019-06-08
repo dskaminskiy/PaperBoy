@@ -8,7 +8,6 @@ import android.view.View
 import android.widget.FrameLayout
 import androidx.annotation.ColorInt
 import deniskaminskiy.paperboy.R
-import deniskaminskiy.paperboy.presentation.base.SuperItemChildPresentModel
 import deniskaminskiy.paperboy.utils.dp
 import deniskaminskiy.paperboy.utils.icon.*
 import deniskaminskiy.paperboy.utils.managers.AndroidResourcesManager
@@ -173,7 +172,7 @@ data class MiddleItemPresentModel(
     val extraTitle: String = "",
     val isDivider: Boolean = true,
     val icon: MiddleItemIcon = MiddleItemIconDefault
-) : SuperItemChildPresentModel
+)
 
 sealed class MiddleItemIcon
 
