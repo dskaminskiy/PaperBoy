@@ -4,9 +4,7 @@ import android.content.Context
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import deniskaminskiy.paperboy.presentation.view.CheckItemPresentModel
-import deniskaminskiy.paperboy.presentation.view.CheckItemView
-import deniskaminskiy.paperboy.presentation.view.DividerView
+import deniskaminskiy.paperboy.presentation.view.*
 import deniskaminskiy.paperboy.utils.OnItemClick
 
 class SuperAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -29,6 +27,7 @@ class SuperAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
         when (viewType) {
             VIEW_TYPE_CHECK_ITEM -> CheckItemViewHolder(parent.context)
+            VIEW_TYPE_MIDDLE_ITEM -> MiddleItemViewHolder(parent.context)
             // divider
             else -> DividerItemViewHolder(parent.context)
         }
@@ -40,6 +39,8 @@ class SuperAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         when {
             holder is CheckItemViewHolder && item is CheckItemPresentItemModel<*> ->
                 holder.show(item)
+            holder is MiddleItemViewHolder && item is MiddleItemPresentItemModel<*> ->
+                holder.show(item)
         }
     }
 
@@ -49,18 +50,35 @@ class SuperAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     ) : RecyclerView.ViewHolder(checkItemView) {
 
         init {
-            checkItemView.setOnClickListener {
-                data.getOrNull(adapterPosition)
-                    ?.let {
-                        onItemClick.invoke(it)
-                    }
-            }
+            checkItemView.setOnClickListener { onItemClick(adapterPosition) }
         }
 
         fun show(itemModel: CheckItemPresentItemModel<*>) {
             checkItemView.show(itemModel.model)
         }
 
+    }
+
+    private inner class MiddleItemViewHolder(
+        context: Context,
+        private val middleItemView: MiddleItemView = MiddleItemView(context)
+    ) : RecyclerView.ViewHolder(middleItemView) {
+
+        init {
+            middleItemView.setOnClickListener { onItemClick(adapterPosition) }
+        }
+
+        fun show(itemModel: MiddleItemPresentItemModel<*>) {
+            middleItemView.show(itemModel.model)
+        }
+
+    }
+
+    private fun onItemClick(adapterPosition: Int) {
+        data.getOrNull(adapterPosition)
+            ?.let {
+                onItemClick.invoke(it)
+            }
     }
 
     private inner class DividerItemViewHolder(
@@ -73,7 +91,7 @@ class SuperAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
 sealed class SuperItemPresentItemModel(
     val element: Any
-){
+) {
 
     inline fun <reified T> ifTypeOf(func: (T) -> Unit): SuperItemPresentItemModel {
         (element as? T)?.let(func)
@@ -87,9 +105,9 @@ class CheckItemPresentItemModel<out T : Any>(
     val model: CheckItemPresentModel
 ) : SuperItemPresentItemModel(element)
 
-/*data class MiddleItemPresentItemModel<out T>(
-    val element: T,
+class MiddleItemPresentItemModel<out T : Any>(
+    element: T,
     val model: MiddleItemPresentModel
-)*/
+) : SuperItemPresentItemModel(element)
 
 object DividerPresentItemModel : SuperItemPresentItemModel(Unit)
