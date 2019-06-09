@@ -1,7 +1,6 @@
 package deniskaminskiy.paperboy.presentation.view
 
 import android.content.Context
-import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
 import android.util.AttributeSet
 import android.view.View
@@ -16,7 +15,6 @@ import deniskaminskiy.paperboy.utils.view.goneIf
 import deniskaminskiy.paperboy.utils.view.isVisible
 import kotlinx.android.synthetic.main.view_middle_item.view.*
 
-//TODO: обновить верстку после просмотра макета
 class MiddleItemView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
@@ -40,17 +38,6 @@ class MiddleItemView @JvmOverloads constructor(
                 cornerRadius = dpCornerRadius
                 setColor(iconBackgroundColor)
             }
-
-    // Оранжевый сквиркл
-    private val defaultIconPlaceholder: Drawable by lazy {
-        GradientDrawable(
-            GradientDrawable.Orientation.TOP_BOTTOM,
-            intArrayOf(palette.print20, palette.print60)
-        ).apply {
-            shape = GradientDrawable.RECTANGLE
-            cornerRadius = dpCornerRadius
-        }
-    }
 
     var title: String
         get() = tvTitle.text.toString()
@@ -78,20 +65,20 @@ class MiddleItemView @JvmOverloads constructor(
             vDivider goneIf !value
         }
 
+    // Padding troubles
     var icon: Icon? = null
         set(value) {
             field = value
 
-            val padding = if (value is ConstantIcon) 12.dp(context) else 0
-            ivIcon.setPadding(padding, padding, padding, padding)
+//            val padding = if (value is ConstantIcon) 8.dp(context) else 0
+//            ivIcon.setPadding(padding, padding, padding, padding)
 
             value?.let {
                 IconRendererFactory.create(
                     icon = it,
-                    urlIconShape = UrlIconShape.SUPER_ELLIPSE,
-                    placeholder = defaultIconPlaceholder
+                    urlIconShape = UrlIconShape.SUPER_ELLIPSE
                 )
-            }?.render(ivIcon)
+            }?.render(ivIcon) ?: ivIcon.setImageDrawable(null)
         }
 
     var iconBackgroundColor: Int = palette.print30
@@ -114,7 +101,7 @@ class MiddleItemView @JvmOverloads constructor(
                 icon = MiddleItemIconConstant(
                     icon = a.getInt(R.styleable.MiddleItemView_iconConstant, -1)
                         .takeIf { it != -1 }?.let(IconFactory::create),
-                    iconColor = a.getInt(R.styleable.MiddleItemView_iconColor, -1),
+                    iconColor = a.getInt(R.styleable.MiddleItemView_iconColor, palette.print70),
                     backgroundColor = a.getInt(R.styleable.MiddleItemView_iconBackgroundColor, -1)
                 )
             )

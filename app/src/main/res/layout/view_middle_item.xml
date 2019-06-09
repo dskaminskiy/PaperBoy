@@ -13,7 +13,8 @@
                 android:id="@+id/ivIcon"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
-                tools:src="#FF9800"
+                android:padding="8dp"
+                android:src="@drawable/ic_bookmark"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
                 android:layout_marginStart="16dp"/>
@@ -61,6 +62,8 @@
                 android:layout_height="28dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="10dp"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
                 android:layout_marginBottom="10dp"
                 android:minWidth="24dp"
                 android:gravity="center"
@@ -75,7 +78,7 @@
             android:id="@+id/vDivider"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_marginStart="72dp"
+            android:layout_marginStart="64dp"
             android:layout_gravity="bottom"
             android:background="@color/print20"/>
 
