@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import deniskaminskiy.paperboy.core.Mapper
 import deniskaminskiy.paperboy.presentation.view.*
 import deniskaminskiy.paperboy.utils.OnItemClick
 
@@ -12,6 +13,7 @@ class SuperAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     companion object {
         private const val VIEW_TYPE_CHECK_ITEM = 1
         private const val VIEW_TYPE_MIDDLE_ITEM = 2
+        private const val VIEW_TYPE_DIVIDER = 3
     }
 
     var onItemClick: OnItemClick<SuperItemPresentItemModel> = {}
@@ -43,6 +45,13 @@ class SuperAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 holder.show(item)
         }
     }
+
+    override fun getItemViewType(position: Int): Int =
+        when (data[position]) {
+            is MiddleItemPresentItemModel<*> -> VIEW_TYPE_MIDDLE_ITEM
+            is CheckItemPresentItemModel<*> -> VIEW_TYPE_CHECK_ITEM
+            else -> VIEW_TYPE_DIVIDER
+        }
 
     private inner class CheckItemViewHolder(
         context: Context,
@@ -111,3 +120,28 @@ class MiddleItemPresentItemModel<out T : Any>(
 ) : SuperItemPresentItemModel(element)
 
 object DividerPresentItemModel : SuperItemPresentItemModel(Unit)
+
+
+/**
+ * Данный маппер обеспечивает лишь обязательное определение "под-маппера" из бизнес-объекта в [CheckItemPresentModel].
+ */
+class CheckItemToSuperItemPresentItemModelMapper<T : Any>(
+    private val modelToPresentModelMapper: Mapper<T, CheckItemPresentModel>
+) : Mapper<List<T>, List<SuperItemPresentItemModel>> {
+
+    override fun map(from: List<T>): List<SuperItemPresentItemModel> =
+        from.map { CheckItemPresentItemModel(it, modelToPresentModelMapper.map(it)) }
+
+}
+
+/**
+ * Данный маппер обеспечивает лишь обязательное определение "под-маппера" из бизнес-объекта в [MiddleItemPresentModel].
+ */
+class MiddleItemToSuperItemPresentItemModelMapper<T : Any>(
+    private val modelToPresentModelMapper: Mapper<T, MiddleItemPresentModel>
+) : Mapper<List<T>, List<SuperItemPresentItemModel>> {
+
+    override fun map(from: List<T>): List<SuperItemPresentItemModel> =
+        from.map { MiddleItemPresentItemModel(it, modelToPresentModelMapper.map(it)) }
+
+}

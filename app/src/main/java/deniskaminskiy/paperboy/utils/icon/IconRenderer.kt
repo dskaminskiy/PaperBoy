@@ -4,8 +4,6 @@ import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
 import android.widget.ImageView
-import androidx.annotation.DrawableRes
-import deniskaminskiy.paperboy.R
 
 interface IconRenderer {
 
@@ -69,7 +67,7 @@ data class DrawableIconRenderer(
 }
 
 data class PlaceholderIconRenderer(
-    @DrawableRes private val placeholder: Drawable
+    private val placeholder: Drawable
 ) : IconRenderer {
     override fun render(imageView: ImageView) {
         imageView.setImageDrawable(placeholder)
@@ -79,7 +77,7 @@ data class PlaceholderIconRenderer(
 data class UrlIconRenderer(
     private val icon: UrlIcon,
     private val shape: UrlIconShape,
-    @DrawableRes private val placeholder: Drawable
+    private val placeholder: Drawable
 ) : IconRenderer {
     override fun render(imageView: ImageView) {
 //        GlideApp.with(imageView)
