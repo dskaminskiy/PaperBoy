@@ -10,7 +10,8 @@ object IconFactory {
         IconConstant.ARROW_FORWARD to DrawableConstantIcon(DrawableIconConstant.ARROW_FORWARD),
         IconConstant.WARNING to DrawableConstantIcon(DrawableIconConstant.WARNING),
         IconConstant.UNREAD to DrawableConstantIcon(DrawableIconConstant.UNREAD),
-        IconConstant.BOOKMARK to DrawableConstantIcon(DrawableIconConstant.BOOKMARK)
+        IconConstant.BOOKMARK to DrawableConstantIcon(DrawableIconConstant.BOOKMARK),
+        IconConstant.SETTINGS to DrawableConstantIcon(DrawableIconConstant.SETTINGS)
     )
 
     /**
@@ -39,5 +40,6 @@ enum class IconConstant(
     ARROW_FORWARD(3, "iconArrowForward"),
     WARNING(4, "iconWarning"),
     UNREAD(5, "iconUnread"),
-    BOOKMARK(6, "iconBookmark")
+    BOOKMARK(6, "iconBookmark"),
+    SETTINGS(7, "iconSettings")
 }
