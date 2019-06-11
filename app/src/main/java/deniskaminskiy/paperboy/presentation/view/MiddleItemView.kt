@@ -91,7 +91,9 @@ class MiddleItemView @JvmOverloads constructor(
                     urlIconShape = UrlIconShape.SUPER_ELLIPSE,
                     placeholder = defaultIconPlaceholder
                 )
-            }?.render(ivIcon)
+            }
+                ?.render(ivIcon)
+                ?: ivIcon.setImageDrawable(null)
         }
 
     var iconBackgroundColor: Int = palette.print30
