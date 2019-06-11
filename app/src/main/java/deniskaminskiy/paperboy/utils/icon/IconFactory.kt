@@ -9,7 +9,7 @@ object IconFactory {
         IconConstant.TRASH to DrawableConstantIcon(DrawableIconConstant.TRASH),
         IconConstant.ARROW_FORWARD to DrawableConstantIcon(DrawableIconConstant.ARROW_FORWARD),
         IconConstant.WARNING to DrawableConstantIcon(DrawableIconConstant.WARNING),
-        IconConstant.CIRCLE to DrawableConstantIcon(DrawableIconConstant.CIRCLE),
+        IconConstant.UNREAD to DrawableConstantIcon(DrawableIconConstant.UNREAD),
         IconConstant.BOOKMARK to DrawableConstantIcon(DrawableIconConstant.BOOKMARK)
     )
 
@@ -38,6 +38,6 @@ enum class IconConstant(
     TRASH(2, "iconTrash"),
     ARROW_FORWARD(3, "iconArrowForward"),
     WARNING(4, "iconWarning"),
-    CIRCLE(5, "iconCircle"),
+    UNREAD(5, "iconUnread"),
     BOOKMARK(6, "iconBookmark")
 }

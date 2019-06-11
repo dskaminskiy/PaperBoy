@@ -33,7 +33,7 @@ enum class DrawableIconConstant(
     TRASH(R.drawable.ic_trash),
     ARROW_FORWARD(R.drawable.ic_arrow_forward),
     WARNING(R.drawable.ic_warning),
-    CIRCLE(R.drawable.ic_circle),
+    UNREAD(R.drawable.ic_unread),
     BOOKMARK(R.drawable.ic_bookmark)
 }
 
