@@ -42,10 +42,45 @@
                 app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
             <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/vToolbar"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
-                    app:layout_collapseMode="pin"
-                    app:collapseIcon="@drawable/ic_add"/>
+                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                    app:layout_collapseMode="pin"/>
+
+            <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginEnd="12dp"
+                    app:layout_collapseMode="parallax"
+                    android:layout_gravity="end|center_vertical">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/vSearch"
+                        android:layout_width="32dp"
+                        android:padding="4dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_height="32dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        app:srcCompat="@drawable/ic_search"
+                        app:tint="@color/iconDefaultColor"
+                        android:background="?selectableItemBackgroundBorderless"/>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/vSettings"
+                        android:layout_width="32dp"
+                        android:padding="4dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:layout_height="32dp"
+                        app:srcCompat="@drawable/ic_settings"
+                        app:tint="@color/iconDefaultColor"
+                        android:background="?selectableItemBackgroundBorderless"/>
+
+            </LinearLayout>
+
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
 

@@ -2,7 +2,7 @@ package deniskaminskiy.paperboy.domain.home
 
 import deniskaminskiy.paperboy.core.Interactor
 import deniskaminskiy.paperboy.data.channels.Channel
-import deniskaminskiy.paperboy.utils.DataGenerator
+import deniskaminskiy.paperboy.utils.DataProvider
 import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject
 import java.util.concurrent.TimeUnit
@@ -20,6 +20,6 @@ class HomeInteractorImpl : HomeInteractor {
 
     override fun channels(): Observable<List<Channel>> = channelsSubject
         .delay(2, TimeUnit.SECONDS) // temp
-        .also { channelsSubject.onNext(DataGenerator.channels()) }
+        .also { channelsSubject.onNext(DataProvider.channels()) }
 
 }

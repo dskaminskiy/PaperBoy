@@ -33,7 +33,7 @@ class HomePresenter(
                 title = "All unread posts",
                 extraTitle = "949",
                 icon = MiddleItemIconConstant(
-                    icon = IconFactory.create(IconConstant.CIRCLE.constant),
+                    icon = IconFactory.create(IconConstant.UNREAD.constant),
                     iconColor = resources.colors.print70
                 ),
                 isDivider = true)),

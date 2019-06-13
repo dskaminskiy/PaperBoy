@@ -98,11 +98,11 @@ class SuperAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private inner class DividerItemViewHolder(
         context: Context,
         dividerView: View = View(context).apply {
+            setBackgroundColor(AndroidResourcesManager.create(context).colors.print20)
             layoutParams = RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT, 1.dp(context))
                 .apply {
                     bottomMargin = 8.dp(context)
                 }
-            setBackgroundColor(AndroidResourcesManager.create(context).colors.print20)
         }
     ) : RecyclerView.ViewHolder(dividerView)
 
@@ -134,7 +134,7 @@ object DividerPresentItemModel : SuperItemPresentItemModel(Unit)
 
 
 /**
- * Данный маппер обеспечивает лишь обязательное определение "под-маппера" из бизнес-объекта в [CheckItemPresentModel].
+ * Данный маппер обеспечивает лишь обязательное реализацию "под-маппера" из бизнес-объекта в [CheckItemPresentModel].
  */
 class CheckItemToSuperItemPresentItemModelMapper<T : Any>(
     private val modelToPresentModelMapper: Mapper<T, CheckItemPresentModel>
@@ -146,7 +146,7 @@ class CheckItemToSuperItemPresentItemModelMapper<T : Any>(
 }
 
 /**
- * Данный маппер обеспечивает лишь обязательное определение "под-маппера" из бизнес-объекта в [MiddleItemPresentModel].
+ * Данный маппер обеспечивает лишь обязательную реализацию "под-маппера" из бизнес-объекта в [MiddleItemPresentModel].
  */
 class MiddleItemToSuperItemPresentItemModelMapper<T : Any>(
     private val modelToPresentModelMapper: Mapper<T, MiddleItemPresentModel>
