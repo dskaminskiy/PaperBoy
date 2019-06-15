@@ -13,10 +13,10 @@ import deniskaminskiy.paperboy.utils.icon.*
 import deniskaminskiy.paperboy.utils.managers.AndroidResourcesManager
 import deniskaminskiy.paperboy.utils.managers.ResourcesManager
 import deniskaminskiy.paperboy.utils.view.goneIf
+import deniskaminskiy.paperboy.utils.view.invisibleIf
 import deniskaminskiy.paperboy.utils.view.isVisible
 import kotlinx.android.synthetic.main.view_middle_item.view.*
 
-//TODO: обновить верстку после просмотра макета
 class MiddleItemView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
@@ -75,7 +75,7 @@ class MiddleItemView @JvmOverloads constructor(
     var isDivier: Boolean
         get() = vDivider.isVisible
         set(value) {
-            vDivider goneIf !value
+            vDivider invisibleIf !value
         }
 
     var icon: Icon? = null

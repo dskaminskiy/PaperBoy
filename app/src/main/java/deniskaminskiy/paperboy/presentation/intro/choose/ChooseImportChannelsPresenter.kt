@@ -39,7 +39,6 @@ class ChooseImportChannelsPresenter(
     override fun onStart(viewCreated: Boolean) {
         super.onStart(viewCreated)
         disposableUpdateUi = interactor.channels()
-            // тут могло бы быть .doOnSubscribe{ view?.showLoading() }, но loading-state тут не будет
             .compose(composer.observable())
             .subscribe(::onChannelsImportUpdate, ::onError)
     }
