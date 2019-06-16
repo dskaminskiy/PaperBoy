@@ -82,9 +82,6 @@ class MiddleItemView @JvmOverloads constructor(
         set(value) {
             field = value
 
-            val padding = if (value is ConstantIcon) 12.dp(context) else 0
-            ivIcon.setPadding(padding, padding, padding, padding)
-
             value?.let {
                 IconRendererFactory.create(
                     icon = it,
@@ -178,7 +175,8 @@ data class MiddleItemPresentModel(
 
 sealed class MiddleItemIcon
 
-object MiddleItemIconDefault : MiddleItemIcon()
+object
+MiddleItemIconDefault : MiddleItemIcon()
 
 data class MiddleItemIconConstant(
     val icon: ConstantIcon? = null,
