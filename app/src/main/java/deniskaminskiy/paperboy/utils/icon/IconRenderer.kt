@@ -4,6 +4,9 @@ import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
 import android.widget.ImageView
+import deniskaminskiy.paperboy.utils.glide.GlideApp
+import deniskaminskiy.paperboy.utils.icon.UrlIconShape.CIRCLE
+import deniskaminskiy.paperboy.utils.icon.UrlIconShape.SQUARE
 
 interface IconRenderer {
 
@@ -32,7 +35,7 @@ object IconRendererFactory {
      */
     @JvmStatic
     fun create(
-        icon: Icon?, urlIconShape: UrlIconShape = UrlIconShape.SQUARE,
+        icon: Icon?, urlIconShape: UrlIconShape = SQUARE,
         placeholder: Drawable = defaultPlaceholder
     ): IconRenderer {
 
@@ -80,23 +83,21 @@ data class UrlIconRenderer(
     private val placeholder: Drawable
 ) : IconRenderer {
     override fun render(imageView: ImageView) {
-//        GlideApp.with(imageView)
-//                .load(icon.url)
-//                .placeholder(placeholder)
-//                .error(placeholder)
-//                .centerCrop()
-//                .apply { if (shape == UrlIconShape.CIRCLE) this.circleCrop() }
-//                .into(imageView)
-
-        // TODO: CORNERS
-        // https://stackoverflow.com/questions/45186181/glide-rounded-corner-transform-issue
+        GlideApp.with(imageView)
+            .load(icon.url)
+            .centerCrop()
+            .apply { if (shape == CIRCLE) circleCrop() }
+            .roundCorners(shape.cornersRadiusDp, imageView.context)
+            .placeholder(placeholder)
+            .error(placeholder)
+            .into(imageView)
     }
 
 }
 
-enum class UrlIconShape(val cornersRadius: Int) {
+enum class UrlIconShape(val cornersRadiusDp: Int) {
     SQUARE(0),
     CIRCLE(0),
-    SUPER_ELLIPSE(4)
+    SUPER_ELLIPSE(6)
 }
 

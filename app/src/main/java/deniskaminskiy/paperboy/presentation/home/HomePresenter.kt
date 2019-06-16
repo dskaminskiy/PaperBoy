@@ -10,6 +10,7 @@ import deniskaminskiy.paperboy.presentation.base.MiddleItemPresentItemModel
 import deniskaminskiy.paperboy.presentation.base.MiddleItemToSuperItemPresentItemModelMapper
 import deniskaminskiy.paperboy.presentation.base.SuperItemPresentItemModel
 import deniskaminskiy.paperboy.presentation.view.MiddleItemIconConstant
+import deniskaminskiy.paperboy.presentation.view.MiddleItemIconUrl
 import deniskaminskiy.paperboy.presentation.view.MiddleItemPresentModel
 import deniskaminskiy.paperboy.utils.icon.IconConstant
 import deniskaminskiy.paperboy.utils.icon.IconFactory
@@ -27,7 +28,7 @@ class HomePresenter(
 ) : BasePresenterImpl<HomeView>(view) {
 
     // temp
-    val listHeader = listOf(
+    private val listHeader = listOf(
         MiddleItemPresentItemModel(Unit,
             MiddleItemPresentModel(
                 title = "All unread posts",
@@ -88,6 +89,7 @@ class ChannelToMiddleItemPresentModelMapper : Mapper<Channel, MiddleItemPresentM
         MiddleItemPresentModel(
             title = "Some title",
             extraTitle = "4",
-            isDivider = true
+            isDivider = true,
+            icon = MiddleItemIconUrl("https://user-images.githubusercontent.com/24874033/39674914-011fd850-5171-11e8-82b5-01e8613114cf.png")
         )
 }
