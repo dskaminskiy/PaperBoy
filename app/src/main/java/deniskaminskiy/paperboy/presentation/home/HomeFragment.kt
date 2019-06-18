@@ -7,10 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.appbar.AppBarLayout
 import deniskaminskiy.paperboy.R
 import deniskaminskiy.paperboy.core.BaseFragment
 import deniskaminskiy.paperboy.presentation.base.SuperAdapter
 import deniskaminskiy.paperboy.presentation.base.SuperItemPresentItemModel
+import deniskaminskiy.paperboy.utils.OutlineProviderFactory
 import deniskaminskiy.paperboy.utils.managers.AndroidResourcesManager
 import kotlinx.android.synthetic.main.fragment_home.*
 
@@ -25,18 +27,42 @@ class HomeFragment : BaseFragment<HomePresenter, HomeView>(), HomeView {
 
     private val adapter = SuperAdapter()
 
+    private val appBarOffsetListener = AppBarLayout.OnOffsetChangedListener { _, offset ->
+        // Необходимо для правильной координации swipeLayout'a и CollapsingToolbar'a
+        vSwipeRefresh.isEnabled = offset == 0
+    }
+
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
         inflater.inflate(R.layout.fragment_home, container, false)
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        initCustomSwipeRefreshLayout()
+
         rvChannels.layoutManager = LinearLayoutManager(context)
         rvChannels.itemAnimator = DefaultItemAnimator()
         rvChannels.adapter = adapter
 
+        vAppBar.outlineProvider = OutlineProviderFactory.outlineProviderDefault
+
         presenter = HomePresenter(this, AndroidResourcesManager.create(this))
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        vAppBar.addOnOffsetChangedListener(appBarOffsetListener)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        vAppBar.removeOnOffsetChangedListener(appBarOffsetListener)
+    }
+
+    private fun initCustomSwipeRefreshLayout() {
+        vSwipeRefresh.isKeepTopRefreshingHead = true
     }
 
     override fun showTitleTypeface(font: Typeface) {

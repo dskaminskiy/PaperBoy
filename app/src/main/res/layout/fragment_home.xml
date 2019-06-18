@@ -5,12 +5,26 @@
         android:background="@color/paper"
         android:layout_height="match_parent">
 
-    <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvChannels"
+    <com.reginald.swiperefresh.CustomSwipeRefreshLayout
+            xmlns:swiperefresh="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/vSwipeRefresh"
             android:layout_width="match_parent"
-            android:overScrollMode="never"
             android:layout_height="wrap_content"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+            swiperefresh:keep_refresh_head="true"
+            swiperefresh:refresh_mode="pull_mode"
+            swiperefresh:time_out_refresh_complete="2000"
+            swiperefresh:time_out_return_to_top="1000"
+            swiperefresh:return_to_header_duration="1000"
+            swiperefresh:return_to_top_duration="500"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvChannels"
+                android:layout_width="match_parent"
+                android:overScrollMode="never"
+                android:layout_height="wrap_content"/>
+
+    </com.reginald.swiperefresh.CustomSwipeRefreshLayout>
 
     <androidx.core.widget.ContentLoadingProgressBar
             android:id="@+id/vProgress"
@@ -22,6 +36,7 @@
 
 
     <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/vAppBar"
             android:background="@color/paper"
             android:layout_width="match_parent"
             android:layout_height="72dp">
