@@ -13,6 +13,7 @@ import deniskaminskiy.paperboy.core.BaseFragment
 import deniskaminskiy.paperboy.presentation.base.SuperAdapter
 import deniskaminskiy.paperboy.presentation.base.SuperItemPresentItemModel
 import deniskaminskiy.paperboy.utils.OutlineProviderFactory
+import deniskaminskiy.paperboy.utils.hideApp
 import deniskaminskiy.paperboy.utils.managers.AndroidResourcesManager
 import kotlinx.android.synthetic.main.fragment_home.*
 
@@ -62,7 +63,7 @@ class HomeFragment : BaseFragment<HomePresenter, HomeView>(), HomeView {
     }
 
     private fun initCustomSwipeRefreshLayout() {
-        vSwipeRefresh.isKeepTopRefreshingHead = true
+
     }
 
     override fun showTitleTypeface(font: Typeface) {
@@ -79,6 +80,10 @@ class HomeFragment : BaseFragment<HomePresenter, HomeView>(), HomeView {
 
     override fun showLoading() {
         vProgress.show()
+    }
+
+    override fun onBackPressed() {
+        hideApp()
     }
 
 }

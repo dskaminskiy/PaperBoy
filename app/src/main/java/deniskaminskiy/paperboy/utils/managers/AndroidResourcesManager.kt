@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment
 import deniskaminskiy.paperboy.R
 import deniskaminskiy.paperboy.utils.*
 
-// TODO: вынести реализацию внутренних классов ( в делегат ? )
 class AndroidResourcesManager private constructor(
     private val contextDelegate: ContextDelegate
 ) : ResourcesManager {
@@ -116,6 +115,9 @@ class AndroidResourcesManager private constructor(
 
         override val sansSemibold: Typeface
             get() = getFont(R.font.ibm_plex_sans_semibold)
+
+        override val sansBold: Typeface
+            get() = getFont(R.font.ibm_plex_sans_bold)
 
         override val sansText: Typeface
             get() = getFont(R.font.ibm_plex_sans_text)

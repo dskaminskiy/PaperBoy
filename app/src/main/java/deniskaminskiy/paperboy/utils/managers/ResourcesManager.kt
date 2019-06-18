@@ -54,6 +54,7 @@ interface ResourcesManager {
 
         val sansMedium: Typeface
         val sansSemibold: Typeface
+        val sansBold: Typeface
         val sansText: Typeface
         val serifBold: Typeface
         val serifSemibold: Typeface
