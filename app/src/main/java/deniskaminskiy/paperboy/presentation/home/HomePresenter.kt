@@ -17,6 +17,7 @@ import deniskaminskiy.paperboy.utils.icon.IconFactory
 import deniskaminskiy.paperboy.utils.managers.ResourcesManager
 import deniskaminskiy.paperboy.utils.rx.Composer
 import deniskaminskiy.paperboy.utils.rx.SchedulerComposerFactory
+import deniskaminskiy.paperboy.utils.rx.disposeIfNotNull
 
 class HomePresenter(
     view: HomeView,
@@ -57,6 +58,7 @@ class HomePresenter(
             view?.showTitleTypeface(resources.fonts.serifBold)
         }
 
+        disposableUpdateUi.disposeIfNotNull()
         disposableUpdateUi = interactor.channels()
             .map(superMapper::map)
             .map(::removeLastElementDivider)

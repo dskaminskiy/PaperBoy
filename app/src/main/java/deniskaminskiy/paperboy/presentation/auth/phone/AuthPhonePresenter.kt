@@ -35,6 +35,7 @@ class AuthPhonePresenter(
     override fun onStart(viewCreated: Boolean) {
         super.onStart(viewCreated)
 
+        disposableUpdateUi.disposeIfNotNull()
         disposableUpdateUi = interactor.onModelUpdate()
             .map(mapper::map)
             .compose(composer.observable())
@@ -49,6 +50,7 @@ class AuthPhonePresenter(
     }
 
     fun onNextClick() {
+        disposableCode.disposeIfNotNull()
         disposableCode = interactor.requestCode()
             .compose(composer.observable())
             .doOnSubscribe { view?.showLoading() }
