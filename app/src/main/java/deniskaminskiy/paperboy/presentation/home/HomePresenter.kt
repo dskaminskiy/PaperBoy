@@ -64,7 +64,7 @@ class HomePresenter(
             .map(::removeLastElementDivider)
             .map { listHeader + it }
             .compose(composer.observable())
-            .doOnSubscribe { view?.showLoading() }
+            .doOnSubscribe { /*view?.showLoading()*/ }
             .subscribe({
                 view?.show(it)
             }, ::onError)

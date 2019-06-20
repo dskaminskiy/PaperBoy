@@ -12,8 +12,6 @@
             android:layout_height="wrap_content"
             swiperefresh:keep_refresh_head="true"
             swiperefresh:refresh_mode="pull_mode"
-            swiperefresh:time_out_refresh_complete="2000"
-            swiperefresh:time_out_return_to_top="1000"
             swiperefresh:return_to_header_duration="1000"
             swiperefresh:return_to_top_duration="500"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
@@ -30,6 +28,7 @@
             android:id="@+id/vProgress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             style="?android:attr/progressBarStyle"
             android:layout_gravity="center"
             android:indeterminateTint="@color/marlboroNew"/>

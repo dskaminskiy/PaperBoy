@@ -12,6 +12,7 @@ import deniskaminskiy.paperboy.R
 import deniskaminskiy.paperboy.core.BaseFragment
 import deniskaminskiy.paperboy.presentation.base.SuperAdapter
 import deniskaminskiy.paperboy.presentation.base.SuperItemPresentItemModel
+import deniskaminskiy.paperboy.presentation.view.SwipeRefreshPrintingHeader
 import deniskaminskiy.paperboy.utils.OutlineProviderFactory
 import deniskaminskiy.paperboy.utils.hideApp
 import deniskaminskiy.paperboy.utils.managers.AndroidResourcesManager
@@ -63,7 +64,10 @@ class HomeFragment : BaseFragment<HomePresenter, HomeView>(), HomeView {
     }
 
     private fun initCustomSwipeRefreshLayout() {
-
+        vSwipeRefresh.apply {
+            setCustomHeadview(SwipeRefreshPrintingHeader(requireContext()))
+            triggerDistance = 32
+        }
     }
 
     override fun showTitleTypeface(font: Typeface) {
