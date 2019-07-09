@@ -2,10 +2,6 @@ package deniskaminskiy.paperboy.utils.view
 
 import android.view.View
 
-fun View.gone() {
-    visibility = View.GONE
-}
-
 val View.isGone: Boolean
     get() = visibility == View.GONE
 
@@ -17,6 +13,14 @@ val View.isInvisible: Boolean
 
 fun View.visible() {
     visibility = View.VISIBLE
+}
+
+fun View.gone() {
+    visibility = View.GONE
+}
+
+fun View.invisible() {
+    visibility = View.INVISIBLE
 }
 
 infix fun View.goneIf(expr: Boolean) {
