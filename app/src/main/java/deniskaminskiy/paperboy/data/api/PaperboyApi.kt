@@ -16,7 +16,7 @@ interface PaperboyApi {
      * @param phoneNumber     - телефон передается в международном формате (пр: "+79261342532")
      */
     @GET("auth")
-    fun auth(@Query("phoneNumber") phoneNumber: String): Single<DataResponseJson<AuthResponseJson>>
+    fun auth(@Query(value = "phoneNumber", encoded = true) phoneNumber: String): Single<DataResponseJson<AuthResponseJson>>
 
     @POST("auth/code")
     fun authCode(@Body request: AuthCodeRequestJson): Single<DataResponseJson<AuthCodeResponseJson>>
