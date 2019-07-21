@@ -18,7 +18,7 @@ class HomeInteractorImpl : HomeInteractor {
         BehaviorSubject.createDefault(emptyList())
 
     override fun channels(): Observable<List<Channel>> = channelsSubject
-        //.delay(2, TimeUnit.SECONDS) // temp
+        //.delay(1, TimeUnit.SECONDS) // temp
         .also { channelsSubject.onNext(DataProvider.channels()) }
 
 }

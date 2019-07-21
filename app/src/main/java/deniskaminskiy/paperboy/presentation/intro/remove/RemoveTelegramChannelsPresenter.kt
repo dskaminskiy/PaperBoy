@@ -20,4 +20,8 @@ class RemoveTelegramChannelsPresenter(
         view?.show(RemoveTelegramChannelsPresentModel(title))
     }
 
+    fun onMaybeLayterClick() {
+        view?.showHome()
+    }
+
 }

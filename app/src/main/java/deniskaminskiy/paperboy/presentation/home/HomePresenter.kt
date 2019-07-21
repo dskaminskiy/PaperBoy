@@ -58,17 +58,19 @@ class HomePresenter(
             view?.showTitleTypeface(resources.fonts.serifBold)
         }
 
+        loadChannels()
+    }
+
+    private fun loadChannels() {
         disposableUpdateUi.disposeIfNotNull()
         disposableUpdateUi = interactor.channels()
             .map(superMapper::map)
             .map(::removeLastElementDivider)
             .map { listHeader + it }
             .compose(composer.observable())
-            .doOnSubscribe { /*view?.showLoading()*/ }
             .subscribe({
                 view?.show(it)
             }, ::onError)
-
     }
 
     private fun removeLastElementDivider(list: List<SuperItemPresentItemModel>) =
@@ -83,6 +85,11 @@ class HomePresenter(
                         ?: element
                 }
             }
+
+    fun onRefresh() {
+        //loadChannels()
+    }
+
 
 }
 

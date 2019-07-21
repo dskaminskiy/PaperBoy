@@ -16,6 +16,7 @@ import deniskaminskiy.paperboy.presentation.view.SwipeRefreshPrintingHeader
 import deniskaminskiy.paperboy.utils.OutlineProviderFactory
 import deniskaminskiy.paperboy.utils.hideApp
 import deniskaminskiy.paperboy.utils.managers.AndroidResourcesManager
+import deniskaminskiy.paperboy.utils.view.visible
 import kotlinx.android.synthetic.main.fragment_home.*
 
 class HomeFragment : BaseFragment<HomePresenter, HomeView>(), HomeView {
@@ -34,7 +35,6 @@ class HomeFragment : BaseFragment<HomePresenter, HomeView>(), HomeView {
         vSwipeRefresh.isEnabled = offset == 0
     }
 
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
         inflater.inflate(R.layout.fragment_home, container, false)
 
@@ -50,6 +50,9 @@ class HomeFragment : BaseFragment<HomePresenter, HomeView>(), HomeView {
         vAppBar.outlineProvider = OutlineProviderFactory.outlineProviderDefault
 
         presenter = HomePresenter(this, AndroidResourcesManager.create(this))
+            .apply {
+                vSwipeRefresh.setOnRefreshListener { onRefresh() }
+            }
 
     }
 
@@ -78,12 +81,13 @@ class HomeFragment : BaseFragment<HomePresenter, HomeView>(), HomeView {
     }
 
     override fun show(items: List<SuperItemPresentItemModel>) {
-        vProgress.hide()
+        if (vSwipeRefresh.isRefreshing) vSwipeRefresh.refreshComplete()
+        vProgress.visibility = View.GONE
         adapter.setData(items)
     }
 
     override fun showLoading() {
-        vProgress.show()
+        vProgress.visible()
     }
 
     override fun onBackPressed() {

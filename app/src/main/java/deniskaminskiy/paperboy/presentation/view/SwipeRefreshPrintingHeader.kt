@@ -2,11 +2,11 @@ package deniskaminskiy.paperboy.presentation.view
 
 import android.content.Context
 import android.util.AttributeSet
-import android.util.Log
 import android.view.View
 import android.widget.FrameLayout
 import com.reginald.swiperefresh.CustomSwipeRefreshLayout
-import com.reginald.swiperefresh.CustomSwipeRefreshLayout.State.*
+import com.reginald.swiperefresh.CustomSwipeRefreshLayout.State.STATE_NORMAL
+import com.reginald.swiperefresh.CustomSwipeRefreshLayout.State.STATE_READY
 import deniskaminskiy.paperboy.R
 import deniskaminskiy.paperboy.utils.dp
 import deniskaminskiy.paperboy.utils.view.invisible
@@ -34,15 +34,9 @@ class SwipeRefreshPrintingHeader(
         currentState: CustomSwipeRefreshLayout.State,
         lastState: CustomSwipeRefreshLayout.State
     ) {
-        Log.d("Steve", "---------------------------------|")
 
         val stateCode = currentState.refreshState
-        val lastStateCode = lastState.refreshState
         val percent = currentState.percent
-
-        Log.d("Steve", "state: " + defineState(stateCode))
-        Log.d("Steve", "lastState: " + defineState(lastStateCode))
-        Log.d("Steve", "statePercent: " + currentState.percent)
 
         when (stateCode) {
             STATE_NORMAL -> {
@@ -62,17 +56,6 @@ class SwipeRefreshPrintingHeader(
             }
         }
 
-        Log.d("Steve", "---------------------------------|")
-
-    }
-
-    //TODO: temp
-    private fun defineState(stateCode: Int) = when (stateCode) {
-        STATE_NORMAL -> "STATE_NORMAL"
-        STATE_COMPLETE -> "STATE COMPLETE"
-        STATE_READY -> "STATE READY"
-        STATE_REFRESHING -> "STATE_REFRESHING"
-        else -> "STATE_UNKNOWN"
     }
 
 }
