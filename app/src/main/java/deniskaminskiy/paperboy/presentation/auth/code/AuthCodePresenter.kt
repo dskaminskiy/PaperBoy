@@ -32,6 +32,7 @@ class AuthCodePresenter(
     override fun onStart(viewCreated: Boolean) {
         super.onStart(viewCreated)
 
+        disposableUpdateUi.disposeIfNotNull()
         disposableUpdateUi = interactor.onModelUpdate()
             .map(mapper::map)
             .compose(composer.observable())
@@ -50,6 +51,7 @@ class AuthCodePresenter(
     }
 
     private fun sendCode() {
+        disposableSendCode.disposeIfNotNull()
         disposableSendCode = interactor.sendCode()
             .compose(composer.observable())
             .doOnSubscribe { view?.showLoading() }
@@ -72,6 +74,7 @@ class AuthCodePresenter(
     }
 
     private fun fetchImportChannels() {
+        disposableLoadImportChannels.disposeIfNotNull()
         disposableLoadImportChannels = interactor.loadAndCacheImportChannels()
             .compose(composer.completable())
             .subscribe({

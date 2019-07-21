@@ -8,7 +8,7 @@ import deniskaminskiy.paperboy.data.importchannels.ImportChannel
 import deniskaminskiy.paperboy.data.importchannels.sources.ImportChannelDao
 import deniskaminskiy.paperboy.utils.Constants.DATABASE_NAME
 
-@Database(entities = [ImportChannel::class], version = 1)
+@Database(entities = [ImportChannel::class], version = 1, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun importChannelsDao(): ImportChannelDao

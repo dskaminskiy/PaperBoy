@@ -7,6 +7,8 @@ interface RemoveTelegramChannelsView : View {
 
     fun show(model: RemoveTelegramChannelsPresentModel)
 
+    fun showHome()
+
 }
 
 data class RemoveTelegramChannelsPresentModel(

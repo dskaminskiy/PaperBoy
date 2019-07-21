@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">PaperBoy</string>
     <string name="app_name_lower_case">paperboy</string>
     <string name="phone_number">Phone number</string>
@@ -22,4 +22,7 @@
     <string name="next">Next</string>
     <string name="send_code_as_sms">Send code as an SMS</string>
     <string name="code_was_sent_to_you_by_sms">The code was sent to you by SMS</string>
+    <string name="you_want_more">You want more?</string>
+    <string name="drop_this_shit">Drop this shit</string>
+    <string name="printing_new_papers" tools:ignore="TypographyEllipsis">Printing new papers...</string>
 </resources>

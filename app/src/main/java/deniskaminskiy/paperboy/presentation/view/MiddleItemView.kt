@@ -13,10 +13,10 @@ import deniskaminskiy.paperboy.utils.icon.*
 import deniskaminskiy.paperboy.utils.managers.AndroidResourcesManager
 import deniskaminskiy.paperboy.utils.managers.ResourcesManager
 import deniskaminskiy.paperboy.utils.view.goneIf
+import deniskaminskiy.paperboy.utils.view.invisibleIf
 import deniskaminskiy.paperboy.utils.view.isVisible
 import kotlinx.android.synthetic.main.view_middle_item.view.*
 
-//TODO: обновить верстку после просмотра макета
 class MiddleItemView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
@@ -24,31 +24,23 @@ class MiddleItemView @JvmOverloads constructor(
 ) : FrameLayout(context, attrs, defStyleAttr) {
 
     companion object {
-        const val EXTRA_TITLE_CORNER_RADIUS = 8
+        const val ICON_CORNER_RADIUS = 6
+
+        const val EXTRA_TITLE_CORNER_RADIUS = 4
         const val EXTRA_TITLE_STROKE_WIDTH = 1
     }
 
     private val palette: ResourcesManager.Colors by lazy { AndroidResourcesManager.create(context).colors }
 
-    private val dpStrokeWidth = EXTRA_TITLE_STROKE_WIDTH.dp(context)
-    private val dpCornerRadius = EXTRA_TITLE_CORNER_RADIUS.dp(context).toFloat()
+    private val extraTitleStrokeWidthDp = EXTRA_TITLE_STROKE_WIDTH.dp(context)
+    private val extraTitleCornerRadiusDp = EXTRA_TITLE_CORNER_RADIUS.dp(context).toFloat()
 
-    private val iconBackground: GradientDrawable
-        get() =
-            GradientDrawable().apply {
-                shape = GradientDrawable.RECTANGLE
-                cornerRadius = dpCornerRadius
-                setColor(iconBackgroundColor)
-            }
+    private val iconCornerRadiusDp = ICON_CORNER_RADIUS.dp(context).toFloat()
 
-    // Оранжевый сквиркл
-    private val defaultIconPlaceholder: Drawable by lazy {
-        GradientDrawable(
-            GradientDrawable.Orientation.TOP_BOTTOM,
-            intArrayOf(palette.print20, palette.print60)
-        ).apply {
+    private val iconPlaceholder: Drawable by lazy {
+        GradientDrawable().apply {
             shape = GradientDrawable.RECTANGLE
-            cornerRadius = dpCornerRadius
+            cornerRadius = iconCornerRadiusDp
         }
     }
 
@@ -75,29 +67,28 @@ class MiddleItemView @JvmOverloads constructor(
     var isDivier: Boolean
         get() = vDivider.isVisible
         set(value) {
-            vDivider goneIf !value
+            vDivider invisibleIf !value
         }
 
     var icon: Icon? = null
         set(value) {
             field = value
 
-            val padding = if (value is ConstantIcon) 12.dp(context) else 0
-            ivIcon.setPadding(padding, padding, padding, padding)
-
             value?.let {
                 IconRendererFactory.create(
                     icon = it,
                     urlIconShape = UrlIconShape.SUPER_ELLIPSE,
-                    placeholder = defaultIconPlaceholder
+                    placeholder = iconPlaceholder
                 )
-            }?.render(ivIcon)
+            }
+                ?.render(ivIcon)
+                ?: ivIcon.setImageDrawable(null)
         }
 
     var iconBackgroundColor: Int = palette.print30
         set(value) {
             field = if (value != -1) value else palette.print30
-            ivIcon.background = iconBackground
+            updateIconBackground()
         }
 
     init {
@@ -126,11 +117,11 @@ class MiddleItemView @JvmOverloads constructor(
     init {
         tvExtra.background = GradientDrawable().apply {
             shape = GradientDrawable.RECTANGLE
-            cornerRadius = dpCornerRadius
-            setStroke(dpStrokeWidth, palette.print15)
+            cornerRadius = extraTitleCornerRadiusDp
+            setStroke(extraTitleStrokeWidthDp, palette.print15)
         }
 
-        ivIcon.background = iconBackground
+        updateIconBackground()
     }
 
     fun show(model: MiddleItemPresentModel) {
@@ -164,6 +155,14 @@ class MiddleItemView @JvmOverloads constructor(
         }
     }
 
+    private fun updateIconBackground() {
+        ivIcon.background = GradientDrawable().apply {
+            shape = GradientDrawable.RECTANGLE
+            cornerRadius = iconCornerRadiusDp
+            setColor(iconBackgroundColor)
+        }
+    }
+
 }
 
 data class MiddleItemPresentModel(
@@ -176,7 +175,8 @@ data class MiddleItemPresentModel(
 
 sealed class MiddleItemIcon
 
-object MiddleItemIconDefault : MiddleItemIcon()
+object
+MiddleItemIconDefault : MiddleItemIcon()
 
 data class MiddleItemIconConstant(
     val icon: ConstantIcon? = null,

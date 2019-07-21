@@ -1,14 +1,13 @@
 package deniskaminskiy.paperboy.utils.managers
 
 import android.content.Context
+import android.graphics.Typeface
 import androidx.annotation.ColorRes
+import androidx.annotation.FontRes
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 import deniskaminskiy.paperboy.R
-import deniskaminskiy.paperboy.utils.ContextContextDelegate
-import deniskaminskiy.paperboy.utils.ContextDelegate
-import deniskaminskiy.paperboy.utils.FragmentContextDelegate
-import deniskaminskiy.paperboy.utils.compatColor
+import deniskaminskiy.paperboy.utils.*
 
 class AndroidResourcesManager private constructor(
     private val contextDelegate: ContextDelegate
@@ -16,6 +15,7 @@ class AndroidResourcesManager private constructor(
 
     override val colors: ResourcesManager.Colors by lazy { Colors() }
     override val strings: ResourcesManager.Strings by lazy { Strings() }
+    override val fonts: ResourcesManager.Fonts by lazy { Fonts() }
 
     companion object {
 
@@ -76,7 +76,7 @@ class AndroidResourcesManager private constructor(
             contextDelegate.getContext().compatColor(resId)
     }
 
-    private inner class Strings: ResourcesManager.Strings {
+    private inner class Strings : ResourcesManager.Strings {
 
         override val chooseChannelsYouWantImportSentence: String
             get() = getString(R.string.choose_channels_you_want_import_sentence)
@@ -102,9 +102,34 @@ class AndroidResourcesManager private constructor(
 
 
         private fun getString(@StringRes stringId: Int): String =
-            getContext()?.getString(stringId) ?: ""
+            contextDelegate.getContext()?.getString(stringId) ?: ""
 
         private fun getContext(): Context? = contextDelegate.getContext()
+
+    }
+
+    private inner class Fonts : ResourcesManager.Fonts {
+
+        override val sansMedium: Typeface
+            get() = getFont(R.font.ibm_plex_sans_medium)
+
+        override val sansSemibold: Typeface
+            get() = getFont(R.font.ibm_plex_sans_semibold)
+
+        override val sansBold: Typeface
+            get() = getFont(R.font.ibm_plex_sans_bold)
+
+        override val sansText: Typeface
+            get() = getFont(R.font.ibm_plex_sans_text)
+
+        override val serifBold: Typeface
+            get() = getFont(R.font.ibm_plex_serif_bold)
+
+        override val serifSemibold: Typeface
+            get() = getFont(R.font.ibm_plex_serif_semibold)
+
+        private fun getFont(@FontRes fontId: Int): Typeface =
+            contextDelegate.getContext().compatFont(fontId)
 
     }
 

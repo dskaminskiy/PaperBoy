@@ -3,7 +3,7 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:statusBarColor">@color/paper</item>
+        <item name="android:statusBarColor">@color/statusBarColor</item>
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:navigationBarColor">@color/paper</item>
         <item name="android:windowLightNavigationBar">true</item>

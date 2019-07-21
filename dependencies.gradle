@@ -44,7 +44,7 @@ ext {
     httpmimeVersion = '4.3.4'
 
     frescoVersion = '1.7.1'
-    glideVersion = '4.1.1'
+    glideVersion = '4.9.0'
     glideTransformationVersion = '3.0.1'
 
     crashlyticsVersion = '2.7.1'
@@ -90,7 +90,6 @@ ext {
     jodaTimeVersion = '2.9.9'
     commonsIoVersion = '2.4'
     universalImageLoaderVersion = '1.9.4'
-    glideTransformationVersion = '3.0.1'
     safeJobIntentServiceVersion = '1.0.1'
 
     ////////////////////////////////////////////////////////////////////////////////////////////////

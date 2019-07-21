@@ -25,6 +25,7 @@ class AuthSecurityCodePresenter(
     override fun onStart(viewCreated: Boolean) {
         super.onStart(viewCreated)
 
+        disposableUpdateUi.disposeIfNotNull()
         disposableUpdateUi = interactor.onUiUpdateRequest()
             .compose(composer.observable())
             .subscribe { view?.show(it) }
@@ -40,6 +41,7 @@ class AuthSecurityCodePresenter(
     }
 
     fun onNextClick() {
+        disposableSecurityCode.disposeIfNotNull()
         disposableSecurityCode = interactor.sendSecurityCode()
             .compose(composer.observable())
             .doOnSubscribe { view?.showLoading() }
@@ -60,6 +62,7 @@ class AuthSecurityCodePresenter(
     }
 
     private fun fetchImportChannels() {
+        disposableLoadImportChannels.disposeIfNotNull()
         disposableLoadImportChannels = interactor.loadAndCacheImportChannels()
             .compose(composer.completable())
             .doOnError { view?.hideLoading() }

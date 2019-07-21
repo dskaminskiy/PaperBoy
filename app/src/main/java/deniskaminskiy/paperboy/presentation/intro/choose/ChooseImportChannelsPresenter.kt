@@ -6,6 +6,8 @@ import deniskaminskiy.paperboy.core.Mapper
 import deniskaminskiy.paperboy.data.importchannels.ImportChannel
 import deniskaminskiy.paperboy.domain.intro.ChooseImportChannelsInteractor
 import deniskaminskiy.paperboy.domain.intro.ChooseImportChannelsInteractorImpl
+import deniskaminskiy.paperboy.presentation.base.CheckItemPresentItemModel
+import deniskaminskiy.paperboy.presentation.base.SuperItemPresentItemModel
 import deniskaminskiy.paperboy.presentation.view.CheckItemPresentModel
 import deniskaminskiy.paperboy.utils.managers.ResourcesManager
 import deniskaminskiy.paperboy.utils.paintWord
@@ -36,8 +38,9 @@ class ChooseImportChannelsPresenter(
 
     override fun onStart(viewCreated: Boolean) {
         super.onStart(viewCreated)
+
+        disposableUpdateUi.disposeIfNotNull()
         disposableUpdateUi = interactor.channels()
-            // тут могло бы быть .doOnSubscribe{ view?.showLoading() }, но loading-state тут не будет
             .compose(composer.observable())
             .subscribe(::onChannelsImportUpdate, ::onError)
     }
@@ -59,6 +62,7 @@ class ChooseImportChannelsPresenter(
     }
 
     private fun subscribeChannels() {
+        disposableSubscribeChannels.disposeIfNotNull()
         disposableSubscribeChannels = interactor.subscribeChannels()
             .doOnSubscribe { view?.showLoading() }
             .doOnEvent { view?.hideLoading() }
@@ -68,8 +72,8 @@ class ChooseImportChannelsPresenter(
             }, ::onError)
     }
 
-    fun onItemClick(model: CheckItemPresentItemModel<ImportChannel>) {
-        interactor.changeCheckStatus(model.element)
+    fun onItemClick(item: SuperItemPresentItemModel) {
+        item.ifTypeOf(interactor::changeCheckStatus)
     }
 
     fun onSkipClick() {

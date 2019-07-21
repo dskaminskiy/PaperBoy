@@ -6,7 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import deniskaminskiy.paperboy.R
 import deniskaminskiy.paperboy.core.BaseFragment
+import deniskaminskiy.paperboy.presentation.home.HomeFragment
 import deniskaminskiy.paperboy.utils.managers.AndroidResourcesManager
+import deniskaminskiy.paperboy.utils.replace
 import kotlinx.android.synthetic.main.fragment_remove_telegram_channels.*
 
 class RemoveTelegramChannelsFragment : BaseFragment<RemoveTelegramChannelsPresenter, RemoveTelegramChannelsView>(),
@@ -27,11 +29,18 @@ class RemoveTelegramChannelsFragment : BaseFragment<RemoveTelegramChannelsPresen
         presenter = RemoveTelegramChannelsPresenter(
             view = this,
             resources = AndroidResourcesManager.create(this)
-        )
+        ).apply {
+            tvMaybeLater.setOnClickListener { onMaybeLayterClick() }
+        }
     }
 
     override fun show(model: RemoveTelegramChannelsPresentModel) {
         tvTitle.text = model.title
+    }
+
+    override fun showHome() {
+        HomeFragment.newInstance()
+            .replace(activity, R.id.vgContent, HomeFragment.TAG)
     }
 
 }

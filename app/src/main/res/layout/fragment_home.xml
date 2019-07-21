@@ -1,31 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fitsSystemWindows="true">
+        xmlns:app="http://schemas.android.com/apk/res-auto" android:layout_width="match_parent"
+        android:background="@color/paper"
+        android:layout_height="match_parent">
+
+    <com.reginald.swiperefresh.CustomSwipeRefreshLayout
+            xmlns:swiperefresh="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/vSwipeRefresh"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            swiperefresh:keep_refresh_head="true"
+            swiperefresh:refresh_mode="pull_mode"
+            swiperefresh:return_to_header_duration="1000"
+            swiperefresh:return_to_top_duration="500"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvChannels"
+                android:layout_width="match_parent"
+                android:overScrollMode="never"
+                android:layout_height="wrap_content"/>
+
+    </com.reginald.swiperefresh.CustomSwipeRefreshLayout>
+
+    <ProgressBar
+            android:id="@+id/vProgress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            style="?android:attr/progressBarStyle"
+            android:layout_gravity="center"
+            android:indeterminateTint="@color/marlboroNew"/>
+
 
     <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/vAppBar"
-            android:layout_width="match_parent"
-            android:layout_height="72dp"
             android:background="@color/paper"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            android:fitsSystemWindows="true">
+            android:layout_width="match_parent"
+            android:layout_height="72dp">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
                 android:id="@+id/vCollapsingToolbar"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:layout_scrollFlags="scroll|exitUntilCollapsed"
-                app:contentScrim="@color/print100"
+                app:titleEnabled="true"
+                app:contentScrim="@color/paper"
+                app:title="Paperboy"
+                app:collapsedTitleTextAppearance="@style/TextStyle.Serif.Bold.24"
+                app:expandedTitleGravity="top"
                 app:expandedTitleMarginStart="16dp"
-                app:expandedTitleMarginEnd="16dp"
+                app:expandedTitleMarginBottom="14dp"
+                app:expandedTitleTextAppearance="@style/TextStyle.Serif.Bold.32"
                 app:expandedTitleMarginTop="16dp"
-                android:layout_marginTop="12dp"
-                app:title="Some Shit"
-                android:fitsSystemWindows="true">
+                app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
             <androidx.appcompat.widget.Toolbar
                     android:id="@+id/vToolbar"
@@ -34,15 +62,40 @@
                     app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
                     app:layout_collapseMode="pin"/>
 
+            <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginEnd="12dp"
+                    app:layout_collapseMode="parallax"
+                    android:layout_gravity="end|center_vertical">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/vSearch"
+                        android:layout_width="32dp"
+                        android:padding="4dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_height="32dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        app:srcCompat="@drawable/ic_search"
+                        app:tint="@color/iconDefaultColor"
+                        android:background="?selectableItemBackgroundBorderless"/>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/vSettings"
+                        android:layout_width="32dp"
+                        android:padding="4dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:layout_height="32dp"
+                        app:srcCompat="@drawable/ic_settings"
+                        app:tint="@color/iconDefaultColor"
+                        android:background="?selectableItemBackgroundBorderless"/>
+
+            </LinearLayout>
+
         </com.google.android.material.appbar.CollapsingToolbarLayout>
-
     </com.google.android.material.appbar.AppBarLayout>
-
-    <androidx.core.widget.NestedScrollView
-            android:id="@+id/vNestedScroll"
-            android:layout_width="match_parent"
-            android:layout_marginTop="20dp"
-            android:layout_height="600dp"
-            app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

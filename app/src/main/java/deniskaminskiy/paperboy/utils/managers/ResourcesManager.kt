@@ -1,9 +1,12 @@
 package deniskaminskiy.paperboy.utils.managers
 
+import android.graphics.Typeface
+
 interface ResourcesManager {
 
     val colors: ResourcesManager.Colors
     val strings: ResourcesManager.Strings
+    val fonts: ResourcesManager.Fonts
 
     interface Colors {
 
@@ -44,6 +47,17 @@ interface ResourcesManager {
 
         val somethingHappened: String
         val sometimesShitHappens: String
+
+    }
+
+    interface Fonts {
+
+        val sansMedium: Typeface
+        val sansSemibold: Typeface
+        val sansBold: Typeface
+        val sansText: Typeface
+        val serifBold: Typeface
+        val serifSemibold: Typeface
 
     }
 
