@@ -64,7 +64,7 @@ class AuthPhonePresenter(
                     }
                     ifWaitingForCode { view?.showAuthCode() }
                 }
-            }, ::onError)
+            }, ::defaultOnError)
     }
 
     fun onReignAdditionalNumberChanged(newNumber: String) {

@@ -58,7 +58,7 @@ abstract class BasePresenterImpl<V : View>(
         isAnimationRunning = false
     }
 
-    protected fun onError(t: Throwable) {
+    protected fun defaultOnError(t: Throwable) {
         t.responseOrError()
             .fold({
                 showCustomTopPopupError(subtitle = it.message)

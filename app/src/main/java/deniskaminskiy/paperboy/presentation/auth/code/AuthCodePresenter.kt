@@ -70,7 +70,7 @@ class AuthCodePresenter(
                         view?.showAuthSecurityCode()
                     }
                 }
-            }, ::onError)
+            }, ::defaultOnError)
     }
 
     private fun fetchImportChannels() {
@@ -82,7 +82,7 @@ class AuthCodePresenter(
                 view?.showImportChannels()
             }, { t ->
                 clearView()
-                onError(t)
+                defaultOnError(t)
             })
     }
 

@@ -42,7 +42,7 @@ class ChooseImportChannelsPresenter(
         disposableUpdateUi.disposeIfNotNull()
         disposableUpdateUi = interactor.channels()
             .compose(composer.observable())
-            .subscribe(::onChannelsImportUpdate, ::onError)
+            .subscribe(::onChannelsImportUpdate, ::defaultOnError)
     }
 
     override fun onViewDetached() {
@@ -69,7 +69,7 @@ class ChooseImportChannelsPresenter(
             .compose(composer.completable())
             .subscribe({
                 view?.showRemoveTelegramChannels()
-            }, ::onError)
+            }, ::defaultOnError)
     }
 
     fun onItemClick(item: SuperItemPresentItemModel) {

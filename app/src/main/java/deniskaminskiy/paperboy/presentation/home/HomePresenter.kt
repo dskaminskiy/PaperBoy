@@ -70,7 +70,7 @@ class HomePresenter(
             .compose(composer.observable())
             .subscribe({
                 view?.show(it)
-            }, ::onError)
+            }, ::defaultOnError)
     }
 
     private fun removeLastElementDivider(list: List<SuperItemPresentItemModel>) =

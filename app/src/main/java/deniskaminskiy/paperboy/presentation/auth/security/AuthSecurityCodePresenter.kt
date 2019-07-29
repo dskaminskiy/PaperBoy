@@ -57,7 +57,7 @@ class AuthSecurityCodePresenter(
                 }
             }, { t ->
                 view?.hideLoading()
-                onError(t)
+                defaultOnError(t)
             })
     }
 
@@ -69,7 +69,7 @@ class AuthSecurityCodePresenter(
             .subscribe({
                 view?.hideLoading()
                 view?.showImportChannels()
-            }, ::onError)
+            }, ::defaultOnError)
     }
 
     fun onSecurityCodeTextChanged(newCode: String) {
