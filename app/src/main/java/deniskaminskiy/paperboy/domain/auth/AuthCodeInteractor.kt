@@ -49,7 +49,7 @@ class AuthCodeInteractorImpl(
 
     override fun onModelUpdate(): Observable<String> = subjectModel
 
-    override fun sendCode(): Observable<AuthResponseState> = repository.sendCode(code.toInt())
+    override fun sendCode(): Observable<AuthResponseState> = repository.sendCode(code)
 
     override fun onPassCodeChanged(newNumber: String) {
         if (newNumber.isNotEmpty()) {

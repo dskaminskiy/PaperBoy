@@ -81,8 +81,6 @@ class ChooseImportChannelsFragment : BaseFragment<ChooseImportChannelsPresenter,
     }
 
     override fun showRemoveTelegramChannels() {
-        //TODO: temp
-        toast("Каналы для импорта успешно отправлены")
         RemoveTelegramChannelsFragment.newInstance()
             .open(activity, R.id.vgContent, RemoveTelegramChannelsFragment.TAG)
     }
