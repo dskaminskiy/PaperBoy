@@ -27,6 +27,8 @@ class ChooseImportChannelsInteractorImpl(
     private val subjectImportChannels: BehaviorSubject<List<ImportChannel>> =
         BehaviorSubject.createDefault(emptyList())
 
+    private var isFetchingChannels = false
+
     private val subscribeChannelsIds: List<Long>
         get() = subjectImportChannels.value
             ?.filter { it.isChecked }
@@ -42,6 +44,8 @@ class ChooseImportChannelsInteractorImpl(
             }
         }
             .map(::copyCheckStatuses)
+            .doOnSubscribe { isFetchingChannels = true }
+            .doOnEach { isFetchingChannels = false }
             .switchMap {
                 subjectImportChannels.onNext(it)
                 subjectImportChannels
@@ -59,16 +63,18 @@ class ChooseImportChannelsInteractorImpl(
     override fun channelsCount(): Int = subjectImportChannels.value?.size ?: 0
 
     override fun changeCheckStatus(model: ImportChannel) {
-        subjectImportChannels.onNext(
-            subjectImportChannels.value
-                ?.map {
-                    if (it == model) {
-                        it.copy(isChecked = !it.isChecked)
-                    } else {
-                        it
-                    }
-                } ?: emptyList()
-        )
+        if (!isFetchingChannels) {
+            subjectImportChannels.onNext(
+                subjectImportChannels.value
+                    ?.map {
+                        if (it == model) {
+                            it.copy(isChecked = !it.isChecked)
+                        } else {
+                            it
+                        }
+                    } ?: emptyList()
+            )
+        }
     }
 
     override fun subscribeChannels(): Completable = repository.subscribeChannels(subscribeChannelsIds)
