@@ -15,7 +15,7 @@ interface AuthCloudDataSource {
 
     fun requestCode(phoneNumber: String): Observable<Auth>
 
-    fun sendCode(code: Int): Observable<AuthResponseState>
+    fun sendCode(code: String): Observable<AuthResponseState>
 
     fun sendSecurityCode(code: String, token: String): Observable<AuthResponseState>
 
@@ -35,7 +35,7 @@ class AuthCloudDataSourceImpl(
             .map{ it.soleData?.let(authMapper::map) ?: Auth.EMPTY }
             .toObservable()
 
-    override fun sendCode(code: Int): Observable<AuthResponseState> =
+    override fun sendCode(code: String): Observable<AuthResponseState> =
         api.authCode(AuthCodeRequestJson(code))
             .map{ it.soleData?.let(authCodeMapper::map) ?: AuthResponseState.ERROR }
             .toObservable()

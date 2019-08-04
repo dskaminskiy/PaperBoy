@@ -36,17 +36,21 @@ class ChooseImportChannelsPresenter(
 
     private var disposableSubscribeChannels: Disposable? = null
 
-    override fun onStart(viewCreated: Boolean) {
-        super.onStart(viewCreated)
+    override fun onStart(isViewCreated: Boolean) {
+        super.onStart(isViewCreated)
 
         disposableUpdateUi.disposeIfNotNull()
-        disposableUpdateUi = interactor.channels()
+        disposableUpdateUi = interactor.channels(isViewCreated)
             .compose(composer.observable())
-            .subscribe(::onChannelsImportUpdate, ::onError)
+            .subscribe(
+                ::onChannelsImportUpdate,
+                ::defaultOnError
+            )
     }
 
     override fun onViewDetached() {
         disposableSubscribeChannels.disposeIfNotNull()
+        view?.hideFab()
         super.onViewDetached()
     }
 
@@ -64,12 +68,12 @@ class ChooseImportChannelsPresenter(
     private fun subscribeChannels() {
         disposableSubscribeChannels.disposeIfNotNull()
         disposableSubscribeChannels = interactor.subscribeChannels()
-            .doOnSubscribe { view?.showLoading() }
-            .doOnEvent { view?.hideLoading() }
             .compose(composer.completable())
+            .doOnSubscribe { view?.showLoading() }
+            .doFinally { view?.hideLoading() }
             .subscribe({
                 view?.showRemoveTelegramChannels()
-            }, ::onError)
+            }, ::defaultOnError)
     }
 
     fun onItemClick(item: SuperItemPresentItemModel) {

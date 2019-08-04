@@ -13,6 +13,8 @@ interface ChooseImportChannelsView : View {
 
     fun hideLoading()
 
+    fun hideFab()
+
     fun showRemoveTelegramChannels()
 
 }

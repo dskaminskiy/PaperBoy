@@ -16,6 +16,8 @@ interface AuthCodeView : View {
 
     fun showImportChannels()
 
+    fun showHome()
+
     fun showSmsSended()
 
 }

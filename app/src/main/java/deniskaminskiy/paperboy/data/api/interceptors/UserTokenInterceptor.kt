@@ -39,7 +39,9 @@ class UserTokenInterceptor(
             val bodyString = InterceptorsUtils.bodyToString(originalRequest.body())
             val jsonBody = if (bodyString.isBlank()) JSONObject() else JSONObject(bodyString)
 
-            jsonBody.put(PROPERTY_TOKEN, userToken)
+            if (originalRequest.url().toString().contains("auth/code")) {
+                jsonBody.put(PROPERTY_TOKEN, userToken)
+            }
 
             if (originalRequest.method().equals(POST, true)) {
                 builder.post(RequestBody.create(mediaType, jsonBody.toString()))

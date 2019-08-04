@@ -90,4 +90,5 @@ dependencies {
     debugImplementation chuck
 
     implementation "com.reginald.swiperefresh:library:1.1.0"
+    implementation 'com.github.pwittchen:reactivenetwork-rx2:3.0.3'
 }

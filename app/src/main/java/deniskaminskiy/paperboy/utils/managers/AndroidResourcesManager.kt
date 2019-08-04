@@ -93,6 +93,12 @@ class AndroidResourcesManager private constructor(
         override fun youHaveChannels(count: Int): String =
             getContext()?.getString(R.string.template_you_have_channels_you_always_can_import, count) ?: ""
 
+        override val noNetworkConnection: String
+            get() = getString(R.string.no_network_connection)
+
+        override val pleaseFixItAndTryAgain: String
+            get() = getString(R.string.please_fix_it_and_try_again)
+
 
         override val somethingHappened: String
             get() = getString(R.string.oops_something_happened)

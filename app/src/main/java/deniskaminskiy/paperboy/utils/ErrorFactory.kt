@@ -12,10 +12,19 @@ object ErrorFactory {
 
     private var resources: ResourcesManager? = null
 
-    val unknownError: TopPopupPresentModel by lazy {
+    val errorUnknown: TopPopupPresentModel by lazy {
         TopPopupPresentModel(
             title = resources?.strings?.somethingHappened ?: "",
             subtitle = resources?.strings?.sometimesShitHappens ?: "",
+            icon = IconFactory.create(IconConstant.WARNING.constant),
+            iconColor = resources?.colors?.marlboroNew ?: -1
+        )
+    }
+
+    val errorNoNetworkConnection: TopPopupPresentModel by lazy {
+        TopPopupPresentModel(
+            title = resources?.strings?.noNetworkConnection ?: "",
+            subtitle = resources?.strings?.pleaseFixItAndTryAgain ?: "",
             icon = IconFactory.create(IconConstant.WARNING.constant),
             iconColor = resources?.colors?.marlboroNew ?: -1
         )

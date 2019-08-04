@@ -29,6 +29,7 @@ class HomeFragment : BaseFragment<HomePresenter, HomeView>(), HomeView {
     }
 
     private val adapter = SuperAdapter()
+    private var isContentScrollable = true
 
     private val appBarOffsetListener = AppBarLayout.OnOffsetChangedListener { _, offset ->
         // Необходимо для правильной координации swipeLayout'a и CollapsingToolbar'a
@@ -40,10 +41,13 @@ class HomeFragment : BaseFragment<HomePresenter, HomeView>(), HomeView {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
         initCustomSwipeRefreshLayout()
 
-        rvChannels.layoutManager = LinearLayoutManager(context)
+        rvChannels.layoutManager = object : LinearLayoutManager(context) {
+            override fun canScrollVertically(): Boolean {
+                return isContentScrollable && super.canScrollVertically()
+            }
+        }
         rvChannels.itemAnimator = DefaultItemAnimator()
         rvChannels.adapter = adapter
 
@@ -88,6 +92,14 @@ class HomeFragment : BaseFragment<HomePresenter, HomeView>(), HomeView {
 
     override fun showLoading() {
         vProgress.visible()
+    }
+
+    override fun enableScrolling() {
+        isContentScrollable = true
+    }
+
+    override fun disableScrolling() {
+        isContentScrollable = false
     }
 
     override fun onBackPressed() {

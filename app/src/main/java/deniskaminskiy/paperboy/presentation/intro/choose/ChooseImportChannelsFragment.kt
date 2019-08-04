@@ -13,7 +13,6 @@ import deniskaminskiy.paperboy.utils.Constants
 import deniskaminskiy.paperboy.utils.hideApp
 import deniskaminskiy.paperboy.utils.managers.AndroidResourcesManager
 import deniskaminskiy.paperboy.utils.open
-import deniskaminskiy.paperboy.utils.toast
 import deniskaminskiy.paperboy.utils.view.gone
 import deniskaminskiy.paperboy.utils.view.isGone
 import deniskaminskiy.paperboy.utils.view.isVisible
@@ -80,9 +79,11 @@ class ChooseImportChannelsFragment : BaseFragment<ChooseImportChannelsPresenter,
         vLoading.gone()
     }
 
+    override fun hideFab() {
+        vFab.hide()
+    }
+
     override fun showRemoveTelegramChannels() {
-        //TODO: temp
-        toast("Каналы для импорта успешно отправлены")
         RemoveTelegramChannelsFragment.newInstance()
             .open(activity, R.id.vgContent, RemoveTelegramChannelsFragment.TAG)
     }

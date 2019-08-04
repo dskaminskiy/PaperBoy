@@ -29,8 +29,8 @@ class AuthCodePresenter(
     private var disposableSendCode: Disposable? = null
     private var disposableLoadImportChannels: Disposable? = null
 
-    override fun onStart(viewCreated: Boolean) {
-        super.onStart(viewCreated)
+    override fun onStart(isViewCreated: Boolean) {
+        super.onStart(isViewCreated)
 
         disposableUpdateUi.disposeIfNotNull()
         disposableUpdateUi = interactor.onModelUpdate()
@@ -70,19 +70,23 @@ class AuthCodePresenter(
                         view?.showAuthSecurityCode()
                     }
                 }
-            }, ::onError)
+            }, ::defaultOnError)
     }
 
     private fun fetchImportChannels() {
         disposableLoadImportChannels.disposeIfNotNull()
         disposableLoadImportChannels = interactor.loadAndCacheImportChannels()
-            .compose(composer.completable())
-            .subscribe({
+            .compose(composer.single())
+            .subscribe({ isAtLeastOneChannel ->
                 clearView()
-                view?.showImportChannels()
+                if (isAtLeastOneChannel) {
+                    view?.showImportChannels()
+                } else {
+
+                }
             }, { t ->
                 clearView()
-                onError(t)
+                defaultOnError(t)
             })
     }
 

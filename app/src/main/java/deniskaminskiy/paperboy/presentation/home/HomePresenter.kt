@@ -51,10 +51,10 @@ class HomePresenter(
         DividerPresentItemModel
     )
 
-    override fun onStart(viewCreated: Boolean) {
-        super.onStart(viewCreated)
+    override fun onStart(isViewCreated: Boolean) {
+        super.onStart(isViewCreated)
 
-        if (viewCreated) {
+        if (isViewCreated) {
             view?.showTitleTypeface(resources.fonts.serifBold)
         }
 
@@ -70,7 +70,7 @@ class HomePresenter(
             .compose(composer.observable())
             .subscribe({
                 view?.show(it)
-            }, ::onError)
+            }, ::defaultOnError)
     }
 
     private fun removeLastElementDivider(list: List<SuperItemPresentItemModel>) =
@@ -87,7 +87,7 @@ class HomePresenter(
             }
 
     fun onRefresh() {
-        //loadChannels()
+        view?.disableScrolling()
     }
 
 

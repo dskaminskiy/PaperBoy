@@ -5,8 +5,7 @@ import android.util.AttributeSet
 import android.view.View
 import android.widget.FrameLayout
 import com.reginald.swiperefresh.CustomSwipeRefreshLayout
-import com.reginald.swiperefresh.CustomSwipeRefreshLayout.State.STATE_NORMAL
-import com.reginald.swiperefresh.CustomSwipeRefreshLayout.State.STATE_READY
+import com.reginald.swiperefresh.CustomSwipeRefreshLayout.State.*
 import deniskaminskiy.paperboy.R
 import deniskaminskiy.paperboy.utils.dp
 import deniskaminskiy.paperboy.utils.view.invisible
@@ -34,7 +33,6 @@ class SwipeRefreshPrintingHeader(
         currentState: CustomSwipeRefreshLayout.State,
         lastState: CustomSwipeRefreshLayout.State
     ) {
-
         val stateCode = currentState.refreshState
         val percent = currentState.percent
 
@@ -53,6 +51,9 @@ class SwipeRefreshPrintingHeader(
             STATE_READY -> {
                 vTitle.visible()
                 vTitle.translationY = 0f
+            }
+            STATE_REFRESHING -> {
+                vProgress.visible()
             }
         }
 

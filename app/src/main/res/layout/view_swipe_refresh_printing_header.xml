@@ -22,11 +22,15 @@
             android:textColor="@color/print60"
             android:layout_marginBottom="2dp"/>
 
-    <androidx.core.widget.ContentLoadingProgressBar
+
+    <ProgressBar
             android:id="@+id/vProgress"
             style="@style/Widget.AppCompat.ProgressBar.Horizontal"
             android:layout_width="match_parent"
-            android:layout_height="2dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="-8dp"
+            android:layout_marginTop="-4dp"
+            android:indeterminateTint="@color/marlboroNew"
             android:visibility="invisible"
             android:layout_gravity="bottom"
             android:indeterminate="true"/>
