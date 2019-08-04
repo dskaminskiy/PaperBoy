@@ -41,7 +41,6 @@ class HomeFragment : BaseFragment<HomePresenter, HomeView>(), HomeView {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
         initCustomSwipeRefreshLayout()
 
         rvChannels.layoutManager = object : LinearLayoutManager(context) {

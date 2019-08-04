@@ -1,5 +1,6 @@
 package deniskaminskiy.paperboy.data.api.interceptors
 
+import deniskaminskiy.paperboy.data.settings.PreferenceHelperImpl
 import deniskaminskiy.paperboy.utils.ContextDelegate
 import deniskaminskiy.paperboy.utils.InterceptorsUtils
 import okhttp3.Interceptor
