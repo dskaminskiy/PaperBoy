@@ -36,17 +36,21 @@ class ChooseImportChannelsPresenter(
 
     private var disposableSubscribeChannels: Disposable? = null
 
-    override fun onStart(viewCreated: Boolean) {
-        super.onStart(viewCreated)
+    override fun onStart(isViewCreated: Boolean) {
+        super.onStart(isViewCreated)
 
         disposableUpdateUi.disposeIfNotNull()
-        disposableUpdateUi = interactor.channels()
+        disposableUpdateUi = interactor.channels(isViewCreated)
             .compose(composer.observable())
-            .subscribe(::onChannelsImportUpdate, ::defaultOnError)
+            .subscribe(
+                ::onChannelsImportUpdate,
+                ::defaultOnError
+            )
     }
 
     override fun onViewDetached() {
         disposableSubscribeChannels.disposeIfNotNull()
+        view?.hideFab()
         super.onViewDetached()
     }
 

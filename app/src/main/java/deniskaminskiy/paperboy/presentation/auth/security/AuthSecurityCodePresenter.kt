@@ -22,8 +22,8 @@ class AuthSecurityCodePresenter(
     private var disposableSecurityCode: Disposable? = null
     private var disposableLoadImportChannels: Disposable? = null
 
-    override fun onStart(viewCreated: Boolean) {
-        super.onStart(viewCreated)
+    override fun onStart(isViewCreated: Boolean) {
+        super.onStart(isViewCreated)
 
         disposableUpdateUi.disposeIfNotNull()
         disposableUpdateUi = interactor.onUiUpdateRequest()

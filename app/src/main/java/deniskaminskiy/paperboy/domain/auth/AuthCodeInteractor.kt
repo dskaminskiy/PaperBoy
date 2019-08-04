@@ -4,10 +4,10 @@ import deniskaminskiy.paperboy.core.Interactor
 import deniskaminskiy.paperboy.data.api.AuthResponseState
 import deniskaminskiy.paperboy.data.auth.AuthRepository
 import deniskaminskiy.paperboy.data.auth.AuthRepositoryFactory
-import deniskaminskiy.paperboy.domain.intro.LoadImportChannelsInteractor
-import deniskaminskiy.paperboy.domain.intro.LoadImportChannelsInteractorImpl
-import io.reactivex.Completable
+import deniskaminskiy.paperboy.data.importchannels.ImportChannelsRepository
+import deniskaminskiy.paperboy.data.importchannels.ImportChannelsRepositoryFactory
 import io.reactivex.Observable
+import io.reactivex.Single
 import io.reactivex.subjects.BehaviorSubject
 
 interface AuthCodeInteractor : Interactor {
@@ -27,14 +27,18 @@ interface AuthCodeInteractor : Interactor {
 
     fun removeLastCodeSymbol()
 
-    fun loadAndCacheImportChannels(): Completable
+    /**
+     * @return isAtLeastOneChannel  - true, если у пользователя имеется хотя бы 1 канал для длаьнейшего
+     *                                импорта; false - если нет.
+     */
+    fun loadAndCacheImportChannels(): Single<Boolean>
 
 }
 
 class AuthCodeInteractorImpl(
     private val codeLength: Int,
-    private val repository: AuthRepository = AuthRepositoryFactory.create(),
-    private val loadImportChannelsInteractor: LoadImportChannelsInteractor = LoadImportChannelsInteractorImpl()
+    private val repositoryAuth: AuthRepository = AuthRepositoryFactory.create(),
+    private val repositoryImportChannels: ImportChannelsRepository = ImportChannelsRepositoryFactory.create()
 ) : AuthCodeInteractor {
 
     private val subjectModel = BehaviorSubject.createDefault("")
@@ -49,7 +53,7 @@ class AuthCodeInteractorImpl(
 
     override fun onModelUpdate(): Observable<String> = subjectModel
 
-    override fun sendCode(): Observable<AuthResponseState> = repository.sendCode(code)
+    override fun sendCode(): Observable<AuthResponseState> = repositoryAuth.sendCode(code)
 
     override fun onPassCodeChanged(newNumber: String) {
         if (newNumber.isNotEmpty()) {
@@ -75,6 +79,15 @@ class AuthCodeInteractorImpl(
         }
     }
 
-    override fun loadAndCacheImportChannels(): Completable = loadImportChannelsInteractor.loadAndCache()
+    override fun loadAndCacheImportChannels(): Single<Boolean> {
+        var channelsCount = 0
+
+        return repositoryImportChannels.getFromCloud()
+            .doOnNext { channelsCount = it.size }
+            .flatMapCompletable(repositoryImportChannels::retain)
+            .toSingle {
+               channelsCount != 0
+            }
+    }
 
 }

@@ -13,7 +13,6 @@ import deniskaminskiy.paperboy.utils.Constants
 import deniskaminskiy.paperboy.utils.hideApp
 import deniskaminskiy.paperboy.utils.managers.AndroidResourcesManager
 import deniskaminskiy.paperboy.utils.open
-import deniskaminskiy.paperboy.utils.toast
 import deniskaminskiy.paperboy.utils.view.gone
 import deniskaminskiy.paperboy.utils.view.isGone
 import deniskaminskiy.paperboy.utils.view.isVisible
@@ -78,6 +77,10 @@ class ChooseImportChannelsFragment : BaseFragment<ChooseImportChannelsPresenter,
         vFab.imageAlpha = Constants.ALPHA_VISIBLE
         vBlind.gone()
         vLoading.gone()
+    }
+
+    override fun hideFab() {
+        vFab.hide()
     }
 
     override fun showRemoveTelegramChannels() {

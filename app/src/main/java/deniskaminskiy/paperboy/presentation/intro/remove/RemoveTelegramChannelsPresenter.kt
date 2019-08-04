@@ -15,8 +15,8 @@ class RemoveTelegramChannelsPresenter(
             .paintWord(resources.strings.nowYouCanRemoveChannelsFromTelegramAccentWord, resources.colors.marlboroNew)
     }
 
-    override fun onStart(viewCreated: Boolean) {
-        super.onStart(viewCreated)
+    override fun onStart(isViewCreated: Boolean) {
+        super.onStart(isViewCreated)
         view?.show(RemoveTelegramChannelsPresentModel(title))
     }
 

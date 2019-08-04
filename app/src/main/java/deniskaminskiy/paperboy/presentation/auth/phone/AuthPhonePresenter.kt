@@ -32,8 +32,8 @@ class AuthPhonePresenter(
 
     private var disposableCode: Disposable? = null
 
-    override fun onStart(viewCreated: Boolean) {
-        super.onStart(viewCreated)
+    override fun onStart(isViewCreated: Boolean) {
+        super.onStart(isViewCreated)
 
         disposableUpdateUi.disposeIfNotNull()
         disposableUpdateUi = interactor.onModelUpdate()

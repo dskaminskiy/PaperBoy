@@ -31,9 +31,9 @@ abstract class BasePresenterImpl<V : View>(
     }
 
     /**
-     * @param viewCreated   - true if it's first calling presenter onStart()
+     * @param isViewCreated   - true if it's first calling presenter onStart()
      */
-    override fun onStart(viewCreated: Boolean) {
+    override fun onStart(isViewCreated: Boolean) {
         //..
     }
 

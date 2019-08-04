@@ -12,10 +12,6 @@ import deniskaminskiy.paperboy.utils.showKeyboard
 abstract class BaseFragment<P : Presenter<V>, V : View> : Fragment(), View,
     FragmentTransactionAllowable, BackPressedListener, OnAnimationLifecycleListener {
 
-    companion object {
-        private const val TAG = "BaseFragment"
-    }
-
     protected var presenter: P? = null
 
     private var isFirstStart: Boolean = true
@@ -35,6 +31,7 @@ abstract class BaseFragment<P : Presenter<V>, V : View> : Fragment(), View,
         super.onActivityCreated(savedInstanceState)
         (activity as? FragmentTransactionAllowable)?.let {
             transactionAllowable = it
+            tag
         }
     }
 

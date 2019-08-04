@@ -6,9 +6,9 @@ class MainPresenter(
     view: MainView
 ) : BasePresenterImpl<MainView>(view) {
 
-    override fun onStart(viewCreated: Boolean) {
-        super.onStart(viewCreated)
-        if (viewCreated) {
+    override fun onStart(isViewCreated: Boolean) {
+        super.onStart(isViewCreated)
+        if (isViewCreated) {
             view?.showAuth()
         }
     }

@@ -4,10 +4,10 @@ import deniskaminskiy.paperboy.core.Interactor
 import deniskaminskiy.paperboy.data.api.AuthResponseState
 import deniskaminskiy.paperboy.data.auth.AuthRepository
 import deniskaminskiy.paperboy.data.auth.AuthRepositoryFactory
+import deniskaminskiy.paperboy.data.importchannels.ImportChannelsRepository
+import deniskaminskiy.paperboy.data.importchannels.ImportChannelsRepositoryImpl
 import deniskaminskiy.paperboy.data.settings.PreferenceHelper
 import deniskaminskiy.paperboy.data.settings.PreferenceHelperImpl
-import deniskaminskiy.paperboy.domain.intro.LoadImportChannelsInteractor
-import deniskaminskiy.paperboy.domain.intro.LoadImportChannelsInteractorImpl
 import deniskaminskiy.paperboy.utils.ContextDelegate
 import io.reactivex.Completable
 import io.reactivex.Observable
@@ -28,8 +28,8 @@ interface AuthSecurityCodeInteractor : Interactor {
 class AuthSecurityCodeInteractorImpl(
     private val contextDelegate: ContextDelegate,
     private val settings: PreferenceHelper = PreferenceHelperImpl(contextDelegate),
-    private val repository: AuthRepository = AuthRepositoryFactory.create(),
-    private val loadImportChannelsInteractor: LoadImportChannelsInteractor = LoadImportChannelsInteractorImpl()
+    private val repositoryAuth: AuthRepository = AuthRepositoryFactory.create(),
+    private val repositoryImportChannels: ImportChannelsRepository = ImportChannelsRepositoryImpl()
 ) : AuthSecurityCodeInteractor {
 
     private var securityCode: String = ""
@@ -44,8 +44,9 @@ class AuthSecurityCodeInteractorImpl(
     override fun onUiUpdateRequest(): Observable<Boolean> = updateSubject
 
     override fun sendSecurityCode(): Observable<AuthResponseState> =
-        repository.sendSecurityCode(securityCode, settings.userToken)
+        repositoryAuth.sendSecurityCode(securityCode, settings.userToken)
 
-    override fun loadAndCacheImportChannels(): Completable = loadImportChannelsInteractor.loadAndCache()
+    override fun loadAndCacheImportChannels(): Completable = repositoryImportChannels.getFromCloud()
+        .flatMapCompletable(repositoryImportChannels::retain)
 
 }

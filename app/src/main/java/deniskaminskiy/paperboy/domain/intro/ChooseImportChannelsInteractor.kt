@@ -10,7 +10,7 @@ import io.reactivex.subjects.BehaviorSubject
 
 interface ChooseImportChannelsInteractor : Interactor {
 
-    fun channels(): Observable<List<ImportChannel>>
+    fun channels(isFromCache: Boolean): Observable<List<ImportChannel>>
 
     fun channelsCount(): Int
 
@@ -24,27 +24,43 @@ class ChooseImportChannelsInteractorImpl(
     private val repository: ImportChannelsRepository = ImportChannelsRepositoryFactory.create()
 ) : ChooseImportChannelsInteractor {
 
-    private val importChannelsSubject: BehaviorSubject<List<ImportChannel>> =
+    private val subjectImportChannels: BehaviorSubject<List<ImportChannel>> =
         BehaviorSubject.createDefault(emptyList())
 
     private val subscribeChannelsIds: List<Long>
-        get() = importChannelsSubject.value
+        get() = subjectImportChannels.value
             ?.filter { it.isChecked }
             ?.map { it.id }
             ?: emptyList()
 
-    override fun channels(): Observable<List<ImportChannel>> =
-        repository.getFromCache()
+    override fun channels(isFromCache: Boolean): Observable<List<ImportChannel>> =
+        repository.let {
+            if (isFromCache) {
+                it.getFromCache()
+            } else {
+                it.getFromCloud()
+            }
+        }
+            .map(::copyCheckStatuses)
             .switchMap {
-                importChannelsSubject.onNext(it)
-                importChannelsSubject
+                subjectImportChannels.onNext(it)
+                subjectImportChannels
             }
 
-    override fun channelsCount(): Int = importChannelsSubject.value?.size ?: 0
+    private fun copyCheckStatuses(newChannels: List<ImportChannel>): List<ImportChannel> {
+        val previousChannels = subjectImportChannels.value ?: emptyList()
+
+        return newChannels.map { newChannel ->
+            newChannel.copy(isChecked = previousChannels.firstOrNull { it.id == newChannel.id }?.isChecked == true)
+        }
+    }
+
+
+    override fun channelsCount(): Int = subjectImportChannels.value?.size ?: 0
 
     override fun changeCheckStatus(model: ImportChannel) {
-        importChannelsSubject.onNext(
-            importChannelsSubject.value
+        subjectImportChannels.onNext(
+            subjectImportChannels.value
                 ?.map {
                     if (it == model) {
                         it.copy(isChecked = !it.isChecked)

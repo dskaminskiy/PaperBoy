@@ -13,9 +13,9 @@ interface Presenter<V : View> {
      * Called every time the view starts, the view is guarantee to be not null starting at this
      * method, until [.onStop] is called.
      *
-     * @param viewCreated true if it's the has been just created, false if its just restarting after a stop
+     * @param isViewCreated true if it's the has been just created, false if its just restarting after a stop
      */
-    fun onStart(viewCreated: Boolean)
+    fun onStart(isViewCreated: Boolean)
 
     /**
      * Called every time the view stops. After this method, the view will be null.
