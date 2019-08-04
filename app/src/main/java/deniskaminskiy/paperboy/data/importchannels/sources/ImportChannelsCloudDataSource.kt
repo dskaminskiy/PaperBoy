@@ -4,6 +4,7 @@ import deniskaminskiy.paperboy.core.Mapper
 import deniskaminskiy.paperboy.data.api.ApiService
 import deniskaminskiy.paperboy.data.api.PaperboyApi
 import deniskaminskiy.paperboy.data.api.json.importchannels.ImportChannelResponseJson
+import deniskaminskiy.paperboy.data.api.json.importchannels.ImportChannelsRequestJson
 import deniskaminskiy.paperboy.data.importchannels.ImportChannel
 import deniskaminskiy.paperboy.data.importchannels.sources.mappers.ImportChannelFromResponseJsonMapper
 import io.reactivex.Completable
@@ -27,6 +28,7 @@ class ImportChannelsCloudDataSourceImpl(
         .map { it.data.map(mapper::map) }
         .toObservable()
 
-    override fun subscribeChannels(ids: List<Long>): Completable = api.subscribeChannels(ids)
+    override fun subscribeChannels(ids: List<Long>): Completable =
+        api.subscribeChannels(ImportChannelsRequestJson(ids))
 
 }

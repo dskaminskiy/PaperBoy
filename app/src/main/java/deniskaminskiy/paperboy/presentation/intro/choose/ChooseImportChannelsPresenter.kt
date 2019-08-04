@@ -68,9 +68,9 @@ class ChooseImportChannelsPresenter(
     private fun subscribeChannels() {
         disposableSubscribeChannels.disposeIfNotNull()
         disposableSubscribeChannels = interactor.subscribeChannels()
-            .doOnSubscribe { view?.showLoading() }
-            .doOnEvent { view?.hideLoading() }
             .compose(composer.completable())
+            .doOnSubscribe { view?.showLoading() }
+            .doFinally { view?.hideLoading() }
             .subscribe({
                 view?.showRemoveTelegramChannels()
             }, ::defaultOnError)
