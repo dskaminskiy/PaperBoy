@@ -4,7 +4,7 @@ import android.os.Bundle
 import deniskaminskiy.paperboy.R
 import deniskaminskiy.paperboy.core.BaseActivity
 import deniskaminskiy.paperboy.core.OnAnimationLifecycleListener
-import deniskaminskiy.paperboy.presentation.intro.choose.ChooseImportChannelsFragment
+import deniskaminskiy.paperboy.presentation.auth.phone.AuthPhoneFragment
 import deniskaminskiy.paperboy.presentation.view.TopPopupPresentModel
 import deniskaminskiy.paperboy.utils.ContextDelegateFactory
 import deniskaminskiy.paperboy.utils.open
