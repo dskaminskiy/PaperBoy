@@ -87,7 +87,7 @@ class HomePresenter(
             }
 
     fun onRefresh() {
-        //loadChannels()
+        view?.disableScrolling()
     }
 
 

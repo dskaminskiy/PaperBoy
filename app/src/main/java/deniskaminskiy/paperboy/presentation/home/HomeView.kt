@@ -10,6 +10,10 @@ interface HomeView : View {
 
     fun show(items: List<SuperItemPresentItemModel>)
 
+    fun disableScrolling()
+
+    fun enableScrolling()
+
     fun showLoading()
 
 }
