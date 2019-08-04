@@ -25,4 +25,6 @@
     <string name="you_want_more">You want more?</string>
     <string name="drop_this_shit">Drop this shit</string>
     <string name="printing_new_papers" tools:ignore="TypographyEllipsis">Printing new papers...</string>
+    <string name="no_network_connection">No network connection</string>
+    <string name="please_fix_it_and_try_again">Please fix it and try again</string>
 </resources>

@@ -68,7 +68,7 @@ abstract class BasePresenterImpl<V : View>(
     }
 
     protected fun showUnknownTopPopupError() {
-        view?.showTopPopup(ErrorFactory.unknownError)
+        view?.showTopPopup(ErrorFactory.errorUnknown)
     }
 
     private fun showCustomTopPopupError(
@@ -78,7 +78,7 @@ abstract class BasePresenterImpl<V : View>(
         @ColorInt iconColor: Int = -1
     ) {
         view?.showTopPopup(
-            ErrorFactory.unknownError.let { default ->
+            ErrorFactory.errorUnknown.let { default ->
                 TopPopupPresentModel(
                     title = if (title.isNotBlank()) title else default.title,
                     subtitle = if (subtitle.isNotBlank()) subtitle else default.subtitle,
@@ -87,6 +87,12 @@ abstract class BasePresenterImpl<V : View>(
                 )
             }
         )
+    }
+
+    protected fun showCustomTopPopupError(
+        model: TopPopupPresentModel
+    ) {
+        view?.showTopPopup(model)
     }
 
 }

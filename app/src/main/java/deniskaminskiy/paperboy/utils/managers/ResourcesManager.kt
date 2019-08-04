@@ -48,6 +48,9 @@ interface ResourcesManager {
         val somethingHappened: String
         val sometimesShitHappens: String
 
+        val noNetworkConnection: String
+        val pleaseFixItAndTryAgain: String
+
     }
 
     interface Fonts {
