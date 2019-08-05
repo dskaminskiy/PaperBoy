@@ -74,6 +74,8 @@ class MiddleItemView @JvmOverloads constructor(
         set(value) {
             field = value
 
+            val visibleImageView = if (ivIcon.isVisible) ivIcon else ivImage
+
             value?.let {
                 IconRendererFactory.create(
                     icon = it,
@@ -81,8 +83,8 @@ class MiddleItemView @JvmOverloads constructor(
                     placeholder = iconPlaceholder
                 )
             }
-                ?.render(ivIcon)
-                ?: ivIcon.setImageDrawable(null)
+                ?.render(visibleImageView)
+                ?: visibleImageView.setImageDrawable(null)
         }
 
     var iconBackgroundColor: Int = palette.print30
@@ -131,6 +133,9 @@ class MiddleItemView @JvmOverloads constructor(
 
         isDivier = model.isDivider
 
+        ivIcon goneIf (model.icon !is MiddleItemIconConstant)
+        ivImage goneIf (model.icon is MiddleItemIconConstant)
+
         when (model.icon) {
             is MiddleItemIconDefault -> {
                 icon = null
@@ -175,8 +180,7 @@ data class MiddleItemPresentModel(
 
 sealed class MiddleItemIcon
 
-object
-MiddleItemIconDefault : MiddleItemIcon()
+object MiddleItemIconDefault : MiddleItemIcon()
 
 data class MiddleItemIconConstant(
     val icon: ConstantIcon? = null,
