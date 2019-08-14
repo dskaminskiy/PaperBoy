@@ -6,9 +6,8 @@ import android.util.AttributeSet
 import android.view.View
 import android.widget.FrameLayout
 import deniskaminskiy.paperboy.R
+import deniskaminskiy.paperboy.utils.compatColor
 import deniskaminskiy.paperboy.utils.dp
-import deniskaminskiy.paperboy.utils.managers.AndroidResourcesManager
-import deniskaminskiy.paperboy.utils.managers.ResourcesManager
 import deniskaminskiy.paperboy.utils.view.goneIf
 import deniskaminskiy.paperboy.utils.view.isVisible
 import kotlinx.android.synthetic.main.view_check_item.view.*
@@ -23,8 +22,6 @@ class CheckItemView @JvmOverloads constructor(
         private const val EXTRA_TITLE_CORNER_RADIUS = 4
         private const val EXTRA_TITLE_STROKE_WIDTH = 1
     }
-
-    private val palette: ResourcesManager.Colors by lazy { AndroidResourcesManager.create(context).colors }
 
     private val dpStrokeWidth = EXTRA_TITLE_STROKE_WIDTH.dp(context)
     private val dpCornerRadius = EXTRA_TITLE_CORNER_RADIUS.dp(context).toFloat()
@@ -62,7 +59,7 @@ class CheckItemView @JvmOverloads constructor(
         tvExtra.background = GradientDrawable().apply {
             shape = GradientDrawable.RECTANGLE
             cornerRadius = dpCornerRadius
-            setStroke(dpStrokeWidth, palette.print15)
+            setStroke(dpStrokeWidth, context.compatColor(R.color.print15))
         }
 
         val a = context.theme.obtainStyledAttributes(attrs, R.styleable.CheckItemView, 0, 0)

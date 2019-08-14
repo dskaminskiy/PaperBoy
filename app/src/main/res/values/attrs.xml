@@ -94,4 +94,16 @@
         <attr name="iconBackgroundColor"/>
     </declare-styleable>
 
+    <declare-styleable name="PostHeaderView">
+        <attr name="title"/>
+        <attr name="subtitle"/>
+        <attr name="leftIconConstant"/>
+        <attr name="rightIconConstant"/>
+        <attr name="leftIconColor"/>
+        <attr name="rightIconColor"/>
+        <attr name="isDivider"/>
+        <attr name="subtitleColor"/>
+        <attr name="titleColor"/>
+    </declare-styleable>
+
 </resources>

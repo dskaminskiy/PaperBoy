@@ -6,7 +6,7 @@ import android.util.AttributeSet
 import android.view.View
 import android.widget.FrameLayout
 import deniskaminskiy.paperboy.R
-import deniskaminskiy.paperboy.utils.managers.AndroidResourcesManager
+import deniskaminskiy.paperboy.utils.compatColor
 import kotlinx.android.synthetic.main.view_loading.view.*
 
 class LoadingView @JvmOverloads constructor(
@@ -20,7 +20,7 @@ class LoadingView @JvmOverloads constructor(
 
         vProgress.background = GradientDrawable().apply {
             shape = GradientDrawable.OVAL
-            setColor(AndroidResourcesManager.create(context).colors.paper)
+            setColor(context.compatColor(R.color.paper))
         }
     }
 

@@ -18,8 +18,8 @@ import deniskaminskiy.paperboy.utils.icon.Icon
 import deniskaminskiy.paperboy.utils.icon.IconFactory
 import deniskaminskiy.paperboy.utils.icon.IconRendererFactory
 import deniskaminskiy.paperboy.utils.icon.PaintedIcon
-import deniskaminskiy.paperboy.utils.managers.AndroidResourcesManager
-import deniskaminskiy.paperboy.utils.managers.ResourcesManager
+import deniskaminskiy.paperboy.utils.managers.AndroidResourcesProvider
+import deniskaminskiy.paperboy.utils.managers.ResourcesProvider
 import deniskaminskiy.paperboy.utils.view.gone
 import deniskaminskiy.paperboy.utils.view.visible
 import kotlinx.android.synthetic.main.view_top_popup.view.*
@@ -46,7 +46,7 @@ class TopPopupView @JvmOverloads constructor(
         private const val ALPHA_GONE = 0f
     }
 
-    private val palette: ResourcesManager.Colors by lazy { AndroidResourcesManager.create(context).colors }
+    private val resources: ResourcesProvider by lazy { AndroidResourcesProvider.create(context) }
 
     private val dpCornerRadius = CORNER_RADIUS.dp(context).toFloat()
 
@@ -54,13 +54,18 @@ class TopPopupView @JvmOverloads constructor(
         GradientDrawable().apply {
             shape = GradientDrawable.RECTANGLE
             cornerRadius = dpCornerRadius
-            setColor(palette.print100)
+            setColor(resources.provideColor(R.color.print100))
         }
     }
 
     private val animShow = AnimatorSet().apply {
         playTogether(
-            ObjectAnimator.ofFloat(this@TopPopupView, PROPERTY_TRANSLATION_Y, TRANSLATION_Y_OFFSET, TRANSLATION_Y_ORIGIN),
+            ObjectAnimator.ofFloat(
+                this@TopPopupView,
+                PROPERTY_TRANSLATION_Y,
+                TRANSLATION_Y_OFFSET,
+                TRANSLATION_Y_ORIGIN
+            ),
             ObjectAnimator.ofFloat(this@TopPopupView, PROPERTY_ALPHA, ALPHA_GONE, ALPHA_VISIBLE)
         )
         interpolator = AccelerateDecelerateInterpolator()
@@ -69,7 +74,12 @@ class TopPopupView @JvmOverloads constructor(
 
     private val animHide = AnimatorSet().apply {
         playTogether(
-            ObjectAnimator.ofFloat(this@TopPopupView, PROPERTY_TRANSLATION_Y, TRANSLATION_Y_ORIGIN, TRANSLATION_Y_OFFSET),
+            ObjectAnimator.ofFloat(
+                this@TopPopupView,
+                PROPERTY_TRANSLATION_Y,
+                TRANSLATION_Y_ORIGIN,
+                TRANSLATION_Y_OFFSET
+            ),
             ObjectAnimator.ofFloat(this@TopPopupView, PROPERTY_ALPHA, ALPHA_VISIBLE, ALPHA_GONE)
         )
         duration = DURATION_ANIM
@@ -124,13 +134,19 @@ class TopPopupView @JvmOverloads constructor(
         show(
             TopPopupPresentModel(
                 title = a.getString(R.styleable.TopPopupView_title) ?: "",
-                titleColor = a.getColor(R.styleable.TopPopupView_titleColor, palette.paper),
+                titleColor = a.getColor(R.styleable.TopPopupView_titleColor, resources.provideColor(R.color.paper)),
                 subtitle = a.getString(R.styleable.TopPopupView_subtitle) ?: "",
-                subtitleColor = a.getColor(R.styleable.TopPopupView_subtitleColor, palette.print40),
+                subtitleColor = a.getColor(
+                    R.styleable.TopPopupView_subtitleColor,
+                    resources.provideColor(R.color.print40)
+                ),
                 icon = a.getInt(R.styleable.TopPopupView_iconConstant, -1)
                     .takeIf { it != -1 }?.let(IconFactory::create),
-                iconColor = a.getInt(R.styleable.TopPopupView_iconColor, palette.marlboroNew),
-                backgroundColor = a.getColor(R.styleable.TopPopupView_backgroundColor, palette.print100)
+                iconColor = a.getInt(R.styleable.TopPopupView_iconColor, resources.provideColor(R.color.marlboroNew)),
+                backgroundColor = a.getColor(
+                    R.styleable.TopPopupView_backgroundColor,
+                    resources.provideColor(R.color.print100)
+                )
             )
         )
 

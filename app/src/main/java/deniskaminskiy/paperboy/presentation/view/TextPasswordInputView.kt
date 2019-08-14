@@ -11,8 +11,8 @@ import android.view.View.OnFocusChangeListener
 import android.widget.LinearLayout
 import deniskaminskiy.paperboy.R
 import deniskaminskiy.paperboy.utils.dp
-import deniskaminskiy.paperboy.utils.managers.AndroidResourcesManager
-import deniskaminskiy.paperboy.utils.managers.ResourcesManager
+import deniskaminskiy.paperboy.utils.managers.AndroidResourcesProvider
+import deniskaminskiy.paperboy.utils.managers.ResourcesProvider
 import deniskaminskiy.paperboy.utils.view.addOnTextChangedListener
 import kotlinx.android.synthetic.main.view_number_input.view.*
 
@@ -36,7 +36,7 @@ class TextPasswordInputView @JvmOverloads constructor(
     var onBackspacePressedWithEmptyText: OnBackspacePressedWithEmptyText = {}
     var onFocusChanged: OnFocusChanged = {}
 
-    private val palette: ResourcesManager.Colors by lazy { AndroidResourcesManager.create(context).colors }
+    private val resources: ResourcesProvider by lazy { AndroidResourcesProvider.create(context) }
 
     var text: String
         set(value) {
@@ -54,7 +54,7 @@ class TextPasswordInputView @JvmOverloads constructor(
         set(value) {
             field = value
             background = defaultBackground.apply {
-                setStroke(dpStrokeWidth, if (value) palette.admiral else Color.TRANSPARENT)
+                setStroke(dpStrokeWidth, if (value) resources.provideColor(R.color.admiral) else Color.TRANSPARENT)
             }
             requestLayout()
         }
@@ -63,7 +63,7 @@ class TextPasswordInputView @JvmOverloads constructor(
         GradientDrawable().apply {
             shape = GradientDrawable.RECTANGLE
             cornerRadius = dpCornerRadius
-            setColor(palette.print15)
+            setColor(resources.provideColor(R.color.print15))
         }
     }
 

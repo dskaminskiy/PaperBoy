@@ -11,7 +11,7 @@ import deniskaminskiy.paperboy.presentation.base.SuperAdapter
 import deniskaminskiy.paperboy.presentation.intro.remove.RemoveTelegramChannelsFragment
 import deniskaminskiy.paperboy.utils.Constants
 import deniskaminskiy.paperboy.utils.hideApp
-import deniskaminskiy.paperboy.utils.managers.AndroidResourcesManager
+import deniskaminskiy.paperboy.utils.managers.AndroidResourcesProvider
 import deniskaminskiy.paperboy.utils.open
 import deniskaminskiy.paperboy.utils.view.gone
 import deniskaminskiy.paperboy.utils.view.isGone
@@ -40,7 +40,7 @@ class ChooseImportChannelsFragment : BaseFragment<ChooseImportChannelsPresenter,
 
         presenter = ChooseImportChannelsPresenter(
             view = this,
-            resources = AndroidResourcesManager.create(this)
+            resources = AndroidResourcesProvider.create(this)
         ).apply {
             tvSkip.setOnClickListener { onSkipClick() }
             vFab.setOnClickListener { onFabClick() }

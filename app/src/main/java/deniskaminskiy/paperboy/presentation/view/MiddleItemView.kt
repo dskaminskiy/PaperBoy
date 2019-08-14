@@ -1,17 +1,18 @@
 package deniskaminskiy.paperboy.presentation.view
 
 import android.content.Context
-import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
 import android.util.AttributeSet
 import android.view.View
 import android.widget.FrameLayout
-import androidx.annotation.ColorInt
 import deniskaminskiy.paperboy.R
+import deniskaminskiy.paperboy.presentation.view.data.ItemConstantIconPresModel
+import deniskaminskiy.paperboy.presentation.view.data.ItemDefaultIconPresModel
+import deniskaminskiy.paperboy.presentation.view.data.ItemIconPresModel
 import deniskaminskiy.paperboy.utils.dp
-import deniskaminskiy.paperboy.utils.icon.*
-import deniskaminskiy.paperboy.utils.managers.AndroidResourcesManager
-import deniskaminskiy.paperboy.utils.managers.ResourcesManager
+import deniskaminskiy.paperboy.utils.icon.IconFactory
+import deniskaminskiy.paperboy.utils.managers.AndroidResourcesProvider
+import deniskaminskiy.paperboy.utils.managers.ResourcesProvider
 import deniskaminskiy.paperboy.utils.view.goneIf
 import deniskaminskiy.paperboy.utils.view.invisibleIf
 import deniskaminskiy.paperboy.utils.view.isVisible
@@ -19,30 +20,18 @@ import kotlinx.android.synthetic.main.view_middle_item.view.*
 
 class MiddleItemView @JvmOverloads constructor(
     context: Context,
-    attrs: AttributeSet? = null,
-    defStyleAttr: Int = 0
-) : FrameLayout(context, attrs, defStyleAttr) {
+    attrs: AttributeSet? = null
+) : FrameLayout(context, attrs) {
 
     companion object {
-        const val ICON_CORNER_RADIUS = 6
-
         const val EXTRA_TITLE_CORNER_RADIUS = 4
         const val EXTRA_TITLE_STROKE_WIDTH = 1
     }
 
-    private val palette: ResourcesManager.Colors by lazy { AndroidResourcesManager.create(context).colors }
+    private val resources: ResourcesProvider by lazy { AndroidResourcesProvider.create(context) }
 
     private val extraTitleStrokeWidthDp = EXTRA_TITLE_STROKE_WIDTH.dp(context)
     private val extraTitleCornerRadiusDp = EXTRA_TITLE_CORNER_RADIUS.dp(context).toFloat()
-
-    private val iconCornerRadiusDp = ICON_CORNER_RADIUS.dp(context).toFloat()
-
-    private val iconPlaceholder: Drawable by lazy {
-        GradientDrawable().apply {
-            shape = GradientDrawable.RECTANGLE
-            cornerRadius = iconCornerRadiusDp
-        }
-    }
 
     var title: String
         get() = tvTitle.text.toString()
@@ -70,27 +59,6 @@ class MiddleItemView @JvmOverloads constructor(
             vDivider invisibleIf !value
         }
 
-    var icon: Icon? = null
-        set(value) {
-            field = value
-
-            value?.let {
-                IconRendererFactory.create(
-                    icon = it,
-                    urlIconShape = UrlIconShape.SUPER_ELLIPSE,
-                    placeholder = iconPlaceholder
-                )
-            }
-                ?.render(ivIcon)
-                ?: ivIcon.setImageDrawable(null)
-        }
-
-    var iconBackgroundColor: Int = palette.print30
-        set(value) {
-            field = if (value != -1) value else palette.print30
-            updateIconBackground()
-        }
-
     init {
         View.inflate(context, R.layout.view_middle_item, this)
 
@@ -102,7 +70,7 @@ class MiddleItemView @JvmOverloads constructor(
                 subtitle = a.getString(R.styleable.MiddleItemView_subtitle) ?: "",
                 extraTitle = a.getString(R.styleable.MiddleItemView_extraTitle) ?: "",
                 isDivider = a.getBoolean(R.styleable.MiddleItemView_isDivider, true),
-                icon = MiddleItemIconConstant(
+                icon = ItemConstantIconPresModel(
                     icon = a.getInt(R.styleable.MiddleItemView_iconConstant, -1)
                         .takeIf { it != -1 }?.let(IconFactory::create),
                     iconColor = a.getInt(R.styleable.MiddleItemView_iconColor, -1),
@@ -118,10 +86,8 @@ class MiddleItemView @JvmOverloads constructor(
         tvExtra.background = GradientDrawable().apply {
             shape = GradientDrawable.RECTANGLE
             cornerRadius = extraTitleCornerRadiusDp
-            setStroke(extraTitleStrokeWidthDp, palette.print15)
+            setStroke(extraTitleStrokeWidthDp, resources.provideColor(R.color.print15))
         }
-
-        updateIconBackground()
     }
 
     fun show(model: MiddleItemPresentModel) {
@@ -131,36 +97,7 @@ class MiddleItemView @JvmOverloads constructor(
 
         isDivier = model.isDivider
 
-        when (model.icon) {
-            is MiddleItemIconDefault -> {
-                icon = null
-            }
-            is MiddleItemIconConstant -> {
-                icon = model.icon.icon
-                setIconColor(model.icon.iconColor)
-                iconBackgroundColor = model.icon.backgroundColor
-
-            }
-            is MiddleItemIconUrl -> {
-                icon = UrlIcon(model.icon.url)
-            }
-        }
-    }
-
-    private fun setIconColor(@ColorInt color: Int) {
-        if (color != -1) {
-            icon?.let {
-                if (it is PaintedIcon) icon = it.toColor(context, color)
-            }
-        }
-    }
-
-    private fun updateIconBackground() {
-        ivIcon.background = GradientDrawable().apply {
-            shape = GradientDrawable.RECTANGLE
-            cornerRadius = iconCornerRadiusDp
-            setColor(iconBackgroundColor)
-        }
+        ivFlip.show(model.icon)
     }
 
 }
@@ -170,20 +107,5 @@ data class MiddleItemPresentModel(
     val subtitle: String = "",
     val extraTitle: String = "",
     val isDivider: Boolean = true,
-    val icon: MiddleItemIcon = MiddleItemIconDefault
+    val icon: ItemIconPresModel = ItemDefaultIconPresModel
 )
-
-sealed class MiddleItemIcon
-
-object
-MiddleItemIconDefault : MiddleItemIcon()
-
-data class MiddleItemIconConstant(
-    val icon: ConstantIcon? = null,
-    @ColorInt val iconColor: Int = -1,
-    @ColorInt val backgroundColor: Int = -1
-) : MiddleItemIcon()
-
-data class MiddleItemIconUrl(
-    val url: String
-) : MiddleItemIcon()

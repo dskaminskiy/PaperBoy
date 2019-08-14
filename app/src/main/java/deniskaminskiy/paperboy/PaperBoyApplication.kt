@@ -5,7 +5,7 @@ import deniskaminskiy.paperboy.data.AppDatabase
 import deniskaminskiy.paperboy.data.api.ApiService
 import deniskaminskiy.paperboy.utils.ContextDelegateFactory
 import deniskaminskiy.paperboy.utils.ErrorFactory
-import deniskaminskiy.paperboy.utils.managers.AndroidResourcesManager
+import deniskaminskiy.paperboy.utils.managers.AndroidResourcesProvider
 
 class PaperBoyApplication : MultiDexApplication() {
 
@@ -16,7 +16,7 @@ class PaperBoyApplication : MultiDexApplication() {
 
         ApiService.init(contextDelegate)
         AppDatabase.init(this)
-        ErrorFactory.init(AndroidResourcesManager.create(contextDelegate))
+        ErrorFactory.init(AndroidResourcesProvider.create(contextDelegate))
 
     }
 

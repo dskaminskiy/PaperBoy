@@ -4,14 +4,15 @@ import android.content.Context
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import deniskaminskiy.paperboy.R
 import deniskaminskiy.paperboy.core.Mapper
 import deniskaminskiy.paperboy.presentation.view.CheckItemPresentModel
 import deniskaminskiy.paperboy.presentation.view.CheckItemView
 import deniskaminskiy.paperboy.presentation.view.MiddleItemPresentModel
 import deniskaminskiy.paperboy.presentation.view.MiddleItemView
 import deniskaminskiy.paperboy.utils.OnItemClick
+import deniskaminskiy.paperboy.utils.compatColor
 import deniskaminskiy.paperboy.utils.dp
-import deniskaminskiy.paperboy.utils.managers.AndroidResourcesManager
 
 class SuperAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -98,7 +99,7 @@ class SuperAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private inner class DividerItemViewHolder(
         context: Context,
         dividerView: View = View(context).apply {
-            setBackgroundColor(AndroidResourcesManager.create(context).colors.print20)
+            setBackgroundColor(context.compatColor(R.color.print20))
             layoutParams = RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT, 1.dp(context))
                 .apply {
                     bottomMargin = 8.dp(context)

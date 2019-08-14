@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import deniskaminskiy.paperboy.R
 import deniskaminskiy.paperboy.core.BaseFragment
 import deniskaminskiy.paperboy.presentation.home.HomeFragment
-import deniskaminskiy.paperboy.utils.managers.AndroidResourcesManager
+import deniskaminskiy.paperboy.utils.managers.AndroidResourcesProvider
 import deniskaminskiy.paperboy.utils.replace
 import kotlinx.android.synthetic.main.fragment_remove_telegram_channels.*
 
@@ -28,7 +28,7 @@ class RemoveTelegramChannelsFragment : BaseFragment<RemoveTelegramChannelsPresen
 
         presenter = RemoveTelegramChannelsPresenter(
             view = this,
-            resources = AndroidResourcesManager.create(this)
+            resources = AndroidResourcesProvider.create(this)
         ).apply {
             tvMaybeLater.setOnClickListener { onMaybeLayterClick() }
         }

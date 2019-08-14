@@ -12,8 +12,8 @@ import deniskaminskiy.paperboy.utils.icon.Icon
 import deniskaminskiy.paperboy.utils.icon.IconFactory
 import deniskaminskiy.paperboy.utils.icon.IconRendererFactory
 import deniskaminskiy.paperboy.utils.icon.PaintedIcon
-import deniskaminskiy.paperboy.utils.managers.AndroidResourcesManager
-import deniskaminskiy.paperboy.utils.managers.ResourcesManager
+import deniskaminskiy.paperboy.utils.managers.AndroidResourcesProvider
+import deniskaminskiy.paperboy.utils.managers.ResourcesProvider
 import deniskaminskiy.paperboy.utils.view.goneIf
 import kotlinx.android.synthetic.main.view_button.view.*
 
@@ -27,8 +27,12 @@ class ButtonView @JvmOverloads constructor(
         const val CORNER_RADIUS = 12
     }
 
-    private val palette: ResourcesManager.Colors by lazy { AndroidResourcesManager.create(context).colors }
     private val dpCornerRadius = CORNER_RADIUS.dp(context).toFloat()
+
+    private val resources: ResourcesProvider by lazy { AndroidResourcesProvider.create(context) }
+
+    private val colorMarlboroNew: Int by lazy { resources.provideColor(R.color.marlboroNew) }
+    private val colorPrint100: Int by lazy { resources.provideColor(R.color.print100) }
 
     private val defaultBackground by lazy {
         GradientDrawable().apply {
@@ -68,7 +72,7 @@ class ButtonView @JvmOverloads constructor(
             }
         }
 
-    var mBackgroundColor: Int = palette.print100
+    var mBackgroundColor: Int = colorPrint100
         set(value) {
             field = value
             if (value != -1) {
@@ -86,14 +90,14 @@ class ButtonView @JvmOverloads constructor(
         show(
             ButtonPresentModel(
                 title = a.getString(R.styleable.ButtonView_title) ?: "",
-                titleColor = a.getColor(R.styleable.ButtonView_titleColor, palette.marlboroNew),
+                titleColor = a.getColor(R.styleable.ButtonView_titleColor, colorMarlboroNew),
                 leftIcon = a.getInt(R.styleable.ButtonView_leftIconConstant, -1)
                     .takeIf { it != -1 }?.let(IconFactory::create),
-                leftIconColor = a.getColor(R.styleable.ButtonView_leftIconColor, palette.marlboroNew),
+                leftIconColor = a.getColor(R.styleable.ButtonView_leftIconColor, colorMarlboroNew),
                 rightIcon = a.getInt(R.styleable.ButtonView_rightIconConstant, -1)
                     .takeIf { it != -1 }?.let(IconFactory::create),
-                rightIconColor = a.getColor(R.styleable.ButtonView_rightIconColor, palette.marlboroNew),
-                backgroundColor = a.getColor(R.styleable.ButtonView_backgroundColor, palette.print100)
+                rightIconColor = a.getColor(R.styleable.ButtonView_rightIconColor, colorMarlboroNew),
+                backgroundColor = a.getColor(R.styleable.ButtonView_backgroundColor, colorPrint100)
             )
         )
 
@@ -138,7 +142,7 @@ class ButtonView @JvmOverloads constructor(
     override fun setEnabled(enabled: Boolean) {
         super.setEnabled(enabled)
         background = defaultBackground.apply {
-            setColor(if (enabled) mBackgroundColor else palette.print40)
+            setColor(if (enabled) mBackgroundColor else resources.provideColor(R.color.print40))
         }
     }
 

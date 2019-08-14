@@ -68,6 +68,13 @@
         <item name="android:letterSpacing">0.017</item>
     </style>
 
+    <style name="TextStyle.Sans.Medium.12" parent="android:Widget.TextView">
+        <item name="android:textSize">12sp</item>
+        <item name="android:fontFamily">@font/ibm_plex_sans_medium</item>
+        <item name="android:textColor">@color/print100</item>
+        <item name="android:letterSpacing">0.017</item>
+    </style>
+
     <style name="TextStyle.Sans.Bold.12" parent="android:Widget.TextView">
         <item name="android:textSize">12sp</item>
         <item name="android:fontFamily">@font/ibm_plex_sans_bold</item>

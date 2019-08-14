@@ -15,7 +15,7 @@ import deniskaminskiy.paperboy.presentation.base.SuperItemPresentItemModel
 import deniskaminskiy.paperboy.presentation.view.SwipeRefreshPrintingHeader
 import deniskaminskiy.paperboy.utils.OutlineProviderFactory
 import deniskaminskiy.paperboy.utils.hideApp
-import deniskaminskiy.paperboy.utils.managers.AndroidResourcesManager
+import deniskaminskiy.paperboy.utils.managers.AndroidResourcesProvider
 import deniskaminskiy.paperboy.utils.view.visible
 import kotlinx.android.synthetic.main.fragment_home.*
 
@@ -53,7 +53,7 @@ class HomeFragment : BaseFragment<HomePresenter, HomeView>(), HomeView {
 
         vAppBar.outlineProvider = OutlineProviderFactory.outlineProviderDefault
 
-        presenter = HomePresenter(this, AndroidResourcesManager.create(this))
+        presenter = HomePresenter(this, AndroidResourcesProvider.create(this))
             .apply {
                 vSwipeRefresh.setOnRefreshListener { onRefresh() }
             }

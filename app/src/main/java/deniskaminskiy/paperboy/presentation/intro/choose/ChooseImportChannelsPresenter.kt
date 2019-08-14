@@ -1,6 +1,7 @@
 package deniskaminskiy.paperboy.presentation.intro.choose
 
 import android.text.SpannableStringBuilder
+import deniskaminskiy.paperboy.R
 import deniskaminskiy.paperboy.core.BasePresenterImpl
 import deniskaminskiy.paperboy.core.Mapper
 import deniskaminskiy.paperboy.data.importchannels.ImportChannel
@@ -9,7 +10,7 @@ import deniskaminskiy.paperboy.domain.intro.ChooseImportChannelsInteractorImpl
 import deniskaminskiy.paperboy.presentation.base.CheckItemPresentItemModel
 import deniskaminskiy.paperboy.presentation.base.SuperItemPresentItemModel
 import deniskaminskiy.paperboy.presentation.view.CheckItemPresentModel
-import deniskaminskiy.paperboy.utils.managers.ResourcesManager
+import deniskaminskiy.paperboy.utils.managers.ResourcesProvider
 import deniskaminskiy.paperboy.utils.paintWord
 import deniskaminskiy.paperboy.utils.rx.Composer
 import deniskaminskiy.paperboy.utils.rx.SchedulerComposerFactory
@@ -18,7 +19,7 @@ import io.reactivex.disposables.Disposable
 
 class ChooseImportChannelsPresenter(
     view: ChooseImportChannelsView,
-    private val resources: ResourcesManager,
+    private val resources: ResourcesProvider,
     private val interactor: ChooseImportChannelsInteractor =
         ChooseImportChannelsInteractorImpl(),
     private val composer: Composer = SchedulerComposerFactory.android(),
@@ -27,12 +28,18 @@ class ChooseImportChannelsPresenter(
 ) : BasePresenterImpl<ChooseImportChannelsView>(view) {
 
     private val title: SpannableStringBuilder by lazy {
-        resources.strings.chooseChannelsYouWantImportSentence
-            .paintWord(resources.strings.chooseChannelsYouWantImportAccentWord, resources.colors.marlboroNew)
+        resources.provideString(R.string.choose_channels_you_want_import_sentence)
+            .paintWord(
+                resources.provideString(R.string.choose_channels_you_want_import_accent_word),
+                resources.provideColor(R.color.marlboroNew)
+            )
     }
 
     private val subtitle: String
-        get() = resources.strings.youHaveChannels(interactor.channelsCount())
+        get() = resources.provideString(
+            R.string.template_you_have_channels_you_always_can_import,
+            interactor.channelsCount()
+        )
 
     private var disposableSubscribeChannels: Disposable? = null
 
