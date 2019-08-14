@@ -6,7 +6,7 @@ import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
 import deniskaminskiy.paperboy.presentation.main.MainView
-import deniskaminskiy.paperboy.presentation.view.TopPopupPresentModel
+import deniskaminskiy.paperboy.presentation.view.TopPopupPresModel
 import deniskaminskiy.paperboy.utils.showKeyboard
 
 abstract class BaseFragment<P : Presenter<V>, V : View> : Fragment(), View,
@@ -78,7 +78,7 @@ abstract class BaseFragment<P : Presenter<V>, V : View> : Fragment(), View,
         }
     }
 
-    override fun showTopPopup(model: TopPopupPresentModel, animListener: OnAnimationLifecycleListener?) {
+    override fun showTopPopup(model: TopPopupPresModel, animListener: OnAnimationLifecycleListener?) {
         (activity as? MainView)?.showTopPopup(model, animListener ?: this)
     }
 

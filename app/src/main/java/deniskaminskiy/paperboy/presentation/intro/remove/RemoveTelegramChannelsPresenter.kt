@@ -21,7 +21,7 @@ class RemoveTelegramChannelsPresenter(
 
     override fun onStart(isViewCreated: Boolean) {
         super.onStart(isViewCreated)
-        view?.show(RemoveTelegramChannelsPresentModel(title))
+        view?.show(RemoveTelegramChannelsPresModel(title))
     }
 
     fun onMaybeLayterClick() {

@@ -9,7 +9,7 @@ import deniskaminskiy.paperboy.domain.intro.ChooseImportChannelsInteractor
 import deniskaminskiy.paperboy.domain.intro.ChooseImportChannelsInteractorImpl
 import deniskaminskiy.paperboy.presentation.base.CheckItemPresentItemModel
 import deniskaminskiy.paperboy.presentation.base.SuperItemPresentItemModel
-import deniskaminskiy.paperboy.presentation.view.CheckItemPresentModel
+import deniskaminskiy.paperboy.presentation.view.CheckItemPresModel
 import deniskaminskiy.paperboy.utils.managers.ResourcesProvider
 import deniskaminskiy.paperboy.utils.paintWord
 import deniskaminskiy.paperboy.utils.rx.Composer
@@ -23,8 +23,8 @@ class ChooseImportChannelsPresenter(
     private val interactor: ChooseImportChannelsInteractor =
         ChooseImportChannelsInteractorImpl(),
     private val composer: Composer = SchedulerComposerFactory.android(),
-    private val mapperToPresentModel: Mapper<List<ImportChannel>, List<CheckItemPresentItemModel<ImportChannel>>> =
-        ChannelImportToPresentModelListMapper()
+    private val mapperToPresModel: Mapper<List<ImportChannel>, List<CheckItemPresentItemModel<ImportChannel>>> =
+        ChannelImportToPresModelListMapper()
 ) : BasePresenterImpl<ChooseImportChannelsView>(view) {
 
     private val title: SpannableStringBuilder by lazy {
@@ -63,10 +63,10 @@ class ChooseImportChannelsPresenter(
 
     private fun onChannelsImportUpdate(channels: List<ImportChannel>) {
         view?.show(
-            ChooseImportChannelsPresentModel(
+            ChooseImportChannelsPresModel(
                 title = title,
                 subtitle = subtitle,
-                channels = mapperToPresentModel.map(channels),
+                channels = mapperToPresModel.map(channels),
                 isFabVisible = channels.any { it.isChecked }
             )
         )
@@ -97,13 +97,13 @@ class ChooseImportChannelsPresenter(
 
 }
 
-class ChannelImportToPresentModelListMapper :
+class ChannelImportToPresModelListMapper :
     Mapper<List<ImportChannel>, List<CheckItemPresentItemModel<ImportChannel>>> {
     override fun map(from: List<ImportChannel>): List<CheckItemPresentItemModel<ImportChannel>> =
         from.map {
             CheckItemPresentItemModel(
                 element = it,
-                model = CheckItemPresentModel(
+                model = CheckItemPresModel(
                     title = it.title,
                     isDivider = from.last() != it,
                     isChecked = it.isChecked

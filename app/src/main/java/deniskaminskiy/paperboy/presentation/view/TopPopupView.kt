@@ -132,7 +132,7 @@ class TopPopupView @JvmOverloads constructor(
         val a = context.theme.obtainStyledAttributes(attrs, R.styleable.TopPopupView, 0, 0)
 
         show(
-            TopPopupPresentModel(
+            TopPopupPresModel(
                 title = a.getString(R.styleable.TopPopupView_title) ?: "",
                 titleColor = a.getColor(R.styleable.TopPopupView_titleColor, resources.provideColor(R.color.paper)),
                 subtitle = a.getString(R.styleable.TopPopupView_subtitle) ?: "",
@@ -153,7 +153,7 @@ class TopPopupView @JvmOverloads constructor(
         a.recycle()
     }
 
-    fun show(model: TopPopupPresentModel) {
+    fun show(model: TopPopupPresModel) {
         title = model.title
         subtitle = model.subtitle
         titleColor = model.titleColor
@@ -163,7 +163,7 @@ class TopPopupView @JvmOverloads constructor(
         setBackgroundColor(model.backgroundColor)
     }
 
-    fun showWithAnimation(model: TopPopupPresentModel, listener: OnAnimationLifecycleListener? = null) {
+    fun showWithAnimation(model: TopPopupPresModel, listener: OnAnimationLifecycleListener? = null) {
         show(model)
 
         if (animSet.isRunning || animSet.isStarted) {
@@ -220,7 +220,7 @@ class TopPopupView @JvmOverloads constructor(
 
 }
 
-data class TopPopupPresentModel(
+data class TopPopupPresModel(
     val title: String,
     val subtitle: String = "",
     @ColorInt val titleColor: Int = -1,

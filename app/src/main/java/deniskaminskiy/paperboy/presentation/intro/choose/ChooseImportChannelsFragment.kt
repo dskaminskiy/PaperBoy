@@ -51,7 +51,7 @@ class ChooseImportChannelsFragment : BaseFragment<ChooseImportChannelsPresenter,
         rvChannels.adapter = adapter
     }
 
-    override fun show(model: ChooseImportChannelsPresentModel) {
+    override fun show(model: ChooseImportChannelsPresModel) {
         tvTitle.text = model.title
 
         if (tvSubtitle.text.toString() != model.subtitle) {

@@ -34,7 +34,7 @@ class RemoveTelegramChannelsFragment : BaseFragment<RemoveTelegramChannelsPresen
         }
     }
 
-    override fun show(model: RemoveTelegramChannelsPresentModel) {
+    override fun show(model: RemoveTelegramChannelsPresModel) {
         tvTitle.text = model.title
     }
 

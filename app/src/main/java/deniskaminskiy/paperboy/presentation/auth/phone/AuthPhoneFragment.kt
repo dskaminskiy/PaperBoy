@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentManager
 import deniskaminskiy.paperboy.R
 import deniskaminskiy.paperboy.core.BaseFragment
 import deniskaminskiy.paperboy.presentation.auth.code.AuthCodeFragment
+import deniskaminskiy.paperboy.presentation.home.HomeFragment
 import deniskaminskiy.paperboy.presentation.intro.choose.ChooseImportChannelsFragment
 import deniskaminskiy.paperboy.utils.ContextDelegateFactory
 import deniskaminskiy.paperboy.utils.hideKeyboard
@@ -63,7 +64,7 @@ class AuthPhoneFragment : BaseFragment<AuthPhonePresenter, AuthPhoneView>(), Aut
         super.onDestroyView()
     }
 
-    override fun show(model: AuthPhonePresentModel) {
+    override fun show(model: AuthPhonePresModel) {
         hideLoading()
         ivRegion.text = model.regionAdditionalNumber
         ivPhone.text = model.phoneNumber

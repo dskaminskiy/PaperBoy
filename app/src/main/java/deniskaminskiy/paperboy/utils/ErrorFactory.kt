@@ -1,7 +1,7 @@
 package deniskaminskiy.paperboy.utils
 
 import deniskaminskiy.paperboy.R
-import deniskaminskiy.paperboy.presentation.view.TopPopupPresentModel
+import deniskaminskiy.paperboy.presentation.view.TopPopupPresModel
 import deniskaminskiy.paperboy.utils.icon.IconConstant
 import deniskaminskiy.paperboy.utils.icon.IconFactory
 import deniskaminskiy.paperboy.utils.managers.ResourcesProvider
@@ -13,8 +13,8 @@ object ErrorFactory {
 
     private var resources: ResourcesProvider? = null
 
-    val errorUnknown: TopPopupPresentModel by lazy {
-        TopPopupPresentModel(
+    val errorUnknown: TopPopupPresModel by lazy {
+        TopPopupPresModel(
             title = resources?.provideString(R.string.oops_something_happened) ?: "",
             subtitle = resources?.provideString(R.string.it_was_shit_sometimes_shit_happens) ?: "",
             icon = IconFactory.create(IconConstant.WARNING.constant),
@@ -22,8 +22,8 @@ object ErrorFactory {
         )
     }
 
-    val errorNoNetworkConnection: TopPopupPresentModel by lazy {
-        TopPopupPresentModel(
+    val errorNoNetworkConnection: TopPopupPresModel by lazy {
+        TopPopupPresModel(
             title = resources?.provideString(R.string.no_network_connection) ?: "",
             subtitle = resources?.provideString(R.string.please_fix_it_and_try_again) ?: "",
             icon = IconFactory.create(IconConstant.WARNING.constant),

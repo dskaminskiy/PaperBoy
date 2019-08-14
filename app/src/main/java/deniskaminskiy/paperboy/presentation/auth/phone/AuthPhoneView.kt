@@ -4,7 +4,7 @@ import deniskaminskiy.paperboy.core.View
 
 interface AuthPhoneView : View {
 
-    fun show(model: AuthPhonePresentModel)
+    fun show(model: AuthPhonePresModel)
 
     fun showLoading()
 
@@ -18,7 +18,7 @@ interface AuthPhoneView : View {
 
 }
 
-data class AuthPhonePresentModel(
+data class AuthPhonePresModel(
     val regionAdditionalNumber: String,
     val phoneNumber: String,
     val isNextButtonEnable: Boolean

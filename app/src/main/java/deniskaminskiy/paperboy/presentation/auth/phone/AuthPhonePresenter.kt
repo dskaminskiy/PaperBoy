@@ -21,8 +21,8 @@ class AuthPhonePresenter(
     private val interactor: AuthPhoneInteractor =
         AuthPhoneInteractorImpl(maxLengthReign, maxLengthPhone, contextDelegate),
     private val composer: Composer = SchedulerComposerFactory.android(),
-    private val mapper: Mapper<AuthPhone, AuthPhonePresentModel> =
-        AuthPhoneToPresentModelMapper(maxLengthPhone)
+    private val mapper: Mapper<AuthPhone, AuthPhonePresModel> =
+        AuthPhoneToPresModelMapper(maxLengthPhone)
 ) : BasePresenterImpl<AuthPhoneView>(view) {
 
     companion object {
@@ -77,11 +77,11 @@ class AuthPhonePresenter(
 
 }
 
-class AuthPhoneToPresentModelMapper(
+class AuthPhoneToPresModelMapper(
     private val maxLengthPhone: Int
-) : Mapper<AuthPhone, AuthPhonePresentModel> {
-    override fun map(from: AuthPhone): AuthPhonePresentModel =
-        AuthPhonePresentModel(
+) : Mapper<AuthPhone, AuthPhonePresModel> {
+    override fun map(from: AuthPhone): AuthPhonePresModel =
+        AuthPhonePresModel(
             regionAdditionalNumber = from.region.takeIf { it != -1 }?.toRegionFormat() ?: "+",
             phoneNumber = from.phone.takeIf { it != -1L }?.toFormatNumber() ?: "",
             isNextButtonEnable = from.phone.toString().length == maxLengthPhone

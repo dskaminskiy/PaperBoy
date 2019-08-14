@@ -10,7 +10,7 @@ import deniskaminskiy.paperboy.presentation.base.DividerPresentItemModel
 import deniskaminskiy.paperboy.presentation.base.MiddleItemPresentItemModel
 import deniskaminskiy.paperboy.presentation.base.MiddleItemToSuperItemPresentItemModelMapper
 import deniskaminskiy.paperboy.presentation.base.SuperItemPresentItemModel
-import deniskaminskiy.paperboy.presentation.view.MiddleItemPresentModel
+import deniskaminskiy.paperboy.presentation.view.MiddleItemPresModel
 import deniskaminskiy.paperboy.presentation.view.data.ItemConstantIconPresModel
 import deniskaminskiy.paperboy.presentation.view.data.ItemUrlIconPresModel
 import deniskaminskiy.paperboy.utils.icon.IconConstant
@@ -26,14 +26,14 @@ class HomePresenter(
     private val interactor: HomeInteractor = HomeInteractorImpl(),
     private val composer: Composer = SchedulerComposerFactory.android(),
     private val superMapper: Mapper<List<Channel>, List<SuperItemPresentItemModel>> =
-        MiddleItemToSuperItemPresentItemModelMapper(ChannelToMiddleItemPresentModelMapper())
+        MiddleItemToSuperItemPresentItemModelMapper(ChannelToMiddleItemPresModelMapper())
 ) : BasePresenterImpl<HomeView>(view) {
 
     // temp
     private val listHeader = listOf(
         MiddleItemPresentItemModel(
             Unit,
-            MiddleItemPresentModel(
+            MiddleItemPresModel(
                 title = "All unread posts",
                 extraTitle = "949",
                 icon = ItemConstantIconPresModel(
@@ -45,7 +45,7 @@ class HomePresenter(
         ),
         MiddleItemPresentItemModel(
             Unit,
-            MiddleItemPresentModel(
+            MiddleItemPresModel(
                 title = "Bookmarked",
                 extraTitle = "4",
                 icon = ItemConstantIconPresModel(
@@ -100,9 +100,9 @@ class HomePresenter(
 
 }
 
-class ChannelToMiddleItemPresentModelMapper : Mapper<Channel, MiddleItemPresentModel> {
-    override fun map(from: Channel): MiddleItemPresentModel =
-        MiddleItemPresentModel(
+class ChannelToMiddleItemPresModelMapper : Mapper<Channel, MiddleItemPresModel> {
+    override fun map(from: Channel): MiddleItemPresModel =
+        MiddleItemPresModel(
             title = "Some title",
             extraTitle = "4",
             isDivider = true,

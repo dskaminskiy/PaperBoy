@@ -88,7 +88,7 @@ class ButtonView @JvmOverloads constructor(
         val a = context.theme.obtainStyledAttributes(attrs, R.styleable.ButtonView, 0, 0)
 
         show(
-            ButtonPresentModel(
+            ButtonPresModel(
                 title = a.getString(R.styleable.ButtonView_title) ?: "",
                 titleColor = a.getColor(R.styleable.ButtonView_titleColor, colorMarlboroNew),
                 leftIcon = a.getInt(R.styleable.ButtonView_leftIconConstant, -1)
@@ -104,7 +104,7 @@ class ButtonView @JvmOverloads constructor(
         a.recycle()
     }
 
-    fun show(model: ButtonPresentModel) {
+    fun show(model: ButtonPresModel) {
         title = model.title
         titleColor = model.titleColor
 
@@ -148,7 +148,7 @@ class ButtonView @JvmOverloads constructor(
 
 }
 
-data class ButtonPresentModel(
+data class ButtonPresModel(
     val title: String,
     @ColorInt
     val titleColor: Int = -1,

@@ -16,7 +16,7 @@ class AuthCodePresenter(
     view: AuthCodeView,
     private val composer: Composer = SchedulerComposerFactory.android(),
     private val codeLength: Int = CODE_LENGTH,
-    private val mapper: Mapper<String, AuthCodePresentModel> = CodeStringToAuthCodePresentModelMapper(),
+    private val mapper: Mapper<String, AuthCodePresModel> = CodeStringToAuthCodePresModelMapper(),
     private val interactor: AuthCodeInteractor = AuthCodeInteractorImpl(codeLength)
 ) : BasePresenterImpl<AuthCodeView>(view) {
 
@@ -122,7 +122,7 @@ class AuthCodePresenter(
 
 }
 
-class CodeStringToAuthCodePresentModelMapper : Mapper<String, AuthCodePresentModel> {
-    override fun map(from: String): AuthCodePresentModel =
-        AuthCodePresentModel(from)
+class CodeStringToAuthCodePresModelMapper : Mapper<String, AuthCodePresModel> {
+    override fun map(from: String): AuthCodePresModel =
+        AuthCodePresModel(from)
 }

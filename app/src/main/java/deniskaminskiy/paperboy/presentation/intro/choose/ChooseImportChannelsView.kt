@@ -7,7 +7,7 @@ import deniskaminskiy.paperboy.presentation.base.CheckItemPresentItemModel
 
 interface ChooseImportChannelsView : View {
 
-    fun show(model: ChooseImportChannelsPresentModel)
+    fun show(model: ChooseImportChannelsPresModel)
 
     fun showLoading()
 
@@ -19,7 +19,7 @@ interface ChooseImportChannelsView : View {
 
 }
 
-data class ChooseImportChannelsPresentModel(
+data class ChooseImportChannelsPresModel(
     val title: SpannableStringBuilder,
     val subtitle: String,
     val channels: List<CheckItemPresentItemModel<ImportChannel>>,

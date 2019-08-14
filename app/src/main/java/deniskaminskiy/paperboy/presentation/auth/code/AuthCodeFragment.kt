@@ -61,7 +61,7 @@ class AuthCodeFragment : BaseFragment<AuthCodePresenter, AuthCodeView>(), AuthCo
         super.onDestroyView()
     }
 
-    override fun show(model: AuthCodePresentModel) {
+    override fun show(model: AuthCodePresModel) {
         vLoading.gone()
 
         val textLength = model.code.length

@@ -65,7 +65,7 @@ class MiddleItemView @JvmOverloads constructor(
         val a = context.theme.obtainStyledAttributes(attrs, R.styleable.MiddleItemView, 0, 0)
 
         show(
-            MiddleItemPresentModel(
+            MiddleItemPresModel(
                 title = a.getString(R.styleable.MiddleItemView_title) ?: "",
                 subtitle = a.getString(R.styleable.MiddleItemView_subtitle) ?: "",
                 extraTitle = a.getString(R.styleable.MiddleItemView_extraTitle) ?: "",
@@ -90,7 +90,7 @@ class MiddleItemView @JvmOverloads constructor(
         }
     }
 
-    fun show(model: MiddleItemPresentModel) {
+    fun show(model: MiddleItemPresModel) {
         title = model.title
         subtitle = model.subtitle
         extraTitle = model.extraTitle
@@ -102,7 +102,7 @@ class MiddleItemView @JvmOverloads constructor(
 
 }
 
-data class MiddleItemPresentModel(
+data class MiddleItemPresModel(
     val title: String,
     val subtitle: String = "",
     val extraTitle: String = "",

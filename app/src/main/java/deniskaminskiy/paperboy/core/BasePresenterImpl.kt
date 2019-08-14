@@ -1,7 +1,7 @@
 package deniskaminskiy.paperboy.core
 
 import androidx.annotation.ColorInt
-import deniskaminskiy.paperboy.presentation.view.TopPopupPresentModel
+import deniskaminskiy.paperboy.presentation.view.TopPopupPresModel
 import deniskaminskiy.paperboy.utils.ErrorFactory
 import deniskaminskiy.paperboy.utils.api.fold
 import deniskaminskiy.paperboy.utils.api.responseOrError
@@ -79,7 +79,7 @@ abstract class BasePresenterImpl<V : View>(
     ) {
         view?.showTopPopup(
             ErrorFactory.errorUnknown.let { default ->
-                TopPopupPresentModel(
+                TopPopupPresModel(
                     title = if (title.isNotBlank()) title else default.title,
                     subtitle = if (subtitle.isNotBlank()) subtitle else default.subtitle,
                     icon = icon ?: default.icon,
@@ -90,7 +90,7 @@ abstract class BasePresenterImpl<V : View>(
     }
 
     protected fun showCustomTopPopupError(
-        model: TopPopupPresentModel
+        model: TopPopupPresModel
     ) {
         view?.showTopPopup(model)
     }

@@ -5,12 +5,12 @@ import deniskaminskiy.paperboy.core.View
 
 interface RemoveTelegramChannelsView : View {
 
-    fun show(model: RemoveTelegramChannelsPresentModel)
+    fun show(model: RemoveTelegramChannelsPresModel)
 
     fun showHome()
 
 }
 
-data class RemoveTelegramChannelsPresentModel(
+data class RemoveTelegramChannelsPresModel(
     val title: SpannableStringBuilder
 )

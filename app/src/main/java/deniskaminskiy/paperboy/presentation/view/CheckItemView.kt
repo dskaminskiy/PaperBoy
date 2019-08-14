@@ -65,7 +65,7 @@ class CheckItemView @JvmOverloads constructor(
         val a = context.theme.obtainStyledAttributes(attrs, R.styleable.CheckItemView, 0, 0)
 
         show(
-            CheckItemPresentModel(
+            CheckItemPresModel(
                 title = a.getString(R.styleable.CheckItemView_title) ?: "",
                 extraTitle = a.getString(R.styleable.CheckItemView_extraTitle) ?: "",
                 isChecked = a.getBoolean(R.styleable.CheckItemView_isChecked, false),
@@ -76,7 +76,7 @@ class CheckItemView @JvmOverloads constructor(
         a.recycle()
     }
 
-    fun show(model: CheckItemPresentModel) {
+    fun show(model: CheckItemPresModel) {
         title = model.title
         extraTitle = model.extraTitle
         isChecked = model.isChecked
@@ -85,7 +85,7 @@ class CheckItemView @JvmOverloads constructor(
 
 }
 
-data class CheckItemPresentModel(
+data class CheckItemPresModel(
     val title: String,
     val extraTitle: String = "",
     val isChecked: Boolean = false,
