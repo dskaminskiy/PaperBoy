@@ -14,6 +14,8 @@
     <attr name="subtitleColor" format="color"/>
     <attr name="hintText" format="string"/>
     <attr name="iconBackgroundColor" format="color"/>
+    <attr name="leftIconBackgroundColor" format="color"/>
+    <attr name="rightIconBackgroundColor" format="color"/>
 
 
     <!-- ICONS -->
@@ -104,6 +106,8 @@
         <attr name="isDivider"/>
         <attr name="subtitleColor"/>
         <attr name="titleColor"/>
+        <attr name="leftIconBackgroundColor"/>
+        <attr name="rightIconBackgroundColor"/>
     </declare-styleable>
 
 </resources>
