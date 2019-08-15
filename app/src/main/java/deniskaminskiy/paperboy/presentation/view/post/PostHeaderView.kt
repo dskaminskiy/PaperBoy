@@ -38,15 +38,7 @@ class PostHeaderView(
         show(
             PostHeaderPresModel(
                 title = a.getString(R.styleable.PostHeaderView_title) ?: "",
-                titleColor = a.getColor(
-                    R.styleable.PostHeaderView_titleColor,
-                    -1
-                ),
                 subtitle = a.getString(R.styleable.PostHeaderView_subtitle) ?: "",
-                subtitleColor = a.getColor(
-                    R.styleable.PostHeaderView_subtitleColor,
-                    -1
-                ),
                 image = a.getIcon(
                     IconAttrs(
                         constant = R.styleable.PostHeaderView_leftIconConstant,
@@ -70,10 +62,7 @@ class PostHeaderView(
 
     fun show(model: PostHeaderPresModel) {
         title = model.title
-        titleColor = model.titleColor
-
         subtitle = model.subtitle
-        subtitleColor = model.subtitleColor
 
         ivImage.show(model.image)
         ivIcon.show(model.icon)
@@ -85,9 +74,7 @@ class PostHeaderView(
 
 data class PostHeaderPresModel(
     val title: String,
-    val titleColor: Int = -1,
     val subtitle: String = "",
-    val subtitleColor: Int = -1,
     val image: ItemIconPresModel = ItemDefaultIconPresModel,
     val icon: ItemIconPresModel = ItemDefaultIconPresModel,
     val isDivider: Boolean = false

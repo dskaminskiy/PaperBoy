@@ -41,7 +41,7 @@
             android:paddingBottom="2dp"
             android:textColor="@color/print70"
             android:layout_marginStart="16dp"
-            style="@style/TextStyle.Sans.Text.16"/>
+            style="@style/TextStyle.Sans.Text.14"/>
 
     <deniskaminskiy.paperboy.presentation.view.ButtonView
             android:layout_width="match_parent"

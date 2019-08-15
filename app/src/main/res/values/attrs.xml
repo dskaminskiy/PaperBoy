@@ -104,8 +104,6 @@
         <attr name="leftIconColor"/>
         <attr name="rightIconColor"/>
         <attr name="isDivider"/>
-        <attr name="subtitleColor"/>
-        <attr name="titleColor"/>
         <attr name="leftIconBackgroundColor"/>
         <attr name="rightIconBackgroundColor"/>
     </declare-styleable>

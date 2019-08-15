@@ -64,7 +64,7 @@
         <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/TextStyle.Sans.Text.16"
+                style="@style/TextStyle.Sans.Text.14"
                 android:textColor="@color/print70"
                 android:minHeight="24dp"
                 android:layout_marginTop="8dp"

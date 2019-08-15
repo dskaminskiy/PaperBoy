@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.AppCompatTextView
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:android="http://schemas.android.com/apk/res/android" android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        tools:text="@tools:sample/lorem/random"
+        android:includeFontPadding="false"
+        android:paddingTop="2dp"
+        android:paddingBottom="2dp"
+        android:textColor="@color/print100"
+        style="@style/TextStyle.Sans.Text.16"
+        android:gravity="start"/>
