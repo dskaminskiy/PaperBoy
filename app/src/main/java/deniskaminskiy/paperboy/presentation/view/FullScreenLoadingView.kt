@@ -9,7 +9,7 @@ import deniskaminskiy.paperboy.R
 import deniskaminskiy.paperboy.utils.compatColor
 import kotlinx.android.synthetic.main.view_loading.view.*
 
-class LoadingView @JvmOverloads constructor(
+class FullScreenLoadingView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0

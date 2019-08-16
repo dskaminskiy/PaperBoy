@@ -6,7 +6,7 @@ data class IconAttrs(
     @StyleableRes
     val constant: Int,
     @StyleableRes
-    val color: Int,
+    val color: Int?,
     @StyleableRes
-    val backgroundColor: Int
+    val backgroundColor: Int?
 )

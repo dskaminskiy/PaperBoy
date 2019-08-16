@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:background="@color/paper"
+             android:clickable="true"
+             android:focusable="true"
+             android:layout_height="?attr/actionBarSize">
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+        <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivBack"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginStart="16dp"
+                android:layout_gravity="center_vertical"
+                android:clickable="true"
+                android:focusable="true"
+                app:srcCompat="@drawable/ic_arrow_back"
+                app:tint="@color/print90"
+                android:background="?selectableItemBackgroundBorderless"/>
+
+        <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:paddingTop="6dp"
+                android:paddingBottom="6dp"
+                android:layout_marginStart="24dp"
+                android:gravity="center_vertical"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/print100"
+                    style="@style/TextStyle.Sans.Semibold.20"
+                    android:minHeight="26dp"
+                    android:gravity="center_vertical"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    tools:text="Артемий Лебедев"
+                    android:includeFontPadding="false"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvSubtitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/print50"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    style="@style/TextStyle.Sans.Medium.12"
+                    android:minHeight="16dp"
+                    android:gravity="center_vertical"
+                    tools:text="793 unread posts"
+                    android:includeFontPadding="false"/>
+
+        </LinearLayout>
+
+        <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivMore"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_gravity="center_vertical"
+                android:clickable="true"
+                android:focusable="true"
+                app:srcCompat="@drawable/ic_more"
+                app:tint="@color/print90"
+                android:background="?selectableItemBackgroundBorderless"/>
+
+    </LinearLayout>
+
+    <View
+            android:id="@+id/vDivider"
+            android:layout_gravity="bottom"
+            android:layout_width="match_parent"
+            android:background="@color/print20"
+            android:layout_height="1dp"/>
+
+</FrameLayout>

@@ -108,4 +108,14 @@
         <attr name="rightIconBackgroundColor"/>
     </declare-styleable>
 
+    <declare-styleable name="ChannelToolbarView">
+        <attr name="title"/>
+        <attr name="subtitle"/>
+        <attr name="leftIconConstant"/>
+        <attr name="rightIconConstant"/>
+        <attr name="leftIconColor"/>
+        <attr name="rightIconColor"/>
+        <attr name="isDivider"/>
+    </declare-styleable>
+
 </resources>

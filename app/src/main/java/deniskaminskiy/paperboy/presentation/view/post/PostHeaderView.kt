@@ -6,6 +6,7 @@ import android.widget.FrameLayout
 import deniskaminskiy.paperboy.R
 import deniskaminskiy.paperboy.presentation.view.data.ItemDefaultIconPresModel
 import deniskaminskiy.paperboy.presentation.view.data.ItemIconPresModel
+import deniskaminskiy.paperboy.utils.OutlineProviderFactory
 import deniskaminskiy.paperboy.utils.getIcon
 import deniskaminskiy.paperboy.utils.icon.IconAttrs
 import deniskaminskiy.paperboy.utils.managers.AndroidResourcesProvider
@@ -24,10 +25,8 @@ class PostHeaderView(
 
     var title: String by ViewTextDelegate(R.id.tvTitle, false)
     var titleColor: Int by ViewTextColorDelegate(R.id.tvTitle, resources.provideColor(R.color.print100))
-
     var subtitle: String by ViewTextDelegate(R.id.tvSubtitle)
     var subtitleColor: Int by ViewTextColorDelegate(R.id.tvSubtitle, resources.provideColor(R.color.print70))
-
     var isDivider: Boolean by ViewVisibilityDelegate(R.id.vDivider)
 
     init {
@@ -58,6 +57,10 @@ class PostHeaderView(
         )
 
         a.recycle()
+    }
+
+    init {
+        outlineProvider = OutlineProviderFactory.outlineProviderDefault
     }
 
     fun show(model: PostHeaderPresModel) {

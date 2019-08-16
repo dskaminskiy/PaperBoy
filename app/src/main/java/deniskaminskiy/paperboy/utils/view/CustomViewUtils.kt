@@ -2,8 +2,11 @@ package deniskaminskiy.paperboy.utils.view
 
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.ColorInt
+import deniskaminskiy.paperboy.utils.icon.Icon
+import deniskaminskiy.paperboy.utils.icon.IconRendererFactory
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
@@ -24,12 +27,12 @@ class ViewTextDelegate(
     }
 
     private fun textView(layout: ViewGroup): TextView =
-            textView.let {
-                if (it == null) {
-                    textView = layout.findViewById(textViewId)
-                    textView!!
-                } else it
-            }
+        textView.let {
+            if (it == null) {
+                textView = layout.findViewById(textViewId)
+                textView!!
+            } else it
+        }
 
 }
 
@@ -58,6 +61,36 @@ class ViewTextColorDelegate(
                 textView!!
             } else it
         }
+}
+
+class ViewIconDelegate(
+    private val imageViewId: Int,
+    private val isGoneIfNull: Boolean = false
+) : ReadWriteProperty<ViewGroup, Icon?> {
+
+    private var imageView: ImageView? = null
+    private var value: Icon? = null
+
+    override fun setValue(thisRef: ViewGroup, property: KProperty<*>, value: Icon?) {
+        this.value = value
+
+        imageView ?.goneIf (value == null && isGoneIfNull)
+
+        value?.let { IconRendererFactory.create(it) }
+            ?.render(imageView(thisRef))
+    }
+
+    override fun getValue(thisRef: ViewGroup, property: KProperty<*>): Icon? =
+        this.value
+
+    private fun imageView(layout: ViewGroup): ImageView =
+        imageView.let {
+            if (it == null) {
+                imageView = layout.findViewById(imageViewId)
+                imageView!!
+            } else it
+        }
+
 }
 
 class ViewVisibilityDelegate(
