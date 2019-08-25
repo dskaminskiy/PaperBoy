@@ -79,6 +79,11 @@ class AuthPhoneFragment : BaseFragment<AuthPhonePresenter, AuthPhoneView>(), Aut
         vLoading.gone()
     }
 
+    override fun showHome() {
+        HomeFragment.newInstance()
+            .replace(activity, R.id.vgContent, HomeFragment.TAG)
+    }
+
     override fun showAuthCode() {
         AuthCodeFragment.newInstance()
             .replace(activity, R.id.vgContent, AuthCodeFragment.TAG)

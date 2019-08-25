@@ -12,6 +12,8 @@ interface AuthPhoneView : View {
 
     fun showAuthCode()
 
+    fun showHome()
+
     fun showImportChannels()
 
     fun showInputError()

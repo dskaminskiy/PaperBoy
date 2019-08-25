@@ -57,12 +57,16 @@ class AuthPhonePresenter(
             .doOnEach { view?.hideLoading() }
             .subscribe({
                 with(it) {
-                    ifAuthorized { view?.showImportChannels() }
+                    ifAuthorized {
+                        view?.showHome()
+                    }
                     ifError {
                         view?.showInputError()
                         showUnknownTopPopupError()
                     }
-                    ifWaitingForCode { view?.showAuthCode() }
+                    ifWaitingForCode {
+                        view?.showAuthCode()
+                    }
                 }
             }, ::defaultOnError)
     }
