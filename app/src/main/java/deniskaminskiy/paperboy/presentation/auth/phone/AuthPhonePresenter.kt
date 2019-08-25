@@ -58,7 +58,8 @@ class AuthPhonePresenter(
             .subscribe({
                 with(it) {
                     ifAuthorized {
-                        view?.showHome()
+                        //TODO: костыль, ибо может прийти этот статус, но по факту это WAITING_FOR_CODE
+                        view?.showAuthCode()
                     }
                     ifError {
                         view?.showInputError()
