@@ -3,13 +3,13 @@ package deniskaminskiy.paperboy.presentation.home
 import deniskaminskiy.paperboy.R
 import deniskaminskiy.paperboy.core.BasePresenterImpl
 import deniskaminskiy.paperboy.core.Mapper
-import deniskaminskiy.paperboy.data.channels.Channel
+import deniskaminskiy.paperboy.data.channel.Channel
 import deniskaminskiy.paperboy.domain.home.HomeInteractor
 import deniskaminskiy.paperboy.domain.home.HomeInteractorImpl
-import deniskaminskiy.paperboy.presentation.base.DividerPresentItemModel
-import deniskaminskiy.paperboy.presentation.base.MiddleItemPresentItemModel
+import deniskaminskiy.paperboy.presentation.base.DividerPresItemModel
+import deniskaminskiy.paperboy.presentation.base.MiddleItemPresItemModel
 import deniskaminskiy.paperboy.presentation.base.MiddleItemToSuperItemPresentItemModelMapper
-import deniskaminskiy.paperboy.presentation.base.SuperItemPresentItemModel
+import deniskaminskiy.paperboy.presentation.base.SuperItemPresItemModel
 import deniskaminskiy.paperboy.presentation.view.MiddleItemPresModel
 import deniskaminskiy.paperboy.presentation.view.data.ItemConstantIconPresModel
 import deniskaminskiy.paperboy.presentation.view.data.ItemUrlIconPresModel
@@ -25,13 +25,13 @@ class HomePresenter(
     private val resources: ResourcesProvider,
     private val interactor: HomeInteractor = HomeInteractorImpl(),
     private val composer: Composer = SchedulerComposerFactory.android(),
-    private val superMapper: Mapper<List<Channel>, List<SuperItemPresentItemModel>> =
+    private val superMapper: Mapper<List<Channel>, List<SuperItemPresItemModel>> =
         MiddleItemToSuperItemPresentItemModelMapper(ChannelToMiddleItemPresModelMapper())
 ) : BasePresenterImpl<HomeView>(view) {
 
     // temp
     private val listHeader = listOf(
-        MiddleItemPresentItemModel(
+        MiddleItemPresItemModel(
             Unit,
             MiddleItemPresModel(
                 title = "All unread posts",
@@ -43,7 +43,7 @@ class HomePresenter(
                 isDivider = true
             )
         ),
-        MiddleItemPresentItemModel(
+        MiddleItemPresItemModel(
             Unit,
             MiddleItemPresModel(
                 title = "Bookmarked",
@@ -55,7 +55,7 @@ class HomePresenter(
                 isDivider = false
             )
         ),
-        DividerPresentItemModel
+        DividerPresItemModel
     )
 
     override fun onStart(isViewCreated: Boolean) {
@@ -80,14 +80,14 @@ class HomePresenter(
             }, ::defaultOnError)
     }
 
-    private fun removeLastElementDivider(list: List<SuperItemPresentItemModel>) =
+    private fun removeLastElementDivider(list: List<SuperItemPresItemModel>) =
         list.map { element ->
             if (element != list.lastOrNull()) {
                 element
             } else {
-                (element as? MiddleItemPresentItemModel<*>)
+                (element as? MiddleItemPresItemModel<*>)
                     ?.let { middleItem ->
-                        MiddleItemPresentItemModel(middleItem.element, middleItem.model.copy(isDivider = false))
+                        MiddleItemPresItemModel(middleItem.element, middleItem.model.copy(isDivider = false))
                     }
                     ?: element
             }

@@ -1,4 +1,4 @@
-package deniskaminskiy.paperboy.data.importchannels
+package deniskaminskiy.paperboy.data.importchannel
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

@@ -1,10 +1,10 @@
-package deniskaminskiy.paperboy.data.importchannels
+package deniskaminskiy.paperboy.data.importchannel
 
 import deniskaminskiy.paperboy.core.Factory
 import deniskaminskiy.paperboy.data.AppDatabase
-import deniskaminskiy.paperboy.data.importchannels.sources.ImportChannelDao
-import deniskaminskiy.paperboy.data.importchannels.sources.ImportChannelsCloudDataSource
-import deniskaminskiy.paperboy.data.importchannels.sources.ImportChannelsCloudDataSourceImpl
+import deniskaminskiy.paperboy.data.importchannel.sources.ImportChannelDao
+import deniskaminskiy.paperboy.data.importchannel.sources.ImportChannelsCloudDataSource
+import deniskaminskiy.paperboy.data.importchannel.sources.ImportChannelsCloudDataSourceImpl
 import io.reactivex.Completable
 import io.reactivex.Observable
 

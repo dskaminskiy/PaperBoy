@@ -2,8 +2,8 @@ package deniskaminskiy.paperboy.presentation.intro.choose
 
 import android.text.SpannableStringBuilder
 import deniskaminskiy.paperboy.core.View
-import deniskaminskiy.paperboy.data.importchannels.ImportChannel
-import deniskaminskiy.paperboy.presentation.base.CheckItemPresentItemModel
+import deniskaminskiy.paperboy.data.importchannel.ImportChannel
+import deniskaminskiy.paperboy.presentation.base.CheckItemPresItemModel
 
 interface ChooseImportChannelsView : View {
 
@@ -22,6 +22,6 @@ interface ChooseImportChannelsView : View {
 data class ChooseImportChannelsPresModel(
     val title: SpannableStringBuilder,
     val subtitle: String,
-    val channels: List<CheckItemPresentItemModel<ImportChannel>>,
+    val channels: List<CheckItemPresItemModel<ImportChannel>>,
     val isFabVisible: Boolean
 )

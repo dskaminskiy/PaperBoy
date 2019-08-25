@@ -4,8 +4,8 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import deniskaminskiy.paperboy.data.importchannels.ImportChannel
-import deniskaminskiy.paperboy.data.importchannels.sources.ImportChannelDao
+import deniskaminskiy.paperboy.data.importchannel.ImportChannel
+import deniskaminskiy.paperboy.data.importchannel.sources.ImportChannelDao
 import deniskaminskiy.paperboy.utils.Constants.DATABASE_NAME
 
 @Database(entities = [ImportChannel::class], version = 1, exportSchema = false)

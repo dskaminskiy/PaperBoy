@@ -11,7 +11,7 @@ import com.google.android.material.appbar.AppBarLayout
 import deniskaminskiy.paperboy.R
 import deniskaminskiy.paperboy.core.BaseFragment
 import deniskaminskiy.paperboy.presentation.base.SuperAdapter
-import deniskaminskiy.paperboy.presentation.base.SuperItemPresentItemModel
+import deniskaminskiy.paperboy.presentation.base.SuperItemPresItemModel
 import deniskaminskiy.paperboy.presentation.view.SwipeRefreshPrintingHeader
 import deniskaminskiy.paperboy.utils.OutlineProviderFactory
 import deniskaminskiy.paperboy.utils.hideApp
@@ -84,7 +84,7 @@ class HomeFragment : BaseFragment<HomePresenter, HomeView>(), HomeView {
         }
     }
 
-    override fun show(items: List<SuperItemPresentItemModel>) {
+    override fun show(items: List<SuperItemPresItemModel>) {
         if (vSwipeRefresh.isRefreshing) vSwipeRefresh.refreshComplete()
         vProgress.visibility = View.GONE
         adapter.setData(items)

@@ -1,10 +1,10 @@
-package deniskaminskiy.paperboy.data.importchannels.sources
+package deniskaminskiy.paperboy.data.importchannel.sources
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import deniskaminskiy.paperboy.data.importchannels.ImportChannel
+import deniskaminskiy.paperboy.data.importchannel.ImportChannel
 import io.reactivex.Completable
 import io.reactivex.Observable
 

@@ -10,11 +10,11 @@ import deniskaminskiy.paperboy.presentation.view.CheckItemPresModel
 import deniskaminskiy.paperboy.presentation.view.CheckItemView
 import deniskaminskiy.paperboy.presentation.view.MiddleItemPresModel
 import deniskaminskiy.paperboy.presentation.view.MiddleItemView
-import deniskaminskiy.paperboy.utils.OnItemClick
+import deniskaminskiy.paperboy.utils.DataAdapter
 import deniskaminskiy.paperboy.utils.compatColor
 import deniskaminskiy.paperboy.utils.dp
 
-class SuperAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class SuperAdapter : DataAdapter<SuperItemPresItemModel, RecyclerView.ViewHolder>() {
 
     companion object {
         private const val VIEW_TYPE_CHECK_ITEM = 1
@@ -22,40 +22,27 @@ class SuperAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         private const val VIEW_TYPE_DIVIDER = 3
     }
 
-    var onItemClick: OnItemClick<SuperItemPresentItemModel> = {}
-
-    private val data = mutableListOf<SuperItemPresentItemModel>()
-
-    fun setData(data: List<SuperItemPresentItemModel>) {
-        this.data.clear()
-        this.data.addAll(data)
-        notifyDataSetChanged()
-    }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
         when (viewType) {
             VIEW_TYPE_CHECK_ITEM -> CheckItemViewHolder(parent.context)
             VIEW_TYPE_MIDDLE_ITEM -> MiddleItemViewHolder(parent.context)
-            // divider
             else -> DividerItemViewHolder(parent.context)
         }
-
-    override fun getItemCount(): Int = data.size
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val item = data[position]
         when {
-            holder is CheckItemViewHolder && item is CheckItemPresentItemModel<*> ->
+            holder is CheckItemViewHolder && item is CheckItemPresItemModel<*> ->
                 holder.show(item)
-            holder is MiddleItemViewHolder && item is MiddleItemPresentItemModel<*> ->
+            holder is MiddleItemViewHolder && item is MiddleItemPresItemModel<*> ->
                 holder.show(item)
         }
     }
 
     override fun getItemViewType(position: Int): Int =
         when (data[position]) {
-            is MiddleItemPresentItemModel<*> -> VIEW_TYPE_MIDDLE_ITEM
-            is CheckItemPresentItemModel<*> -> VIEW_TYPE_CHECK_ITEM
+            is MiddleItemPresItemModel<*> -> VIEW_TYPE_MIDDLE_ITEM
+            is CheckItemPresItemModel<*> -> VIEW_TYPE_CHECK_ITEM
             else -> VIEW_TYPE_DIVIDER
         }
 
@@ -65,10 +52,10 @@ class SuperAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     ) : RecyclerView.ViewHolder(checkItemView) {
 
         init {
-            checkItemView.setOnClickListener { onItemClick(adapterPosition) }
+            checkItemView.setOnItemClickListener(adapterPosition)
         }
 
-        fun show(itemModel: CheckItemPresentItemModel<*>) {
+        fun show(itemModel: CheckItemPresItemModel<*>) {
             checkItemView.show(itemModel.model)
         }
 
@@ -80,20 +67,13 @@ class SuperAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     ) : RecyclerView.ViewHolder(middleItemView) {
 
         init {
-            middleItemView.setOnClickListener { onItemClick(adapterPosition) }
+            middleItemView.setOnItemClickListener(adapterPosition)
         }
 
-        fun show(itemModel: MiddleItemPresentItemModel<*>) {
+        fun show(itemModel: MiddleItemPresItemModel<*>) {
             middleItemView.show(itemModel.model)
         }
 
-    }
-
-    private fun onItemClick(adapterPosition: Int) {
-        data.getOrNull(adapterPosition)
-            ?.let {
-                onItemClick.invoke(it)
-            }
     }
 
     private inner class DividerItemViewHolder(
@@ -110,28 +90,28 @@ class SuperAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
 }
 
-sealed class SuperItemPresentItemModel(
+sealed class SuperItemPresItemModel(
     val element: Any
 ) {
 
-    inline fun <reified T> ifTypeOf(func: (T) -> Unit): SuperItemPresentItemModel {
+    inline fun <reified T> ifTypeOf(func: (T) -> Unit): SuperItemPresItemModel {
         (element as? T)?.let(func)
         return this
     }
 
 }
 
-class CheckItemPresentItemModel<out T : Any>(
+class CheckItemPresItemModel<out T : Any>(
     element: T,
     val model: CheckItemPresModel
-) : SuperItemPresentItemModel(element)
+) : SuperItemPresItemModel(element)
 
-class MiddleItemPresentItemModel<out T : Any>(
+class MiddleItemPresItemModel<out T : Any>(
     element: T,
     val model: MiddleItemPresModel
-) : SuperItemPresentItemModel(element)
+) : SuperItemPresItemModel(element)
 
-object DividerPresentItemModel : SuperItemPresentItemModel(Unit)
+object DividerPresItemModel : SuperItemPresItemModel(Unit)
 
 
 /**
@@ -139,10 +119,10 @@ object DividerPresentItemModel : SuperItemPresentItemModel(Unit)
  */
 class CheckItemToSuperItemPresentItemModelMapper<T : Any>(
     private val modelToPresModelMapper: Mapper<T, CheckItemPresModel>
-) : Mapper<List<T>, List<SuperItemPresentItemModel>> {
+) : Mapper<List<T>, List<SuperItemPresItemModel>> {
 
-    override fun map(from: List<T>): List<SuperItemPresentItemModel> =
-        from.map { CheckItemPresentItemModel(it, modelToPresModelMapper.map(it)) }
+    override fun map(from: List<T>): List<SuperItemPresItemModel> =
+        from.map { CheckItemPresItemModel(it, modelToPresModelMapper.map(it)) }
 
 }
 
@@ -151,9 +131,9 @@ class CheckItemToSuperItemPresentItemModelMapper<T : Any>(
  */
 class MiddleItemToSuperItemPresentItemModelMapper<T : Any>(
     private val modelToPresModelMapper: Mapper<T, MiddleItemPresModel>
-) : Mapper<List<T>, List<SuperItemPresentItemModel>> {
+) : Mapper<List<T>, List<SuperItemPresItemModel>> {
 
-    override fun map(from: List<T>): List<SuperItemPresentItemModel> =
-        from.map { MiddleItemPresentItemModel(it, modelToPresModelMapper.map(it)) }
+    override fun map(from: List<T>): List<SuperItemPresItemModel> =
+        from.map { MiddleItemPresItemModel(it, modelToPresModelMapper.map(it)) }
 
 }

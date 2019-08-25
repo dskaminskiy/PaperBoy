@@ -11,7 +11,8 @@ object IconFactory {
         IconConstant.WARNING to DrawableConstantIcon(DrawableIconConstant.WARNING),
         IconConstant.UNREAD to DrawableConstantIcon(DrawableIconConstant.UNREAD),
         IconConstant.BOOKMARK to DrawableConstantIcon(DrawableIconConstant.BOOKMARK),
-        IconConstant.SETTINGS to DrawableConstantIcon(DrawableIconConstant.SETTINGS)
+        IconConstant.SETTINGS to DrawableConstantIcon(DrawableIconConstant.SETTINGS),
+        IconConstant.MORE to DrawableConstantIcon(DrawableIconConstant.MORE)
     )
 
     /**
@@ -41,5 +42,6 @@ enum class IconConstant(
     WARNING(4, "iconWarning"),
     UNREAD(5, "iconUnread"),
     BOOKMARK(6, "iconBookmark"),
-    SETTINGS(7, "iconSettings")
+    SETTINGS(7, "iconSettings"),
+    MORE(8, "iconMore")
 }

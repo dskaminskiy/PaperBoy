@@ -3,15 +3,15 @@ package deniskaminskiy.paperboy.data.settings
 import android.content.Context
 import deniskaminskiy.paperboy.utils.ContextDelegate
 
-interface PreferenceHelper {
+interface PreferenceRepository {
 
     var userToken: String
 
 }
 
-class PreferenceHelperImpl(
+class PreferenceRepositoryImpl(
     private val contextDelegate: ContextDelegate
-) : PreferenceHelper {
+) : PreferenceRepository {
 
     companion object {
         private const val PREF_KEY_USER = "deniskaminskiy.paperboy.data.user"

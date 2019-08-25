@@ -4,8 +4,8 @@ import deniskaminskiy.paperboy.core.Interactor
 import deniskaminskiy.paperboy.data.api.AuthResponseState
 import deniskaminskiy.paperboy.data.auth.AuthRepository
 import deniskaminskiy.paperboy.data.auth.AuthRepositoryFactory
-import deniskaminskiy.paperboy.data.settings.PreferenceHelper
-import deniskaminskiy.paperboy.data.settings.PreferenceHelperImpl
+import deniskaminskiy.paperboy.data.settings.PreferenceRepository
+import deniskaminskiy.paperboy.data.settings.PreferenceRepositoryImpl
 import deniskaminskiy.paperboy.presentation.auth.phone.AuthPhone
 import deniskaminskiy.paperboy.utils.ContextDelegate
 import io.reactivex.Observable
@@ -34,7 +34,7 @@ class AuthPhoneInteractorImpl(
     private val maxLengthPhone: Int,
     private val contextDelegate: ContextDelegate,
     private val repository: AuthRepository = AuthRepositoryFactory.create(),
-    private val settings: PreferenceHelper = PreferenceHelperImpl(contextDelegate)
+    private val settings: PreferenceRepository = PreferenceRepositoryImpl(contextDelegate)
 ) : AuthPhoneInteractor {
 
     private val subjectModel = BehaviorSubject.createDefault(AuthPhone.EMPTY)

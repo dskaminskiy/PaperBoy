@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <deniskaminskiy.paperboy.presentation.view.channel.ChannelToolbarView
+            android:id="@+id/vToolbar"
+            android:layout_width="match_parent"
+            app:leftIconConstant="ICON_ARROW_BACK"
+            app:rightIconConstant="ICON_MORE"
+            app:leftIconColor="@color/print90"
+            app:rightIconColor="@color/print90"
+            android:layout_height="wrap_content"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvPosts"
+            android:overScrollMode="never"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+</LinearLayout>

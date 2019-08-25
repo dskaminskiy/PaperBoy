@@ -1,9 +1,9 @@
 package deniskaminskiy.paperboy.domain.intro
 
 import deniskaminskiy.paperboy.core.Interactor
-import deniskaminskiy.paperboy.data.importchannels.ImportChannel
-import deniskaminskiy.paperboy.data.importchannels.ImportChannelsRepository
-import deniskaminskiy.paperboy.data.importchannels.ImportChannelsRepositoryFactory
+import deniskaminskiy.paperboy.data.importchannel.ImportChannel
+import deniskaminskiy.paperboy.data.importchannel.ImportChannelsRepository
+import deniskaminskiy.paperboy.data.importchannel.ImportChannelsRepositoryFactory
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject

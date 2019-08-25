@@ -4,8 +4,8 @@ import deniskaminskiy.paperboy.core.Interactor
 import deniskaminskiy.paperboy.data.api.AuthResponseState
 import deniskaminskiy.paperboy.data.auth.AuthRepository
 import deniskaminskiy.paperboy.data.auth.AuthRepositoryFactory
-import deniskaminskiy.paperboy.data.importchannels.ImportChannelsRepository
-import deniskaminskiy.paperboy.data.importchannels.ImportChannelsRepositoryFactory
+import deniskaminskiy.paperboy.data.importchannel.ImportChannelsRepository
+import deniskaminskiy.paperboy.data.importchannel.ImportChannelsRepositoryFactory
 import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.subjects.BehaviorSubject

@@ -1,6 +1,6 @@
 package deniskaminskiy.paperboy.utils
 
-import deniskaminskiy.paperboy.data.channels.Channel
+import deniskaminskiy.paperboy.data.channel.Channel
 
 object DataProvider {
 

@@ -1,12 +1,12 @@
-package deniskaminskiy.paperboy.data.importchannels.sources
+package deniskaminskiy.paperboy.data.importchannel.sources
 
 import deniskaminskiy.paperboy.core.Mapper
 import deniskaminskiy.paperboy.data.api.ApiService
 import deniskaminskiy.paperboy.data.api.PaperboyApi
 import deniskaminskiy.paperboy.data.api.json.importchannels.ImportChannelResponseJson
 import deniskaminskiy.paperboy.data.api.json.importchannels.ImportChannelsRequestJson
-import deniskaminskiy.paperboy.data.importchannels.ImportChannel
-import deniskaminskiy.paperboy.data.importchannels.sources.mappers.ImportChannelFromResponseJsonMapper
+import deniskaminskiy.paperboy.data.importchannel.ImportChannel
+import deniskaminskiy.paperboy.data.importchannel.sources.mappers.ImportChannelFromResponseJsonMapper
 import io.reactivex.Completable
 import io.reactivex.Observable
 

@@ -1,7 +1,7 @@
 package deniskaminskiy.paperboy.domain.home
 
 import deniskaminskiy.paperboy.core.Interactor
-import deniskaminskiy.paperboy.data.channels.Channel
+import deniskaminskiy.paperboy.data.channel.Channel
 import deniskaminskiy.paperboy.utils.DataProvider
 import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject

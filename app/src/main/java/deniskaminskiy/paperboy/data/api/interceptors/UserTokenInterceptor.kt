@@ -1,6 +1,6 @@
 package deniskaminskiy.paperboy.data.api.interceptors
 
-import deniskaminskiy.paperboy.data.settings.PreferenceHelperImpl
+import deniskaminskiy.paperboy.data.settings.PreferenceRepositoryImpl
 import deniskaminskiy.paperboy.utils.ContextDelegate
 import deniskaminskiy.paperboy.utils.InterceptorsUtils
 import okhttp3.Interceptor
@@ -24,7 +24,7 @@ class UserTokenInterceptor(
     }
 
     private val userToken: String
-        get() = PreferenceHelperImpl(contextDelegate).userToken
+        get() = PreferenceRepositoryImpl(contextDelegate).userToken
 
     private val mediaType: MediaType?
         get() = MediaType.parse(MEDIA_TYPE)

@@ -35,7 +35,8 @@ enum class DrawableIconConstant(
     WARNING(R.drawable.ic_warning),
     UNREAD(R.drawable.ic_unread),
     BOOKMARK(R.drawable.ic_bookmark),
-    SETTINGS(R.drawable.ic_settings)
+    SETTINGS(R.drawable.ic_settings),
+    MORE(R.drawable.ic_more)
 }
 
 interface PaintedIcon {

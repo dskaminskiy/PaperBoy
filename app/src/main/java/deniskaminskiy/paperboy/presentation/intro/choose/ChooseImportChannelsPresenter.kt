@@ -4,11 +4,11 @@ import android.text.SpannableStringBuilder
 import deniskaminskiy.paperboy.R
 import deniskaminskiy.paperboy.core.BasePresenterImpl
 import deniskaminskiy.paperboy.core.Mapper
-import deniskaminskiy.paperboy.data.importchannels.ImportChannel
+import deniskaminskiy.paperboy.data.importchannel.ImportChannel
 import deniskaminskiy.paperboy.domain.intro.ChooseImportChannelsInteractor
 import deniskaminskiy.paperboy.domain.intro.ChooseImportChannelsInteractorImpl
-import deniskaminskiy.paperboy.presentation.base.CheckItemPresentItemModel
-import deniskaminskiy.paperboy.presentation.base.SuperItemPresentItemModel
+import deniskaminskiy.paperboy.presentation.base.CheckItemPresItemModel
+import deniskaminskiy.paperboy.presentation.base.SuperItemPresItemModel
 import deniskaminskiy.paperboy.presentation.view.CheckItemPresModel
 import deniskaminskiy.paperboy.utils.managers.ResourcesProvider
 import deniskaminskiy.paperboy.utils.paintWord
@@ -23,7 +23,7 @@ class ChooseImportChannelsPresenter(
     private val interactor: ChooseImportChannelsInteractor =
         ChooseImportChannelsInteractorImpl(),
     private val composer: Composer = SchedulerComposerFactory.android(),
-    private val mapperToPresModel: Mapper<List<ImportChannel>, List<CheckItemPresentItemModel<ImportChannel>>> =
+    private val mapperToPresModel: Mapper<List<ImportChannel>, List<CheckItemPresItemModel<ImportChannel>>> =
         ChannelImportToPresModelListMapper()
 ) : BasePresenterImpl<ChooseImportChannelsView>(view) {
 
@@ -83,7 +83,7 @@ class ChooseImportChannelsPresenter(
             }, ::defaultOnError)
     }
 
-    fun onItemClick(item: SuperItemPresentItemModel) {
+    fun onItemClick(item: SuperItemPresItemModel) {
         item.ifTypeOf(interactor::changeCheckStatus)
     }
 
@@ -98,10 +98,10 @@ class ChooseImportChannelsPresenter(
 }
 
 class ChannelImportToPresModelListMapper :
-    Mapper<List<ImportChannel>, List<CheckItemPresentItemModel<ImportChannel>>> {
-    override fun map(from: List<ImportChannel>): List<CheckItemPresentItemModel<ImportChannel>> =
+    Mapper<List<ImportChannel>, List<CheckItemPresItemModel<ImportChannel>>> {
+    override fun map(from: List<ImportChannel>): List<CheckItemPresItemModel<ImportChannel>> =
         from.map {
-            CheckItemPresentItemModel(
+            CheckItemPresItemModel(
                 element = it,
                 model = CheckItemPresModel(
                     title = it.title,
