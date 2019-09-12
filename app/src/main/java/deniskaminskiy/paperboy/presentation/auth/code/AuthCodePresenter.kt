@@ -1,7 +1,6 @@
 package deniskaminskiy.paperboy.presentation.auth.code
 
 import deniskaminskiy.paperboy.core.BasePresenterImpl
-import deniskaminskiy.paperboy.core.Mapper
 import deniskaminskiy.paperboy.data.api.ifAuthorized
 import deniskaminskiy.paperboy.data.api.ifError
 import deniskaminskiy.paperboy.data.api.ifWaitingForPassword
@@ -15,14 +14,8 @@ import io.reactivex.disposables.Disposable
 class AuthCodePresenter(
     view: AuthCodeView,
     private val composer: Composer = SchedulerComposerFactory.android(),
-    private val codeLength: Int = CODE_LENGTH,
-    private val mapper: Mapper<String, AuthCodePresModel> = CodeStringToAuthCodePresModelMapper(),
-    private val interactor: AuthCodeInteractor = AuthCodeInteractorImpl(codeLength)
+    private val interactor: AuthCodeInteractor = AuthCodeInteractorImpl()
 ) : BasePresenterImpl<AuthCodeView>(view) {
-
-    companion object {
-        private const val CODE_LENGTH = 5
-    }
 
     private var isInputsUpdating = false
 
@@ -34,14 +27,15 @@ class AuthCodePresenter(
 
         disposableUpdateUi.disposeIfNotNull()
         disposableUpdateUi = interactor.onModelUpdate()
-            .map(mapper::map)
             .compose(composer.observable())
             .subscribe {
                 isInputsUpdating = true
                 view?.show(it)
-            }
 
-        interactor.onFullCodeEntered = { sendCode() }
+//                if (it.code.length >= MAX_CODE_LENGTH) {
+//                    sendCode()
+//                }
+            }
     }
 
     override fun onViewDetached() {
@@ -99,7 +93,7 @@ class AuthCodePresenter(
      * @param newNumber     - should be integer; if empty string, then it is removing
      */
     fun onPassCodeChanged(newNumber: String) {
-        if (!isInputsUpdating) {
+        if (!isInputsUpdating && disposableSendCode?.isDisposed != false) {
             interactor.onPassCodeChanged(newNumber)
         }
     }
@@ -120,9 +114,4 @@ class AuthCodePresenter(
         interactor.removeLastCodeSymbol()
     }
 
-}
-
-class CodeStringToAuthCodePresModelMapper : Mapper<String, AuthCodePresModel> {
-    override fun map(from: String): AuthCodePresModel =
-        AuthCodePresModel(from)
 }

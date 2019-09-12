@@ -61,15 +61,15 @@ class AuthCodeFragment : BaseFragment<AuthCodePresenter, AuthCodeView>(), AuthCo
         super.onDestroyView()
     }
 
-    override fun show(model: AuthCodePresModel) {
+    override fun show(code: String) {
         vLoading.gone()
 
-        val textLength = model.code.length
+        val textLength = code.length
 
         if (textLength >= 1) {
             // Обновляем текст в засеченых инпутах
             for (i in 1..textLength) {
-                updateInputText(i, model.code[i - 1].toString())
+                updateInputText(i, code[i - 1].toString())
             }
             // Чистим оставшиеся инпуты
             for (i in (textLength + 1)..5) {

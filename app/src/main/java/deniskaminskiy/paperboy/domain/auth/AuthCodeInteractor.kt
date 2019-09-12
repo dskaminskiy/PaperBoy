@@ -12,8 +12,6 @@ import io.reactivex.subjects.BehaviorSubject
 
 interface AuthCodeInteractor : Interactor {
 
-    var onFullCodeEntered: () -> Unit
-
     fun onModelUpdate(): Observable<String>
 
     fun sendCode(): Observable<AuthResponseState>
@@ -36,10 +34,13 @@ interface AuthCodeInteractor : Interactor {
 }
 
 class AuthCodeInteractorImpl(
-    private val codeLength: Int,
     private val repositoryAuth: AuthRepository = AuthRepositoryFactory.create(),
     private val repositoryImportChannels: ImportChannelsRepository = ImportChannelsRepositoryFactory.create()
 ) : AuthCodeInteractor {
+
+    companion object {
+        private const val MAX_CODE_LENGTH = 5
+    }
 
     private val subjectModel = BehaviorSubject.createDefault("")
 
@@ -48,8 +49,6 @@ class AuthCodeInteractorImpl(
         set(value) {
             subjectModel.onNext(value)
         }
-
-    override var onFullCodeEntered: () -> Unit = {}
 
     override fun onModelUpdate(): Observable<String> = subjectModel
 
@@ -62,10 +61,6 @@ class AuthCodeInteractorImpl(
             if (code.isNotEmpty()) {
                 code = code.dropLast(1)
             }
-        }
-
-        if (code.length >= codeLength) {
-            onFullCodeEntered.invoke()
         }
     }
 

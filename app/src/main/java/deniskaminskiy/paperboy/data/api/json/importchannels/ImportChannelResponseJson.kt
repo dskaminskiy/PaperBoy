@@ -3,7 +3,7 @@ package deniskaminskiy.paperboy.data.api.json.importchannels
 data class ImportChannelResponseJson(
     val id: Long? = null,
     val title: String? = null,
-    val order: Long? = null
+    val order: String? = null
 )
 
 

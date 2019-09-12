@@ -4,7 +4,7 @@ import deniskaminskiy.paperboy.core.View
 
 interface AuthCodeView : View {
 
-    fun show(model: AuthCodePresModel)
+    fun show(model: String)
 
     fun showLoading()
 

@@ -30,8 +30,9 @@ class AndroidResourcesProvider private constructor(
     override fun provideString(id: Int): String =
         context?.getString(id) ?: ""
 
-    override fun provideString(id: Int, vararg formatArgs: Any): String =
-        context?.getString(id, formatArgs) ?: ""
+    //TODO: temp
+    override fun provideString(id: Int, param: Int): String =
+        context?.getString(id, param) ?: ""
 
     override fun provideTypeface(id: Int): Typeface =
         context.compatFont(id)

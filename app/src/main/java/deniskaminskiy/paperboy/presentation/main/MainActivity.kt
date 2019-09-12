@@ -22,6 +22,8 @@ class MainActivity : BaseActivity<MainPresenter, MainView>(), MainView {
     }
 
     override fun showAuth() {
+//        AuthCodeFragment.newInstance()
+//            .open(this, R.id.vgContent, AuthCodeFragment.TAG)
         AuthPhoneFragment.newInstance()
             .open(this, R.id.vgContent, AuthPhoneFragment.TAG)
     }

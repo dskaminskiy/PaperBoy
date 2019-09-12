@@ -6,5 +6,5 @@ import deniskaminskiy.paperboy.data.importchannel.ImportChannel
 
 class ImportChannelFromResponseJsonMapper : Mapper<ImportChannelResponseJson, ImportChannel> {
     override fun map(from: ImportChannelResponseJson): ImportChannel =
-        ImportChannel(from.id ?: -1L, from.title ?: "", from.order ?: -1L, false)
+        ImportChannel(from.id ?: -1L, from.title ?: "", from.order?.toLong() ?: -1L, false)
 }

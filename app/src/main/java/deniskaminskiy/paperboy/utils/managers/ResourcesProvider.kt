@@ -10,7 +10,7 @@ interface ResourcesProvider {
 
     fun provideString(@StringRes id: Int): String
 
-    fun provideString(@StringRes id: Int, vararg formatArgs: Any): String
+    fun provideString(@StringRes id: Int, param: Int): String
 
     fun provideTypeface(id: Int): Typeface
 
